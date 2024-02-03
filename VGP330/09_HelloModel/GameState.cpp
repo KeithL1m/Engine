@@ -32,7 +32,6 @@ void GameState::Render()
 	mStandardEffect.Begin();
 	DrawRenderGroup(mStandardEffect, mCharacter);
 	mStandardEffect.End();
-
 }
 void GameState::Update(float deltaTime)
 {
