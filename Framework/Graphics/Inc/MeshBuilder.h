@@ -25,9 +25,12 @@ namespace KEIEngine::Graphics
 
 		//plane
 		static MeshPC CreatePlanePC(int numRows, int numCols, float spacing);
+		static Mesh CreateGroundPlane(int numRows, int numCols, float spacing);
 
 		//cylinder
 		static MeshPC CreateCylinderPC(int slices, int rings);
 
+		// ScreenQuad
+		static MeshPX CreateScreenQuad();
 	};
 }

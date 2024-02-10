@@ -18,6 +18,7 @@
 #include "Model.h"
 #include "ModelIO.h"
 #include "ModelManager.h"
+#include "PostProcessingEffect.h"
 #include "Sampler.h"
 #include "SimpleDraw.h"
 #include "Texture.h"

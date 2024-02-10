@@ -427,6 +427,44 @@ MeshPC MeshBuilder::CreatePlanePC(int numRows, int numCols, float spacing)
 	return mesh;
 }
 
+Mesh MeshBuilder::CreateGroundPlane(int numRows, int numCols, float spacing)
+{
+	Mesh mesh;
+	int index = rand() % 100;
+
+	const float hpw = static_cast<float>(numCols) * spacing * 0.5f;
+	const float hph = static_cast<float>(numRows) * spacing * 0.5f;
+	const float uInc = 1.0f / static_cast<float>(numCols);
+	const float vInc = 1.0f / static_cast<float>(numRows);
+
+	float x = -hpw;
+	float z = -hph;
+	float u = 0.0f;
+	float v = 1.0f;
+
+	for (int r = 0; r <= numRows; r++)
+	{
+		for (int c = 0; c <= numCols; c++)
+		{
+			mesh.vertices.push_back({ 
+				{x , 0.0f , z}, 
+				{0.0f, 1.0f, 0.0f},
+				{0.0f, 0.0f, 1.0f}, 
+				{u ,v}});
+			x += spacing;
+			u += uInc;
+		}
+		x = -hpw;
+		z += spacing;
+		u = 0.0f;
+		v -= vInc;
+	}
+
+	CreatePlaneIndices(mesh.indices, numRows, numCols);
+
+	return mesh;
+}
+
 //cylinder
 MeshPC MeshBuilder::CreateCylinderPC(int slices, int rings)
 {
@@ -456,6 +494,18 @@ MeshPC MeshBuilder::CreateCylinderPC(int slices, int rings)
 
 	CreatePlaneIndices(mesh.indices, rings, slices);
 	CreateCapIndices(mesh.indices, slices, mesh.vertices.size() - 2, mesh.vertices.size() - 1);
+
+	return mesh;
+}
+
+MeshPX MeshBuilder::CreateScreenQuad()
+{
+	MeshPX mesh;
+	mesh.vertices.push_back({ {-1.0f, -1.0f, 0.0f}, {0.0f, 1.0f} });
+	mesh.vertices.push_back({ {-1.0f, 1.0f, 0.0f}, {0.0f, 0.0f} });
+	mesh.vertices.push_back({ {1.0f, 1.0f, 0.0f}, {1.0f, 0.0f} });
+	mesh.vertices.push_back({ {1.0f, -1.0f, 0.0f}, {1.0f, 1.0f} });
+	mesh.indices = { 0, 1, 2, 0, 2, 3 };
 
 	return mesh;
 }
