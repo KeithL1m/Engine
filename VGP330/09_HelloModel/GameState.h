@@ -20,4 +20,5 @@ private:
 	KEIEngine::Graphics::StandardEffect mStandardEffect;
 
 	KEIEngine::Graphics::RenderGroup mCharacter;
+	KEIEngine::Graphics::RenderGroup mCharacter2;
 };
