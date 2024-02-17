@@ -34,7 +34,7 @@ void GameState::Initialize()
 		renderObject.transform.position.x = 1.0f;
 	}
 
-	ModelId modelId2 = ModelManager::Get()->LoadModel(L"../../Assets/Models/character/character.model");
+	ModelId modelId2 = ModelManager::Get()->LoadModel(L"../../Assets/Models/character/character2.model");
 	mCharacter2 = CreateRenderGroup(modelId2);
 	for (auto& renderObject : mCharacter2)
 	{

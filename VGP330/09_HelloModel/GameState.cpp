@@ -21,14 +21,10 @@ void GameState::Initialize()
 
 	ModelId modelId = ModelManager::Get()->LoadModel(L"../../Assets/Models/character/character.model");
 	mCharacter = CreateRenderGroup(modelId);
-
-	ModelId modelId = ModelManager::Get()->LoadModel(L"../../Assets/Models/character/character2.model");
-	mCharacter2 = CreateRenderGroup(modelId);
 };
 void GameState::Terminate()
 {
 	CleanupRenderGroup(mCharacter);
-	CleanupRenderGroup(mCharacter2);
 	mStandardEffect.Terminate();
 }
 void GameState::Render()
