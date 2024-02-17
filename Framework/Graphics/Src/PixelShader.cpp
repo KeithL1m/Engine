@@ -5,7 +5,7 @@
 using namespace KEIEngine;
 using namespace KEIEngine::Graphics;
 
-void PixelShader::Initialize(const std::filesystem::path& filePath)
+void PixelShader::Initialize(const std::filesystem::path& filePath, const char* entryPoint)
 {
 	//===============================================================
 	//Create a pixel shader
@@ -18,7 +18,7 @@ void PixelShader::Initialize(const std::filesystem::path& filePath)
 		filePath.c_str(),
 		nullptr,
 		D3D_COMPILE_STANDARD_FILE_INCLUDE,
-		"PS", "ps_5_0",
+		entryPoint, "ps_5_0",
 		shaderFlags, 0,
 		&shaderBlob,
 		&errorBlob

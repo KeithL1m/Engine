@@ -10,15 +10,28 @@ namespace KEIEngine::Graphics
 {
 	class RenderObject;
 
-	class GaussianBlurEffect
+	class GaussianBlurEffect final
 	{
 	public:
+		void Initialize();
+		void Terminate();
 
+		void Begin();
+		void End();
+
+		void Render(const RenderObject& renderObject);
+
+		void DebugUI();
+
+		void SetSourceTexture(const Texture& texture);
+		const Texture& GetHorizontalBlurTexture() const;
+		const Texture& GetVerticalBlurTexture() const;
+		const Texture& GetResultTexture() const;
 	private:
 		struct SettingsData
 		{
 			float screenWidth;
-			float screenHeigth;
+			float screenHeight;
 			float multiplier;
 			float padding;
 		};

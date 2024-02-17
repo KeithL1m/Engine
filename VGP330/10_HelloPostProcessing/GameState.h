@@ -19,12 +19,13 @@ private:
 	KEIEngine::Graphics::DirectionalLight mDirectionalLight;
 	KEIEngine::Graphics::StandardEffect mStandardEffect;
 	KEIEngine::Graphics::PostProcessingEffect mPostProcessingEffect;
+	KEIEngine::Graphics::GaussianBlurEffect mGaussianBlurEffect;
 
 	KEIEngine::Graphics::RenderGroup mCharacter;
 	KEIEngine::Graphics::RenderGroup mCharacter2;
 	KEIEngine::Graphics::RenderObject mGround;
 	KEIEngine::Graphics::RenderObject mScreenQuad;
-	KEIEngine::Graphics::RenderTarget mRenderTarget;
 
-	KEIEngine::Graphics::Texture mCombineTexture;
+	KEIEngine::Graphics::RenderTarget mRenderTarget;
+	KEIEngine::Graphics::RenderTarget mBlurRenderTarget;
 };

@@ -93,4 +93,6 @@ void RenderTarget::EndRender()
 
 	context->OMSetRenderTargets(1, &mOldRenderTargetView, mOldDepthStencilView);
 	context->RSSetViewports(1, &mOldViewport);
+	SafeRelease(mOldRenderTargetView);
+	SafeRelease(mOldDepthStencilView);
 }

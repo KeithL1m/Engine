@@ -21,14 +21,16 @@ void GameState::Initialize()
 
 	mPostProcessingEffect.Initialize(L"../../Assets/Shaders/PostProcess.fx");
 	mPostProcessingEffect.SetTexture(&mRenderTarget);
-	mPostProcessingEffect.SetTexture(&mCombineTexture, 1);
+	mPostProcessingEffect.SetTexture(&mGaussianBlurEffect.GetResultTexture(), 1);
 
-	mCombineTexture.Initialize(L"../../Assets/Textures/earth_clouds.jpg");
+	mGaussianBlurEffect.Initialize();
+	mGaussianBlurEffect.SetSourceTexture(mBlurRenderTarget);
 
 	GraphicsSystem* gs = GraphicsSystem::Get();
 	const float screenWidth = gs->GetBackBufferWidth();
 	const float screenHeight = gs->GetBackBufferHeight();
 	mRenderTarget.Initialize(screenWidth, screenHeight, RenderTarget::Format::RGBA_U8);
+	mBlurRenderTarget.Initialize(screenWidth, screenHeight, RenderTarget::Format::RGBA_U8);
 
 	ModelId modelId = ModelManager::Get()->LoadModel(L"../../Assets/Models/character/character.model");
 	mCharacter = CreateRenderGroup(modelId);
@@ -57,7 +59,8 @@ void GameState::Terminate()
 	mGround.Terminate();
 	CleanupRenderGroup(mCharacter);
 	CleanupRenderGroup(mCharacter2);
-	mCombineTexture.Terminate();
+	mBlurRenderTarget.Terminate();
+	mGaussianBlurEffect.Terminate();
 	mRenderTarget.Terminate();
 	mPostProcessingEffect.Terminate();
 	mStandardEffect.Terminate();
@@ -71,6 +74,18 @@ void GameState::Render()
 			mStandardEffect.Render(mGround);
 		mStandardEffect.End();
 	mRenderTarget.EndRender();
+
+	//mBlurRenderTarget.BeginRender({ 0.0f, 0.0f, 0.0f, 0.0f });
+	mBlurRenderTarget.BeginRender();
+		mStandardEffect.Begin();
+			DrawRenderGroup(mStandardEffect, mCharacter);
+			DrawRenderGroup(mStandardEffect, mCharacter2);
+		mStandardEffect.End();
+	mBlurRenderTarget.EndRender();
+
+	mGaussianBlurEffect.Begin();
+		mGaussianBlurEffect.Render(mScreenQuad);
+	mGaussianBlurEffect.End();
 
 	mPostProcessingEffect.Begin();
 		mPostProcessingEffect.Render(mScreenQuad);
@@ -96,6 +111,7 @@ void GameState::DebugUI()
 	}
 	mStandardEffect.DebugUI();
 	mPostProcessingEffect.DebugUI();
+	mGaussianBlurEffect.DebugUI();
 	ImGui::End();
 }
 
