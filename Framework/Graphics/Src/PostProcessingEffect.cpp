@@ -70,6 +70,31 @@ void PostProcessingEffect::Begin()
 				data.params0 = mMirrorScaleX;
 				data.params1 = mMirrorScaleY;
 			}
+			break;
+			case Mode::Blur:
+			{
+				GraphicsSystem* gs = GraphicsSystem::Get();
+				const float screenWidth = gs->GetBackBufferWidth();
+				const float screenHeight = gs->GetBackBufferHeight();
+				data.params0 = mBlurStrength / screenWidth;
+				data.params1 = mBlurStrength / screenHeight;
+			}
+			break;
+			case Mode::Combine2: break;
+			case Mode::MotionBlur:
+			{
+				GraphicsSystem* gs = GraphicsSystem::Get();
+				const float screenWidth = gs->GetBackBufferWidth();
+				const float screenHeight = gs->GetBackBufferHeight();
+				data.params0 = mBlurStrength / screenWidth;
+				data.params1 = mBlurStrength / screenHeight;
+			}
+			break;
+			case Mode::ChromaticAberration:
+			{
+				data.params0 = mAbberationValue;
+			}
+			break;
 		}
 		mPostProcessBuffer.Update(data);
 		mPostProcessBuffer.BindPS(0);
@@ -113,6 +138,15 @@ void PostProcessingEffect::DebugUI()
 		{
 			ImGui::DragFloat("MirrorScaleX", &mMirrorScaleX, 0.1f, -1.0f, 1.0f);
 			ImGui::DragFloat("MirrorScaleY", &mMirrorScaleY, 0.1f, -1.0f, 1.0f);
+		}
+		else if (mMode == Mode::Blur || mMode == Mode::MotionBlur)
+		{
+			ImGui::DragFloat("BlurStrength", &mBlurStrength, 1.0f, 0.0f, 100.0f);
+		}
+		else if (mMode == Mode::ChromaticAberration)
+		{
+			ImGui::DragFloat("AbberationValue", &mAbberationValue, 0.001f, 0.001f, 1.0f);
+			//ImGui::DragFloat("AbberationValue", &mAbberationValue, 1.0f, 0.0f, 100.0f); make security camera
 		}
 	}
 }

@@ -25,4 +25,6 @@ private:
 	KEIEngine::Graphics::RenderObject mGround;
 	KEIEngine::Graphics::RenderObject mScreenQuad;
 	KEIEngine::Graphics::RenderTarget mRenderTarget;
+
+	KEIEngine::Graphics::Texture mCombineTexture;
 };
