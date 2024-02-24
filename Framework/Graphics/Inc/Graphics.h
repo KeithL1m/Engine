@@ -25,6 +25,8 @@
 #include "Texture.h"
 #include "Transform.h"
 #include "TextureManager.h"
+#include "Terrain.h"
+#include "TerrainEffect.h"
 #include "RenderTarget.h"
 #include "RenderObject.h"
 #include "StandardEffect.h"
