@@ -124,14 +124,14 @@ float4 PS(VS_OUTPUT input) : SV_Target
         if(input.worldPosition.y > blendHeight)
         {
             // missing
-            colorToUse = blendMap.Sample(textureSampler, input.texCoord);
+            //colorToUse = blendMap.Sample(textureSampler, input.texCoord);
         }
         else
         {
             float blendWidth = 5;
             float transitionHeight = blendHeight - blendWidth;
             float t = saturate(input.worldPosition.y - transitionHeight) / blendWidth;
-            colorToUse = blendMap.Sample(textureSampler, input.texCoord);
+            //colorToUse = blendMap.Sample(textureSampler, input.texCoord);
             colorToUse = lerp(diffuseMapColor, colorToUse, t);
         }
     }
