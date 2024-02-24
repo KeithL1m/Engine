@@ -28,3 +28,4 @@
 #include "RenderTarget.h"
 #include "RenderObject.h"
 #include "StandardEffect.h"
+#include "ShadowEffect.h"
