@@ -21,44 +21,46 @@ void GameState::Initialize()
 	mStandardEffect.SetLightCamera(mShadowEffect.GetLightCamera());
 	mStandardEffect.SetShadowMap(mShadowEffect.GetDepthMap());
 
-	// missing
 	mTerrainEffect.Initialize();
 	mTerrainEffect.SetCamera(mCamera);
-
-	mTerrainEffect.SetLightCamera(mCamera);
+	mTerrainEffect.SetDirectionalLight(mDirectionalLight);
+	mTerrainEffect.SetLightCamera(mShadowEffect.GetLightCamera());
+	mTerrainEffect.SetShadowMap(mShadowEffect.GetDepthMap());
 
 	mShadowEffect.Initialize();
 	mShadowEffect.SetDirectionalLight(mDirectionalLight);
 
 	ModelId modelId = ModelManager::Get()->LoadModel(L"../../Assets/Models/character/character.model");
 	mCharacter = CreateRenderGroup(modelId);
-	for (auto& renderObject : mCharacter)
-	{
-		renderObject.transform.position.x = 1.0f;
-	}
 
 	ModelId modelId2 = ModelManager::Get()->LoadModel(L"../../Assets/Models/character/character2.model");
 	mCharacter2 = CreateRenderGroup(modelId2);
-	for (auto& renderObject : mCharacter2)
-	{
-		renderObject.transform.position.x = -1.0f;
-	}
 
-	mTerrain.Initialize(L"../../Assets/Textures/terrain/height_map.jpg", 10.0f);
 
-	// missing
+	mTerrain.Initialize(L"../../Assets/Textures/terrain/heightmap_512x512.raw", 20.0f);
+
+	
 	mGround.meshBuffer.Initialize(mTerrain.GetMesh());
 	mGround.diffuseMapId = TextureManager::Get()->LoadTexture(L"terrain/dirt_seamless.jpg");
-	mGround.normalMapId = TextureManager::Get()->LoadTexture(L"mountain/mountain_normal.jpg");
-	mGround.specMapId = TextureManager::Get()->LoadTexture(L"mountain/mountain_spec.jpg");
-	mGround.bumpMapId = TextureManager::Get()->LoadTexture(L"terrain/grass_2048");
+	mGround.bumpMapId = TextureManager::Get()->LoadTexture(L"terrain/grass_2048.jpg");
+
+	mCharacterPosition.x = 10.0f;
+	mCharacterPosition.z = 10.0f;
+	mCharacterPosition.y = mTerrain.GetHeight(mCharacterPosition);
+	SetRenderGroupPosition(mCharacter, mCharacterPosition);
+
+	mCharacter2Position.x = 5.0f;
+	mCharacter2Position.z = 15.0f;
+	mCharacter2Position.y = mTerrain.GetHeight(mCharacter2Position);
+	SetRenderGroupPosition(mCharacter2, mCharacter2Position);
+
+
 };
 void GameState::Terminate()
 {
 	mGround.Terminate();
 	CleanupRenderGroup(mCharacter);
 	CleanupRenderGroup(mCharacter2);
-	mRenderTarget.Terminate();
 	mStandardEffect.Terminate();
 }
 void GameState::Render()
@@ -75,7 +77,6 @@ void GameState::Render()
 	mStandardEffect.Begin();
 		DrawRenderGroup(mStandardEffect, mCharacter);
 		DrawRenderGroup(mStandardEffect, mCharacter2);
-		mStandardEffect.Render(mGround);
 	mStandardEffect.End();
 }
 void GameState::Update(float deltaTime)
@@ -96,10 +97,42 @@ void GameState::DebugUI()
 		ImGui::ColorEdit4("Diffuse##Light", &mDirectionalLight.diffuse.r);
 		ImGui::ColorEdit4("Specular##Light", &mDirectionalLight.specular.r);
 	}
+
+	float terrainWidth = mTerrain.GetWidth();
+	float terrainHeight = mTerrain.GetHeight();
+	if (ImGui::CollapsingHeader("CharacterPosition", ImGuiTreeNodeFlags_DefaultOpen))
+	{
+		if (ImGui::DragFloat3("PosX##Character", &mCharacterPosition.x, 0.1f, 0.0f, terrainWidth))
+		{
+			mCharacterPosition.y = mTerrain.GetHeight(mCharacterPosition);
+			SetRenderGroupPosition(mCharacter, mCharacterPosition);
+		}
+		if (ImGui::DragFloat3("PosZ##Character", &mCharacterPosition.x, 0.1f, 0.0f, terrainHeight))
+		{
+			mCharacterPosition.y = mTerrain.GetHeight(mCharacter2Position);
+			SetRenderGroupPosition(mCharacter2, mCharacterPosition);
+		}
+	}
+
+	if (ImGui::CollapsingHeader("Character2Position", ImGuiTreeNodeFlags_DefaultOpen))
+	{
+		if (ImGui::DragFloat3("PosX##Character2", &mCharacter2Position.x, 0.1f, 0.0f, terrainWidth))
+		{
+			mCharacterPosition.y = mTerrain.GetHeight(mCharacterPosition);
+			SetRenderGroupPosition(mCharacter, mCharacterPosition);
+		}
+		if (ImGui::DragFloat3("PosX##Character2", &mCharacter2Position.x, 0.1f, 0.0f, terrainHeight))
+		{
+			mCharacterPosition.y = mTerrain.GetHeight(mCharacter2Position);
+			SetRenderGroupPosition(mCharacter2, mCharacterPosition);
+		}
+	}
 	mStandardEffect.DebugUI();
 	mShadowEffect.DebugUI();
 	mTerrainEffect.DebugUI();
 	ImGui::End();
+	SimpleDraw::AddGroundPlane(20.0f, Colors::White);
+	SimpleDraw::Render(mCamera);
 }
 
 void GameState::UpdateCameraControl(float deltaTime)
@@ -137,4 +170,10 @@ void GameState::UpdateCameraControl(float deltaTime)
 		mCamera.Yaw(input->GetMouseMoveX() * turnSpeed * deltaTime);
 		mCamera.Pitch(input->GetMouseMoveY() * turnSpeed * deltaTime);
 	}
+
+	//walking on terrrain map
+	float characterHeight = 3.0f;
+	KMath::Vector3 cameraPos = mCamera.GetPosition();
+	cameraPos.y = mTerrain.GetHeight(cameraPos) + characterHeight;
+	mCamera.SetPosition(cameraPos);
 }

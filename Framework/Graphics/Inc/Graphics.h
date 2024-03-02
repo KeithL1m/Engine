@@ -3,6 +3,7 @@
 #include "Common.h"
 
 #include "BlendState.h"
+#include "BillboardEffect.h"
 #include "Colors.h"
 #include "ConstantBuffer.h"
 #include "DebugUI.h"

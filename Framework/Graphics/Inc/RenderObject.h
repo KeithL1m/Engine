@@ -29,6 +29,7 @@ namespace KEIEngine::Graphics
 	[[nodiscard]] RenderGroup CreateRenderGroup(ModelId id);
 	[[nodiscard]] RenderGroup CreateRenderGroup(const Model& model);
 	void CleanupRenderGroup(RenderGroup& renderGroup);
+	void SetRenderGroupPosition(RenderGroup& renderGroup, const KMath::Vector3& position);
 
 	template<class Effect>
 	void DrawRenderGroup(Effect& effect, const RenderGroup& renderGroup)

@@ -18,14 +18,14 @@ private:
 	KEIEngine::Graphics::Camera mCamera;
 	KEIEngine::Graphics::DirectionalLight mDirectionalLight;
 	KEIEngine::Graphics::StandardEffect mStandardEffect;
+	KEIEngine::Graphics::TerrainEffect mTerrainEffect;
 	KEIEngine::Graphics::ShadowEffect mShadowEffect;
 
 	KEIEngine::Graphics::RenderGroup mCharacter;
 	KEIEngine::Graphics::RenderGroup mCharacter2;
 	KEIEngine::Graphics::RenderObject mGround;
-	KEIEngine::Graphics::RenderObject mScreenQuad;
 	KEIEngine::Graphics::Terrain mTerrain;
-	KEIEngine::Graphics::TerrainEffect mTerrainEffect;
 
-	KEIEngine::Graphics::RenderTarget mRenderTarget;
+	KEIEngine::KMath::Vector3 mCharacterPosition;
+	KEIEngine::KMath::Vector3 mCharacter2Position;
 };

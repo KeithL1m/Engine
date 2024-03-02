@@ -32,5 +32,8 @@ namespace KEIEngine::Graphics
 
 		// ScreenQuad
 		static MeshPX CreateScreenQuad();
+
+		// Texture Quad
+		static Mesh CreateSpriteQuad(float width, float height);
 	};
 }

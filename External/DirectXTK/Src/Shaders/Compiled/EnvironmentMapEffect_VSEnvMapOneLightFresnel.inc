@@ -49,13 +49,13 @@
     dcl_texcoord1 v1  // vin<4,5,6>
     dcl_texcoord2 v2  // vin<7,8>
 
-#line 65 "E:\repo\Engine\Workspaces\KEIEngine\External\DirectXTK\src\Shaders\EnvironmentMapEffect.fx"
+#line 65 "C:\Users\LCV2042710\Downloads\Engine\External\DirectXTK\src\Shaders\EnvironmentMapEffect.fx"
     dp3 r0.x, v1, c11
     dp3 r0.y, v1, c12
     dp3 r0.z, v1, c13
     nrm r1.xyz, r0  // ::worldNormal<0,1,2>
 
-#line 33 "E:\repo\Engine\Workspaces\KEIEngine\External\DirectXTK\src\Shaders\Lighting.fxh"
+#line 33 "C:\Users\LCV2042710\Downloads\Engine\External\DirectXTK\src\Shaders\Lighting.fxh"
     dp3 r0.x, -c4, r1  // ::dotL<0>
 
 #line 36
@@ -67,7 +67,7 @@
     mov r2.xyz, c2  // Parameters::DiffuseColor<0,1,2>
     mad oT0.xyz, r0, r2, c3  // ::VSEnvMapOneLightFresnel<0,1,2>
 
-#line 69 "E:\repo\Engine\Workspaces\KEIEngine\External\DirectXTK\src\Shaders\EnvironmentMapEffect.fx"
+#line 69 "C:\Users\LCV2042710\Downloads\Engine\External\DirectXTK\src\Shaders\EnvironmentMapEffect.fx"
     dp4 oPos.z, v0, c16  // ::VSEnvMapOneLightFresnel<15>
 
 #line 63
@@ -85,12 +85,12 @@
     pow r1.w, r0.x, c1.y
     mul oT1.xyz, r1.w, c1.x  // ::VSEnvMapOneLightFresnel<4,5,6>
 
-#line 11 "E:\repo\Engine\Workspaces\KEIEngine\External\DirectXTK\src\Shaders\Common.fxh"
+#line 11 "C:\Users\LCV2042710\Downloads\Engine\External\DirectXTK\src\Shaders\Common.fxh"
     dp4 r0.x, v0, c7
     max r0.x, r0.x, c18.x
     min oT1.w, r0.x, c18.y  // ::VSEnvMapOneLightFresnel<7>
 
-#line 79 "E:\repo\Engine\Workspaces\KEIEngine\External\DirectXTK\src\Shaders\EnvironmentMapEffect.fx"
+#line 79 "C:\Users\LCV2042710\Downloads\Engine\External\DirectXTK\src\Shaders\EnvironmentMapEffect.fx"
     dp3 r0.x, -r2, r1
     add r0.x, r0.x, r0.x
     mad oT3.xyz, r1, -r0.x, -r2  // ::VSEnvMapOneLightFresnel<10,11,12>
@@ -104,10 +104,10 @@
     mad oPos.xy, r0.z, c0, r0  // ::VSEnvMapOneLightFresnel<13,14>
     mov oPos.w, r0.z  // ::VSEnvMapOneLightFresnel<16>
 
-#line 43 "E:\repo\Engine\Workspaces\KEIEngine\External\DirectXTK\src\Shaders\Lighting.fxh"
+#line 43 "C:\Users\LCV2042710\Downloads\Engine\External\DirectXTK\src\Shaders\Lighting.fxh"
     mov oT0.w, c2.w  // ::VSEnvMapOneLightFresnel<3>
 
-#line 224 "E:\repo\Engine\Workspaces\KEIEngine\External\DirectXTK\src\Shaders\EnvironmentMapEffect.fx"
+#line 224 "C:\Users\LCV2042710\Downloads\Engine\External\DirectXTK\src\Shaders\EnvironmentMapEffect.fx"
     mov oT2.xy, v2  // ::VSEnvMapOneLightFresnel<8,9>
 
 // approximately 41 instruction slots used
@@ -164,10 +164,10 @@ ret
 
 const BYTE EnvironmentMapEffect_VSEnvMapOneLightFresnel[] =
 {
-     68,  88,  66,  67,  85,   3, 
-    218,  35, 171, 147, 214, 141, 
-    148, 174,  65,  19,  31, 178, 
-    125, 240,   1,   0,   0,   0, 
+     68,  88,  66,  67,  46, 159, 
+     82, 255,  15, 239,  35,  67, 
+    176, 201, 149, 178,   4, 229, 
+     16,  17,   1,   0,   0,   0, 
       0,  15,   0,   0,   4,   0, 
       0,   0,  48,   0,   0,   0, 
      36,   9,   0,   0, 232,  13, 
@@ -198,51 +198,51 @@ const BYTE EnvironmentMapEffect_VSEnvMapOneLightFresnel[] =
       0,   0,  39,   0,   0,   0, 
      48,   1,   0,   0,  11,   0, 
       0,   0,  24,   5,   0,   0, 
-    156,   2,   0,   0,  69,  58, 
-     92, 114, 101, 112, 111,  92, 
-     69, 110, 103, 105, 110, 101, 
-     92,  87, 111, 114, 107, 115, 
-    112,  97,  99, 101, 115,  92, 
-     75,  69,  73,  69, 110, 103, 
-    105, 110, 101,  92,  69, 120, 
-    116, 101, 114, 110,  97, 108, 
-     92,  68, 105, 114, 101,  99, 
-    116,  88,  84,  75,  92, 115, 
-    114,  99,  92,  83, 104,  97, 
-    100, 101, 114, 115,  92,  69, 
-    110, 118, 105, 114, 111, 110, 
-    109, 101, 110, 116,  77,  97, 
-    112,  69, 102, 102, 101,  99, 
-    116,  46, 102, 120,   0,  69, 
-     58,  92, 114, 101, 112, 111, 
-     92,  69, 110, 103, 105, 110, 
-    101,  92,  87, 111, 114, 107, 
-    115, 112,  97,  99, 101, 115, 
-     92,  75,  69,  73,  69, 110, 
+    156,   2,   0,   0,  67,  58, 
+     92,  85, 115, 101, 114, 115, 
+     92,  76,  67,  86,  50,  48, 
+     52,  50,  55,  49,  48,  92, 
+     68, 111, 119, 110, 108, 111, 
+     97, 100, 115,  92,  69, 110, 
     103, 105, 110, 101,  92,  69, 
     120, 116, 101, 114, 110,  97, 
     108,  92,  68, 105, 114, 101, 
      99, 116,  88,  84,  75,  92, 
     115, 114,  99,  92,  83, 104, 
      97, 100, 101, 114, 115,  92, 
-     76, 105, 103, 104, 116, 105, 
-    110, 103,  46, 102, 120, 104, 
-      0,  69,  58,  92, 114, 101, 
-    112, 111,  92,  69, 110, 103, 
-    105, 110, 101,  92,  87, 111, 
-    114, 107, 115, 112,  97,  99, 
-    101, 115,  92,  75,  69,  73, 
+     69, 110, 118, 105, 114, 111, 
+    110, 109, 101, 110, 116,  77, 
+     97, 112,  69, 102, 102, 101, 
+     99, 116,  46, 102, 120,   0, 
+     67,  58,  92,  85, 115, 101, 
+    114, 115,  92,  76,  67,  86, 
+     50,  48,  52,  50,  55,  49, 
+     48,  92,  68, 111, 119, 110, 
+    108, 111,  97, 100, 115,  92, 
      69, 110, 103, 105, 110, 101, 
      92,  69, 120, 116, 101, 114, 
     110,  97, 108,  92,  68, 105, 
     114, 101,  99, 116,  88,  84, 
      75,  92, 115, 114,  99,  92, 
      83, 104,  97, 100, 101, 114, 
-    115,  92,  67, 111, 109, 109, 
-    111, 110,  46, 102, 120, 104, 
-      0, 171, 171, 171,  40,   0, 
-      0,   0, 131,   0,   0,   0, 
-    211,   0,   0,   0,   0,   0, 
+    115,  92,  76, 105, 103, 104, 
+    116, 105, 110, 103,  46, 102, 
+    120, 104,   0,  67,  58,  92, 
+     85, 115, 101, 114, 115,  92, 
+     76,  67,  86,  50,  48,  52, 
+     50,  55,  49,  48,  92,  68, 
+    111, 119, 110, 108, 111,  97, 
+    100, 115,  92,  69, 110, 103, 
+    105, 110, 101,  92,  69, 120, 
+    116, 101, 114, 110,  97, 108, 
+     92,  68, 105, 114, 101,  99, 
+    116,  88,  84,  75,  92, 115, 
+    114,  99,  92,  83, 104,  97, 
+    100, 101, 114, 115,  92,  67, 
+    111, 109, 109, 111, 110,  46, 
+    102, 120, 104,   0,  40,   0, 
+      0,   0, 132,   0,   0,   0, 
+    213,   0,   0,   0,   0,   0, 
     255, 255,  40,   6,   0,   0, 
       0,   0, 255, 255,  64,   6, 
       0,   0,   0,   0, 255, 255, 

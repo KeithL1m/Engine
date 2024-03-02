@@ -32,12 +32,13 @@ cbuffer SettingsBuffer : register(b3)
     bool useBlendMap;
     float depthBias;
     float blendHeight;
+    float blendWidth;
 }
 
 Texture2D diffuseMap : register(t0);
 Texture2D normalMap : register(t1);
 Texture2D specMap : register(t2);
-Texture2D bumpMap : register(t3);
+Texture2D blendMap : register(t3);
 Texture2D shadowMap : register(t4);
 SamplerState textureSampler : register(s0);
 
@@ -123,20 +124,18 @@ float4 PS(VS_OUTPUT input) : SV_Target
     {
         if(input.worldPosition.y > blendHeight)
         {
-            // missing
-            //colorToUse = blendMap.Sample(textureSampler, input.texCoord);
+            colorToUse = blendMap.Sample(textureSampler, input.texCoord);
         }
         else
         {
-            float blendWidth = 5;
             float transitionHeight = blendHeight - blendWidth;
             float t = saturate(input.worldPosition.y - transitionHeight) / blendWidth;
-            //colorToUse = blendMap.Sample(textureSampler, input.texCoord);
+            colorToUse = blendMap.Sample(textureSampler, input.texCoord);
             colorToUse = lerp(diffuseMapColor, colorToUse, t);
         }
     }
     
-    float4 finalColor = (ambient + diffuse + emissive) * diffuseMapColor + (specular * specMapColor);
+    float4 finalColor = (ambient + diffuse + emissive) * colorToUse + (specular * specMapColor);
     
     if(useShadowMap)
     {

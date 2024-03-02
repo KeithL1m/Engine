@@ -44,20 +44,20 @@
     dcl_texcoord1 v1  // vin<4,5>
     dcl_texcoord2 v2  // vin<6,7>
 
-#line 40 "E:\repo\Engine\Workspaces\KEIEngine\External\DirectXTK\src\Shaders\Common.fxh"
+#line 40 "C:\Users\LCV2042710\Downloads\Engine\External\DirectXTK\src\Shaders\Common.fxh"
     dp4 oPos.z, v0, c4  // ::VSDualTextureNoFog<10>
     dp4 r0.x, v0, c2  // ::vout<0>
     dp4 r0.y, v0, c3  // ::vout<1>
     dp4 r0.z, v0, c5  // ::vout<3>
 
-#line 43 "E:\repo\Engine\Workspaces\KEIEngine\External\DirectXTK\src\Shaders\DualTextureEffect.fx"
+#line 43 "C:\Users\LCV2042710\Downloads\Engine\External\DirectXTK\src\Shaders\DualTextureEffect.fx"
     mad oPos.xy, r0.z, c0, r0  // ::VSDualTextureNoFog<8,9>
     mov oPos.w, r0.z  // ::VSDualTextureNoFog<11>
 
-#line 41 "E:\repo\Engine\Workspaces\KEIEngine\External\DirectXTK\src\Shaders\Common.fxh"
+#line 41 "C:\Users\LCV2042710\Downloads\Engine\External\DirectXTK\src\Shaders\Common.fxh"
     mov oT0, c1  // ::VSDualTextureNoFog<0,1,2,3>
 
-#line 50 "E:\repo\Engine\Workspaces\KEIEngine\External\DirectXTK\src\Shaders\DualTextureEffect.fx"
+#line 50 "C:\Users\LCV2042710\Downloads\Engine\External\DirectXTK\src\Shaders\DualTextureEffect.fx"
     mov oT1.xy, v1  // ::VSDualTextureNoFog<4,5>
     mov oT1.zw, v2.xyyx  // ::VSDualTextureNoFog<7,6>
 
@@ -84,10 +84,10 @@ ret
 
 const BYTE DualTextureEffect_VSDualTextureNoFog[] =
 {
-     68,  88,  66,  67, 156,  50, 
-    244, 126, 239, 140, 221, 142, 
-    151, 111,  38,  29, 203, 111, 
-      2, 233,   1,   0,   0,   0, 
+     68,  88,  66,  67, 159,  53, 
+     95, 101, 253, 164,  10, 100, 
+     35,  46, 222,  28, 189, 162, 
+     20, 175,   1,   0,   0,   0, 
     208,   6,   0,   0,   4,   0, 
       0,   0,  48,   0,   0,   0, 
     152,   4,   0,   0, 212,   5, 
@@ -112,36 +112,36 @@ const BYTE DualTextureEffect_VSDualTextureNoFog[] =
       0,   0,  12,   0,   0,   0, 
     216,   0,   0,   0,   3,   0, 
       0,   0,   4,   3,   0,   0, 
-     56,   1,   0,   0,  69,  58, 
-     92, 114, 101, 112, 111,  92, 
-     69, 110, 103, 105, 110, 101, 
-     92,  87, 111, 114, 107, 115, 
-    112,  97,  99, 101, 115,  92, 
-     75,  69,  73,  69, 110, 103, 
-    105, 110, 101,  92,  69, 120, 
-    116, 101, 114, 110,  97, 108, 
-     92,  68, 105, 114, 101,  99, 
-    116,  88,  84,  75,  92, 115, 
-    114,  99,  92,  83, 104,  97, 
-    100, 101, 114, 115,  92,  67, 
-    111, 109, 109, 111, 110,  46, 
-    102, 120, 104,   0,  69,  58, 
-     92, 114, 101, 112, 111,  92, 
-     69, 110, 103, 105, 110, 101, 
-     92,  87, 111, 114, 107, 115, 
-    112,  97,  99, 101, 115,  92, 
-     75,  69,  73,  69, 110, 103, 
-    105, 110, 101,  92,  69, 120, 
-    116, 101, 114, 110,  97, 108, 
-     92,  68, 105, 114, 101,  99, 
-    116,  88,  84,  75,  92, 115, 
-    114,  99,  92,  83, 104,  97, 
-    100, 101, 114, 115,  92,  68, 
-    117,  97, 108,  84, 101, 120, 
-    116, 117, 114, 101,  69, 102, 
-    102, 101,  99, 116,  46, 102, 
-    120,   0, 171, 171,  40,   0, 
-      0,   0, 118,   0,   0,   0, 
+     56,   1,   0,   0,  67,  58, 
+     92,  85, 115, 101, 114, 115, 
+     92,  76,  67,  86,  50,  48, 
+     52,  50,  55,  49,  48,  92, 
+     68, 111, 119, 110, 108, 111, 
+     97, 100, 115,  92,  69, 110, 
+    103, 105, 110, 101,  92,  69, 
+    120, 116, 101, 114, 110,  97, 
+    108,  92,  68, 105, 114, 101, 
+     99, 116,  88,  84,  75,  92, 
+    115, 114,  99,  92,  83, 104, 
+     97, 100, 101, 114, 115,  92, 
+     67, 111, 109, 109, 111, 110, 
+     46, 102, 120, 104,   0,  67, 
+     58,  92,  85, 115, 101, 114, 
+    115,  92,  76,  67,  86,  50, 
+     48,  52,  50,  55,  49,  48, 
+     92,  68, 111, 119, 110, 108, 
+    111,  97, 100, 115,  92,  69, 
+    110, 103, 105, 110, 101,  92, 
+     69, 120, 116, 101, 114, 110, 
+     97, 108,  92,  68, 105, 114, 
+    101,  99, 116,  88,  84,  75, 
+     92, 115, 114,  99,  92,  83, 
+    104,  97, 100, 101, 114, 115, 
+     92,  68, 117,  97, 108,  84, 
+    101, 120, 116, 117, 114, 101, 
+     69, 102, 102, 101,  99, 116, 
+     46, 102, 120,   0,  40,   0, 
+      0,   0, 119,   0,   0,   0, 
       0,   0, 255, 255, 116,   3, 
       0,   0,   0,   0, 255, 255, 
     128,   3,   0,   0,   0,   0, 

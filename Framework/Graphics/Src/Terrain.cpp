@@ -18,7 +18,7 @@ void Terrain::Initialize(const std::filesystem::path& fileName, float heightScal
 
 	mRows = dimensions;
 	mColumns = dimensions;
-	const float tileCount = 35.0f;
+	const float tileCount = 10.0f;
 	mMesh.vertices.resize(mRows * mColumns);
 	for (uint32_t z = 0; z < mRows; ++z)
 	{
@@ -42,9 +42,9 @@ void Terrain::Initialize(const std::filesystem::path& fileName, float heightScal
 
 	const uint32_t cells = (mRows - 1) * (mColumns - 1);
 	mMesh.indices.reserve(cells * 6);
-	for (uint32_t z = 0; z < mRows; ++z)
+	for (uint32_t z = 0; z < mRows - 1; ++z)
 	{
-		for (uint32_t x = 0; x < mColumns; ++x)
+		for (uint32_t x = 0; x < mColumns - 1; ++x)
 		{
 			const uint32_t bl = x + (z * mColumns);
 			const uint32_t tl = x + ((z + 1) * mColumns);
@@ -96,7 +96,7 @@ float Terrain::GetHeight(const KMath::Vector3& position) const
 		const Vertex& c = mMesh.vertices[bl];
 		const float deltaAB = b.position.y - a.position.y;
 		const float deltaAC = c.position.y - a.position.y;
-		height = a.position.y + (deltaAB * v) + (deltaAC * (1 - u));
+		height = a.position.y + (deltaAB * u) + (deltaAC * (1 - v));
 	}
 	return height;
 }

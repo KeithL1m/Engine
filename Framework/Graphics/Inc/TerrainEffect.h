@@ -49,7 +49,8 @@ namespace KEIEngine::Graphics
 			int useBlend = 0;
 			float depthBias = 0.0f;
 			float blendHeight = 0.0f;
-			float padding[2];
+			float blendWidth = 0.0f;
+			float padding[1];
 		};
 
 		using TransformBuffer = TypedConstantBuffer<TransformData>;

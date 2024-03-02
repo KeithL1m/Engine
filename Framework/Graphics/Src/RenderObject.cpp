@@ -62,3 +62,11 @@ void Graphics::CleanupRenderGroup(RenderGroup& renderGroup)
 		renderObject.Terminate();
 	}
 }
+
+void Graphics::SetRenderGroupPosition(RenderGroup& renderGroup, const KMath::Vector3& position)
+{
+	for (RenderObject& renderObject : renderGroup)
+	{
+		renderObject.transform.position = position;
+	}
+}
