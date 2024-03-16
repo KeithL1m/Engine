@@ -68,6 +68,8 @@ void StandardEffect::Render(const RenderObject& renderObject)
 	settingsData.useSpecMap = mSettingsData.useSpecMap > 0 && renderObject.specMapId > 0;
 	settingsData.useBumpMap = mSettingsData.useBumpMap > 0 && renderObject.bumpMapId > 0;
 	settingsData.useShadowMap = mSettingsData.useShadowMap > 0 && mShadowMap != nullptr;
+	settingsData.useNightVision = mSettingsData.useNightVision > 0;
+
 	settingsData.bumpWeight = mSettingsData.bumpWeight;
 	settingsData.depthBias = mSettingsData.depthBias;
 
@@ -149,9 +151,15 @@ void StandardEffect::DebugUI()
 		ImGui::DragFloat("BumpWeight", &mSettingsData.bumpWeight, 0.1f, 0.0f, 2.0f);
 
 		bool useShadow = mSettingsData.useShadowMap > 0;
-		if (ImGui::Checkbox("UseShadow", &useBump))
+		if (ImGui::Checkbox("UseShadow", &useShadow))
 		{
 			mSettingsData.useShadowMap = useShadow ? 1 : 0;
+		}
+
+		bool useNightVision = mSettingsData.useNightVision > 0;
+		if (ImGui::Checkbox("UseNightVision", &useNightVision))
+		{
+			mSettingsData.useNightVision = useNightVision ? 1 : 0;
 		}
 
 		ImGui::DragFloat("DepthBias", &mSettingsData.depthBias, 0.0001f, 0.0f, 1.0f, "%.6f");

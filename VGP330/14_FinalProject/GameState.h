@@ -26,6 +26,7 @@ private:
 	KEIEngine::Graphics::RenderObject mGround;
 	KEIEngine::Graphics::Terrain mTerrain;
 
+	KEIEngine::Graphics::RenderTarget mRenderTarget;
 	KEIEngine::KMath::Vector3 mCharacterPosition;
 	KEIEngine::KMath::Vector3 mCharacter2Position;
 };

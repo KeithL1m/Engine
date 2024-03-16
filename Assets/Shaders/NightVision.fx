@@ -1,4 +1,4 @@
-// Description: Terrain effect to render terrain objects.
+// Description: Night vision effect 
 
 cbuffer TransformBuffer : register(b0)
 {
@@ -26,40 +26,48 @@ cbuffer MaterialBuffer : register(b2)
 
 cbuffer SettingsBuffer : register(b3)
 {
+    bool useDiffuseMap;
     bool useNormalMap;
     bool useSpecMap;
+    bool useBumpMap;
     bool useShadowMap;
-    bool useBlendMap;
+    float bumpWeight;
     float depthBias;
-    float blendHeight;
-    float blendWidth;
+}
+ 
+cbuffer NightVisionBuffer : register(b4)
+{
+    float params0;
+    float params1;
+    float params2;
 }
 
 Texture2D diffuseMap : register(t0);
 Texture2D normalMap : register(t1);
 Texture2D specMap : register(t2);
-Texture2D blendMap : register(t3);
+Texture2D bumpMap : register(t3);
 Texture2D shadowMap : register(t4);
 SamplerState textureSampler : register(s0);
 
+
+
 struct VS_INPUT
 {
-	float3 position : POSITION;
-	float3 normal : NORMAL;
-	float3 tangent : TANGENT;
-	float2 texCoord : TEXCOORD;
+    float3 position : POSITION;
+    float3 normal : NORMAL;
+    float3 tangent : TANGENT;
+    float2 texCoord : TEXCOORD;
 };
 
 struct VS_OUTPUT
 {
-	float4 position : SV_Position;
+    float4 position : SV_Position;
     float3 worldNormal : NORMAL;
     float3 worldTangent : TANGENT;
-	float2 texCoord : TEXCOORD0;
+    float2 texCoord : TEXCOORD0;
     float3 dirToLight : TEXCOORD1;
     float3 dirToView : TEXCOORD2;
     float4 lightNDCPosition : TEXCOORD3;
-    float4 worldPosition : TEXCOORD4;
 };
 
 VS_OUTPUT VS(VS_INPUT input)
@@ -68,12 +76,18 @@ VS_OUTPUT VS(VS_INPUT input)
     matrix toNDC = wvp;
     
     float3 localPosition = input.position;
+    if (useBumpMap)
+    {
+        float4 bumpMapColor = bumpMap.SampleLevel(textureSampler, input.texCoord, 0.0f);
+        float bumpColor = (2.0f * bumpMapColor.r) - 1.0f;
+        localPosition += (input.normal * bumpColor * bumpWeight);
+    }
     
-	VS_OUTPUT output;
-	output.position = mul(float4(localPosition, 1.0f), toNDC);
+    VS_OUTPUT output;
+    output.position = mul(float4(localPosition, 1.0f), toNDC);
     output.worldNormal = mul(input.normal, (float3x3) toWorld);
     output.worldTangent = mul(input.tangent, (float3x3) toWorld);
-	output.texCoord = input.texCoord;
+    output.texCoord = input.texCoord;
     output.dirToLight = -lightDirection;
     output.dirToView = normalize(viewPosition - (mul(float4(localPosition, 1.0f), world).xyz));
     if (useShadowMap)
@@ -81,17 +95,17 @@ VS_OUTPUT VS(VS_INPUT input)
         output.lightNDCPosition = mul(float4(localPosition, 1.0f), lwvp);
 
     }
-    output.worldPosition = mul(float4(localPosition, 1.0f), toWorld);
-    
-	return output;
+    return output;
 }
 
 float4 PS(VS_OUTPUT input) : SV_Target
 {
+    float4 finalColor = 0.0f;
+
+
     float3 n = normalize(input.worldNormal);
     
-    //use normal map to get new normal
-    if(useNormalMap)
+    if (useNormalMap)
     {
         float3 t = normalize(input.worldTangent);
         float3 b = normalize(cross(n, t));
@@ -115,36 +129,20 @@ float4 PS(VS_OUTPUT input) : SV_Target
     float s = pow(base, materialPower);
     float4 specular = s * lightSpecular * materialSpecular;
     
-    float4 emissive = materialEmissive;
+    float4 emissive = float4(0.5f, 2.0f, 0.5f, 1);
     
-    float4 diffuseMapColor = diffuseMap.Sample(textureSampler, input.texCoord);
+    float4 diffuseMapColor = (useDiffuseMap) ? diffuseMap.Sample(textureSampler, input.texCoord) : 1.0f;
     float4 specMapColor = (useSpecMap) ? specMap.Sample(textureSampler, input.texCoord).r : 1.0f;
-    float4 diffColor = float4(diffuseMapColor.xyz / 3.0, diffuseMapColor.a) * float4(0.5f, 1.5f, 0.5, 1);
-    float4 colorToUse = diffColor;
-    if(useBlendMap)
-    {
-        if(input.worldPosition.y > blendHeight)
-        {
-            colorToUse = blendMap.Sample(textureSampler, input.texCoord);
-        }
-        else
-        {
-            float transitionHeight = blendHeight - blendWidth;
-            float t = saturate(input.worldPosition.y - transitionHeight) / blendWidth;
-            colorToUse = blendMap.Sample(textureSampler, input.texCoord);
-            colorToUse = lerp(diffuseMapColor, colorToUse, t);
-        }
-    }
+    float4 diffColor = float4(normalize(diffuseMapColor.xyz) / 3.0, diffuseMapColor.a) * float4(0.35f, 1.5f, 0.168f, 1);
+    finalColor = (ambient + diffuse + emissive) * diffColor + (specular * specMapColor);
     
-    float4 finalColor = (ambient + diffuse + emissive) * colorToUse + (specular * specMapColor);
-    
-    if(useShadowMap)
+    if (useShadowMap)
     {
         float actualDepth = 1.0f - (input.lightNDCPosition.z / input.lightNDCPosition.w);
         float2 shadowUV = input.lightNDCPosition.xy / input.lightNDCPosition.w;
         float u = (shadowUV.x + 1.0f) * 0.5f;
         float v = 1.0f - (shadowUV.y + 1.0f) * 0.5f;
-        if(saturate(u) == u && saturate(v) == v)
+        if (saturate(u) == u && saturate(v) == v)
         {
             float4 savedColor = shadowMap.Sample(textureSampler, float2(u, v));
             float savedDepth = savedColor.r;

@@ -47,9 +47,9 @@ namespace KEIEngine::Graphics
 			int useSpecMap = 1;
 			int useBumpMap = 1;
 			int useShadowMap = 1;
+			int useNightVision = 1;
 			float bumpWeight = 1.0f;
 			float depthBias = 0.0f;
-			float padding[1];
 		};
 
 		using TransformBuffer = TypedConstantBuffer<TransformData>;

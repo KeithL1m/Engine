@@ -10,7 +10,7 @@ void GameState::Initialize()
 	mCamera.SetPosition({ 0.0f, 1.0f, -4.0f });
 	mCamera.SetLookAt({ 0.0f, 0.0f, 0.0f });
 
-	mStandardEffect.Initialize(L"../../Assets/Shaders/Standard.fx");
+	mStandardEffect.Initialize(L"../../Assets/Shaders/NightVision.fx");
 	mStandardEffect.SetCamera(mCamera);
 	mStandardEffect.SetDirectionalLight(mDirectionalLight);
 	mStandardEffect.SetLightCamera(mShadowEffect.GetLightCamera());
@@ -21,6 +21,11 @@ void GameState::Initialize()
 	mTerrainEffect.SetDirectionalLight(mDirectionalLight);
 	mTerrainEffect.SetLightCamera(mShadowEffect.GetLightCamera());
 	mTerrainEffect.SetShadowMap(mShadowEffect.GetDepthMap());
+
+	GraphicsSystem* gs = GraphicsSystem::Get();
+	const float screenWidth = gs->GetBackBufferWidth();
+	const float screenHeight = gs->GetBackBufferHeight();
+	mRenderTarget.Initialize(screenWidth, screenHeight, RenderTarget::Format::RGBA_U8);
 
 	ModelId modelId = ModelManager::Get()->LoadModel(L"../../Assets/Models/character/character.model");
 	mCharacter = CreateRenderGroup(modelId);
@@ -52,6 +57,7 @@ void GameState::Terminate()
 	CleanupRenderGroup(mCharacter);
 	CleanupRenderGroup(mCharacter2);
 	mStandardEffect.Terminate();
+	mRenderTarget.Terminate();
 }
 void GameState::Update(float deltaTime)
 {
@@ -64,6 +70,7 @@ void GameState::Render()
 		mTerrainEffect.Render(mGround);
 	mTerrainEffect.End();
 
+	GraphicsSystem::Get()->SetClearColor(Colors::Black);
 	mStandardEffect.Begin();
 		DrawRenderGroup(mStandardEffect, mCharacter);
 		DrawRenderGroup(mStandardEffect, mCharacter2);
