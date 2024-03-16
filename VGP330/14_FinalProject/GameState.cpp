@@ -71,6 +71,10 @@ void GameState::Render()
 	mTerrainEffect.End();
 
 	GraphicsSystem::Get()->SetClearColor(Colors::Black);
+	//for (auto& renderObject : mCharacter2)
+	//{
+	//	renderObject.material.emissive = { 0.5f, 1.5f, 0.5f, 1.0f };
+	//}
 	mStandardEffect.Begin();
 		DrawRenderGroup(mStandardEffect, mCharacter);
 		DrawRenderGroup(mStandardEffect, mCharacter2);
