@@ -105,17 +105,6 @@ float4 PS(VS_OUTPUT input) : SV_Target
 
     float3 n = normalize(input.worldNormal);
     
-    if (useNormalMap)
-    {
-        float3 t = normalize(input.worldTangent);
-        float3 b = normalize(cross(n, t));
-        float3x3 tbnw = float3x3(t, b, n);
-        float4 normalMapColor = normalMap.Sample(textureSampler, input.texCoord);
-        float3 unpackedNormalMap = normalize(float3((normalMapColor.xy * 2.0f) - 1.0f, normalMapColor.z));
-
-        n = normalize(mul(unpackedNormalMap, tbnw));
-    }
-    
     float3 light = normalize(input.dirToLight);
     float3 view = normalize(input.dirToView);
     
@@ -135,23 +124,6 @@ float4 PS(VS_OUTPUT input) : SV_Target
     float4 specMapColor = (useSpecMap) ? specMap.Sample(textureSampler, input.texCoord).r : 1.0f;
     float4 diffColor = float4(normalize(diffuseMapColor.xyz) / 3.0, diffuseMapColor.a) * float4(0.35f, 2.5f, 0.168f, 1);
     finalColor = (ambient + diffuse + emissive) * diffColor + (specular * specMapColor);
-    
-    if (useShadowMap)
-    {
-        float actualDepth = 1.0f - (input.lightNDCPosition.z / input.lightNDCPosition.w);
-        float2 shadowUV = input.lightNDCPosition.xy / input.lightNDCPosition.w;
-        float u = (shadowUV.x + 1.0f) * 0.5f;
-        float v = 1.0f - (shadowUV.y + 1.0f) * 0.5f;
-        if (saturate(u) == u && saturate(v) == v)
-        {
-            float4 savedColor = shadowMap.Sample(textureSampler, float2(u, v));
-            float savedDepth = savedColor.r;
-            if (savedDepth > actualDepth + depthBias)
-            {
-                finalColor = (ambient + materialEmissive) * diffuseMapColor;
-            }
-        }
-    }
     
     return finalColor;
 }
