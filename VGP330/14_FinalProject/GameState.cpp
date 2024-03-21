@@ -5,16 +5,24 @@ using namespace KEIEngine::Graphics;
 using namespace KEIEngine::KMath;
 using namespace KEIEngine::Input;
 
+bool NightVision = false;
+
 void GameState::Initialize()
 {
 	mCamera.SetPosition({ 0.0f, 1.0f, -4.0f });
 	mCamera.SetLookAt({ 0.0f, 0.0f, 0.0f });
 
-	mStandardEffect.Initialize(L"../../Assets/Shaders/NightVision.fx");
+	mStandardEffect.Initialize(L"../../Assets/Shaders/Standard.fx");
 	mStandardEffect.SetCamera(mCamera);
 	mStandardEffect.SetDirectionalLight(mDirectionalLight);
 	mStandardEffect.SetLightCamera(mShadowEffect.GetLightCamera());
 	mStandardEffect.SetShadowMap(mShadowEffect.GetDepthMap());
+
+	mStandardEffectNV.Initialize(L"../../Assets/Shaders/NightVision.fx");
+	mStandardEffectNV.SetCamera(mCamera);
+	mStandardEffectNV.SetDirectionalLight(mDirectionalLight);
+	mStandardEffectNV.SetLightCamera(mShadowEffect.GetLightCamera());
+	mStandardEffectNV.SetShadowMap(mShadowEffect.GetDepthMap());
 
 	mTerrainEffect.Initialize();
 	mTerrainEffect.SetCamera(mCamera);
@@ -57,6 +65,7 @@ void GameState::Terminate()
 	CleanupRenderGroup(mCharacter);
 	CleanupRenderGroup(mCharacter2);
 	mStandardEffect.Terminate();
+	mStandardEffectNV.Terminate();
 	mRenderTarget.Terminate();
 }
 void GameState::Update(float deltaTime)
@@ -70,20 +79,37 @@ void GameState::Render()
 		mTerrainEffect.Render(mGround);
 	mTerrainEffect.End();
 
-	GraphicsSystem::Get()->SetClearColor(Colors::Black);
 	//for (auto& renderObject : mCharacter2)
 	//{
 	//	renderObject.material.emissive = { 0.5f, 1.5f, 0.5f, 1.0f };
 	//}
-	mStandardEffect.Begin();
+	if (!NightVision)
+	{
+		GraphicsSystem::Get()->SetClearColor(Colors::Gray);
+		mStandardEffect.Begin();
 		DrawRenderGroup(mStandardEffect, mCharacter);
 		DrawRenderGroup(mStandardEffect, mCharacter2);
-	mStandardEffect.End();
+		mStandardEffect.End();
+	}
+	else
+	{
+		GraphicsSystem::Get()->SetClearColor(Colors::Black);
+		mStandardEffectNV.Begin();
+		DrawRenderGroup(mStandardEffectNV, mCharacter);
+		DrawRenderGroup(mStandardEffectNV, mCharacter2);
+		mStandardEffectNV.End();
+	}
 }
 
 void GameState::DebugUI()
 {
-	
+	if (ImGui::CollapsingHeader("Night Vision", ImGuiTreeNodeFlags_DefaultOpen))
+	{
+		if (ImGui::Checkbox("UseNightVision", &NightVision))
+		{
+			NightVision ? 1 : 0;
+		}
+	}
 }
 
 void GameState::UpdateCameraControl(float deltaTime)

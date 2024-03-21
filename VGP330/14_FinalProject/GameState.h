@@ -18,6 +18,7 @@ private:
 	KEIEngine::Graphics::Camera mCamera;
 	KEIEngine::Graphics::DirectionalLight mDirectionalLight;
 	KEIEngine::Graphics::StandardEffect mStandardEffect;
+	KEIEngine::Graphics::StandardEffect mStandardEffectNV;
 	KEIEngine::Graphics::TerrainEffect mTerrainEffect;
 	KEIEngine::Graphics::ShadowEffect mShadowEffect;
 

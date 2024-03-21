@@ -119,6 +119,7 @@ float4 PS(VS_OUTPUT input) : SV_Target
     float4 specular = s * lightSpecular * materialSpecular;
     
     float4 emissive = float4(0.5f, 1.0f, 0.5f, 1);
+
     
     float4 diffuseMapColor = (useDiffuseMap) ? diffuseMap.Sample(textureSampler, input.texCoord) : 1.0f;
     float4 specMapColor = (useSpecMap) ? specMap.Sample(textureSampler, input.texCoord).r : 1.0f;
