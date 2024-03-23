@@ -30,6 +30,8 @@ namespace KEIEngine::Graphics
 		void SetLightCamera(const Camera& camera);
 		void SetDirectionalLight(const DirectionalLight& directionalLight);
 		void SetShadowMap(const Texture& shadowMap);
+		void ChangeBlend();
+		void NormalBlend();
 
 	private:
 		struct TransformData
@@ -46,7 +48,7 @@ namespace KEIEngine::Graphics
 			int useNormalMap = 0;
 			int useSpecMap = 0;
 			int useShadowMap = 0;
-			int useBlend = 0;
+			int useBlend = 1;
 			float depthBias = 0.0f;
 			float blendHeight = 0.0f;
 			float blendWidth = 0.0f;

@@ -129,7 +129,7 @@ void TerrainEffect::DebugUI()
 		{
 			mSettingsData.useShadowMap = useShadowMap ? 1 : 0;
 		}
-		ImGui::DragFloat("DepthBias##Terrain", &mSettingsData.depthBias, 0.000001f, 0.0f, 0.0f, ".6f");
+		ImGui::DragFloat("DepthBias##Terrain", &mSettingsData.depthBias, 0.000001f, 0.0f, 10.0f, ".6f");
 
 		bool useBlend = mSettingsData.useBlend > 0;
 		if (ImGui::Checkbox("UseBlend##Terrain", &useBlend))
@@ -159,4 +159,14 @@ void TerrainEffect::SetDirectionalLight(const DirectionalLight& directionalLight
 void TerrainEffect::SetShadowMap(const Texture& shadowMap)
 {
 	mShadowMap = &shadowMap;
+}
+
+void TerrainEffect::ChangeBlend()
+{
+	mSettingsData.useBlend = 0;
+}
+
+void KEIEngine::Graphics::TerrainEffect::NormalBlend()
+{
+	mSettingsData.useBlend = 1;
 }

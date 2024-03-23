@@ -156,12 +156,6 @@ void StandardEffect::DebugUI()
 			mSettingsData.useShadowMap = useShadow ? 1 : 0;
 		}
 
-		bool useNightVision = mSettingsData.useNightVision > 0;
-		if (ImGui::Checkbox("UseNightVision", &useNightVision))
-		{
-			mSettingsData.useNightVision = useNightVision ? 1 : 0;
-		}
-
 		ImGui::DragFloat("DepthBias", &mSettingsData.depthBias, 0.0001f, 0.0f, 1.0f, "%.6f");
 	}
 }

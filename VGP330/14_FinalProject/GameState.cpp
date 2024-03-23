@@ -9,7 +9,7 @@ bool NightVision = false;
 
 void GameState::Initialize()
 {
-	mCamera.SetPosition({ 0.0f, 1.0f, -4.0f });
+	mCamera.SetPosition({ 0.0f, 3.0f, -4.0f });
 	mCamera.SetLookAt({ 0.0f, 0.0f, 0.0f });
 
 	mStandardEffect.Initialize(L"../../Assets/Shaders/Standard.fx");
@@ -83,6 +83,7 @@ void GameState::Render()
 	//{
 	//	renderObject.material.emissive = { 0.5f, 1.5f, 0.5f, 1.0f };
 	//}
+
 	if (!NightVision)
 	{
 		GraphicsSystem::Get()->SetClearColor(Colors::Gray);
@@ -103,13 +104,24 @@ void GameState::Render()
 
 void GameState::DebugUI()
 {
+	ImGui::Begin("Debug Control", nullptr, ImGuiWindowFlags_AlwaysAutoResize);
 	if (ImGui::CollapsingHeader("Night Vision", ImGuiTreeNodeFlags_DefaultOpen))
 	{
 		if (ImGui::Checkbox("UseNightVision", &NightVision))
 		{
 			NightVision ? 1 : 0;
+			if (NightVision)
+			{
+				mTerrainEffect.ChangeBlend();
+			}
+			else
+			{
+				mTerrainEffect.NormalBlend();
+			}
 		}
 	}
+	mStandardEffect.DebugUI();
+	ImGui::End();
 }
 
 void GameState::UpdateCameraControl(float deltaTime)
