@@ -9,7 +9,7 @@ bool NightVision = false;
 
 void GameState::Initialize()
 {
-	mCamera.SetPosition({ 0.0f, 3.0f, -4.0f });
+	mCamera.SetPosition({ 0.0f, 1.5f, -4.0f });
 	mCamera.SetLookAt({ 0.0f, 0.0f, 0.0f });
 
 	mStandardEffect.Initialize(L"../../Assets/Shaders/Standard.fx");
@@ -99,6 +99,32 @@ void GameState::Render()
 		DrawRenderGroup(mStandardEffectNV, mCharacter);
 		DrawRenderGroup(mStandardEffectNV, mCharacter2);
 		mStandardEffectNV.End();
+
+		//Maybe flash animation
+
+		//mRenderTarget.BeginRender();
+		//mStandardEffectNV.Begin();
+		//DrawRenderGroup(mStandardEffectNV, mCharacter);
+		//DrawRenderGroup(mStandardEffectNV, mCharacter2);
+		//mStandardEffectNV.End();
+		//mRenderTarget.EndRender();
+
+		////mBlurRenderTarget.BeginRender({ 0.0f, 0.0f, 0.0f, 0.0f });
+		//mBlurRenderTarget.BeginRender();
+		//mStandardEffectNV.Begin();
+		//DrawRenderGroup(mStandardEffectNV, mCharacter);
+		//DrawRenderGroup(mStandardEffectNV, mCharacter2);
+		//mStandardEffectNV.End();
+		//mBlurRenderTarget.EndRender();
+
+		//mGaussianBlurEffect.Begin();
+		//mGaussianBlurEffect.Render(mScreenQuad);
+		//mGaussianBlurEffect.End();
+
+		//mPostProcessingEffect.Begin();
+		//mPostProcessingEffect.Render(mScreenQuad);
+		//mPostProcessingEffect.End();
+	}
 	}
 }
 
@@ -120,7 +146,6 @@ void GameState::DebugUI()
 			}
 		}
 	}
-	mStandardEffect.DebugUI();
 	ImGui::End();
 }
 
