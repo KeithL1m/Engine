@@ -2,12 +2,15 @@
 
 #include "Common.h"
 
+#include "Animation.h"
+#include "AnimationBuilder.h"
 #include "BlendState.h"
 #include "BillboardEffect.h"
 #include "Colors.h"
 #include "ConstantBuffer.h"
 #include "DebugUI.h"
 #include "GraphicsSystem.h"
+#include "Keyframe.h"
 #include "LightTypes.h"
 #include "VertexShader.h"
 #include "VertexTypes.h"
