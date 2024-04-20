@@ -12,6 +12,7 @@ namespace KEIEngine::Graphics
 
 		KEIEngine::KMath::Matrix4 GetMatrix4() const
 		{
+			KMath::Matrix4 mat = KMath::Matrix4::MatrixRotationQuaternion(rotation);
 			return {
 				KEIEngine::KMath::Matrix4::Scaling(scale) *
 				KEIEngine::KMath::Matrix4::MatrixRotationQuaternion(rotation) *

@@ -38,10 +38,14 @@ namespace KEIEngine::Graphics
 
 	struct Vertex
 	{
-		VERTEX_FORMAT(VE_Position | VE_Normal | VE_Tangent | VE_TexCoord);
+		VERTEX_FORMAT(VE_Position | VE_Normal | VE_Tangent | VE_TexCoord | VE_BlendIndex | VE_BlendWeight);
+		static constexpr int MaxBoneWeights = 4;
+
 		KMath::Vector3 position;
 		KMath::Vector3 normal;
 		KMath::Vector3 tangent;
 		KMath::Vector2 uvCoord;
+		int boneIndices[MaxBoneWeights] = {};
+		float boneWeights[MaxBoneWeights] = {};
 	};
 }
