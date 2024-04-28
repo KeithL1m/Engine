@@ -47,7 +47,7 @@ namespace KEIEngine::Graphics
 			int useSpecMap = 1;
 			int useBumpMap = 1;
 			int useShadowMap = 1;
-			int useNightVision = 1;
+			int useSkinning = 1;
 			float bumpWeight = 1.0f;
 			float depthBias = 0.0f;
 		};
@@ -56,12 +56,13 @@ namespace KEIEngine::Graphics
 		using LightBuffer = TypedConstantBuffer<DirectionalLight>;
 		using MaterialBuffer = TypedConstantBuffer<Material>;
 		using SettingsBuffer = TypedConstantBuffer<SettingsData>;
-
+		using BoneTransformBuffer = ConstantBuffer;
 
 		TransformBuffer mTransformBuffer;
 		LightBuffer mLightBuffer;
 		MaterialBuffer mMaterialBuffer;
 		SettingsBuffer mSettingsBuffer;
+		BoneTransformBuffer mBoneTransformBuffer;
 		Sampler mSampler;
 		VertexShader mVertexShader;
 		PixelShader mPixelShader;

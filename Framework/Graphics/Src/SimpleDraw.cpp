@@ -207,7 +207,12 @@ void SimpleDraw::AddFilledAABB(float minX, float minY, float minZ, float maxX, f
 	AddFace(botLeftB, topLeftB, topRightB, color);
 }
 
-void SimpleDraw::AddSphere(int slices, int rings, float radius, const Vector3& pos, const Color& color)
+void SimpleDraw::AddSphere(int slices, int rings, float radius, const Color& color)
+{
+	AddSphere(slices, rings, radius, Vector3::Zero, color);
+}
+
+void SimpleDraw::AddSphere(int slices, int rings, float radius, const Vector3& origin, const Color& color)
 {
 	Vector3 v0 = Vector3::Zero;
 	Vector3 v1 = Vector3::Zero;
@@ -238,7 +243,7 @@ void SimpleDraw::AddSphere(int slices, int rings, float radius, const Vector3& p
 				radius * cos(rotation1) * sin(phi)
 			};
 
-			AddLine(v0 + pos, v1 + pos, color);
+			AddLine(v0 + origin, v1 + origin, color);
 
 			v0 =
 			{
@@ -253,7 +258,7 @@ void SimpleDraw::AddSphere(int slices, int rings, float radius, const Vector3& p
 				radius * sin(rotation1) * sin(phi)
 			};
 
-			AddLine(v0 + pos, v1 + pos, color);
+			AddLine(v0 + origin, v1 + origin, color);
 		}
 
 	}

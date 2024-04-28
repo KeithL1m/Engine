@@ -11,7 +11,7 @@ int WINAPI WinMain(HINSTANCE instance, HINSTANCE, LPSTR, int)
 	mainApp.ChangeState("GameState");
 
 	KEIEngine::AppConfig config;
-	config.appName = L"Hello Skeleton";
+	config.appName = L"Hello Skeleton Animation";
 	config.winWidth = 1280;
 	config.winHeight = 780;
 	config.debugDrawLimit = 100000;

@@ -50,6 +50,16 @@ Vector3 ToVector3(const aiVector3D& v)
 	};
 }
 
+Quaternion ToQuaternion(const aiQuaternion& q)
+{
+	return{
+		static_cast<float>(q.x),
+		static_cast<float>(q.y),
+		static_cast<float>(q.z),
+		static_cast<float>(q.w)
+	};
+}
+
 Color ToColor(const aiColor3D& color)
 {
 	return {
@@ -377,6 +387,55 @@ int main(int argc, char* argv[])
 		}
 	}
 
+	if (scene->HasAnimations())
+	{
+		printf("Building Animations...\n");
+		for (uint32_t animIndex = 0; animIndex < scene->mNumAnimations; ++animIndex)
+		{
+			const aiAnimation* aiAnim = scene->mAnimations[animIndex];
+			AnimationClip& animClip = model.animationClips.emplace_back();
+			if (aiAnim->mName.length > 0)
+			{
+				animClip.name = aiAnim->mName.C_Str();
+			}
+			else
+			{
+				animClip.name = "Anim" + std::to_string(animIndex);
+			}
+			animClip.tickDuration = static_cast<float>(aiAnim->mDuration);
+			animClip.ticksPerSecond = static_cast<float>(aiAnim->mTicksPerSecond);
+
+			printf("Reading bone animations for %s...\n", animClip.name.c_str());
+			animClip.boneAnimations.resize(model.skeleton->bones.size());
+			for (uint32_t boneAnimIndex = 0; boneAnimIndex < aiAnim->mNumChannels; ++boneAnimIndex)
+			{
+				const aiNodeAnim* aiBoneAnim = aiAnim->mChannels[boneAnimIndex];
+				const int boneIndex = boneIndexMap[aiBoneAnim->mNodeName.C_Str()];
+				std::unique_ptr<Animation>& boneAnimation = animClip.boneAnimations[boneIndex];
+				boneAnimation = std::make_unique<Animation>();
+
+				AnimationBuilder builder;
+				for (uint32_t keyIndex = 0; keyIndex < aiBoneAnim->mNumPositionKeys; ++keyIndex)
+				{
+					const aiVectorKey& posKey = aiBoneAnim->mPositionKeys[keyIndex];
+					builder.AddPositionKey(ToVector3(posKey.mValue) * arguments.scale, static_cast<float>(posKey.mTime));
+				}
+				for (uint32_t keyIndex = 0; keyIndex < aiBoneAnim->mNumRotationKeys; ++keyIndex)
+				{
+					const aiQuatKey& rotKey = aiBoneAnim->mRotationKeys[keyIndex];
+					builder.AddRotationKey(ToQuaternion(rotKey.mValue), static_cast<float>(rotKey.mTime));
+				}
+				for (uint32_t keyIndex = 0; keyIndex < aiBoneAnim->mNumScalingKeys; ++keyIndex)
+				{
+					const aiVectorKey& scaleKey = aiBoneAnim->mScalingKeys[keyIndex];
+					builder.AddScaleKey(ToVector3(scaleKey.mValue), static_cast<float>(scaleKey.mTime));
+				}
+
+				*boneAnimation = builder.Build();
+			}
+		}
+	}
+
 	printf("Saving Model...\n");
 	if (!ModelIO::SaveModel(arguments.outputFileName, model))
 	{
@@ -389,10 +448,16 @@ int main(int argc, char* argv[])
 		printf("Failed to save the model material\n");
 	}
 
-	printf("Saving Material...\n");
+	printf("Saving Skeleton...\n");
 	if (!ModelIO::SaveSkeleton(arguments.outputFileName, model))
 	{
 		printf("Failed to save the model skeleton\n");
+	}
+
+	printf("Saving Animations...\n");
+	if (!ModelIO::SaveAnimations(arguments.outputFileName, model))
+	{
+		printf("Failed to save animation data...\n");
 	}
 
 	printf("All Done\n");

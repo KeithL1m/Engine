@@ -3,9 +3,12 @@
 #include "Camera.h"
 #include "RenderObject.h"
 #include "VertexTypes.h"
+#include "AnimationUtil.h"
 
 using namespace KEIEngine;
 using namespace KEIEngine::Graphics;
+
+static constexpr size_t MaxBoneCount = 256;
 
 void StandardEffect::Initialize(const std::filesystem::path& filePath)
 {
@@ -13,6 +16,7 @@ void StandardEffect::Initialize(const std::filesystem::path& filePath)
 	mLightBuffer.Initialize();
 	mSettingsBuffer.Initialize();
 	mMaterialBuffer.Initialize();
+	mBoneTransformBuffer.Initialize(MaxBoneCount * sizeof(KMath::Matrix4));
 
 	mVertexShader.Initialize<Vertex>(filePath);
 	mPixelShader.Initialize(filePath);
@@ -23,6 +27,7 @@ void StandardEffect::Terminate()
 	mTransformBuffer.Terminate();
 	mSettingsBuffer.Terminate();
 	mVertexShader.Terminate();
+	mBoneTransformBuffer.Terminate();
 	mPixelShader.Terminate();
 	mSampler.Terminate();
 	mLightBuffer.Terminate();
@@ -43,6 +48,8 @@ void StandardEffect::Begin()
 
 	mSettingsBuffer.BindVS(3);
 	mSettingsBuffer.BindPS(3);
+
+	mBoneTransformBuffer.BindVS(4);
 
 	mSampler.BindVS(0);
 	mSampler.BindPS(0);
@@ -68,8 +75,7 @@ void StandardEffect::Render(const RenderObject& renderObject)
 	settingsData.useSpecMap = mSettingsData.useSpecMap > 0 && renderObject.specMapId > 0;
 	settingsData.useBumpMap = mSettingsData.useBumpMap > 0 && renderObject.bumpMapId > 0;
 	settingsData.useShadowMap = mSettingsData.useShadowMap > 0 && mShadowMap != nullptr;
-	settingsData.useNightVision = mSettingsData.useNightVision > 0;
-
+	settingsData.useSkinning = mSettingsData.useSkinning > 0 && renderObject.skeleton != nullptr;
 	settingsData.bumpWeight = mSettingsData.bumpWeight;
 	settingsData.depthBias = mSettingsData.depthBias;
 
@@ -84,6 +90,19 @@ void StandardEffect::Render(const RenderObject& renderObject)
 		data.lwvp = Transpose(matWorld * matLightView * matLightProj);
 
 		mShadowMap->BindPS(4);
+	}
+
+	if (settingsData.useSkinning > 0)
+	{
+		AnimationUtil::BoneTransforms boneTransforms;
+		AnimationUtil::ComputerBoneTransform(renderObject.modelId, boneTransforms);
+		AnimationUtil::ApplyBoneOffsets(renderObject.modelId, boneTransforms);
+		for (KMath::Matrix4& m : boneTransforms)
+		{
+			m = Transpose(m);
+		}
+		boneTransforms.resize(MaxBoneCount);
+		mBoneTransformBuffer.Update(boneTransforms.data());
 	}
 
 	mTransformBuffer.Update(data);
@@ -156,6 +175,11 @@ void StandardEffect::DebugUI()
 			mSettingsData.useShadowMap = useShadow ? 1 : 0;
 		}
 
+		bool useSkinning = mSettingsData.useSkinning > 0;
+		if (ImGui::Checkbox("UseNormal", &useSkinning))
+		{
+			mSettingsData.useSkinning = useSkinning ? 1 : 0;
+		}
 		ImGui::DragFloat("DepthBias", &mSettingsData.depthBias, 0.0001f, 0.0f, 1.0f, "%.6f");
 	}
 }

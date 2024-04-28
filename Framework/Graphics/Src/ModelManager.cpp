@@ -42,8 +42,16 @@ ModelId ModelManager::LoadModel(const std::filesystem::path& filePath)
 		ModelIO::LoadModel(filePath, *modelPtr);
 		ModelIO::LoadMaterial(filePath, *modelPtr);
 		ModelIO::LoadSkeleton(filePath, *modelPtr);
+		ModelIO::LoadAnimations(filePath, *modelPtr);
 	}
 	return modelId;
+}
+
+void ModelManager::AddAnimation(ModelId id, const std::filesystem::path& filePath)
+{
+	auto model = mInventory.find(id);
+	ASSERT(model != mInventory.end(), "ModelManager: model was not loaded for animation");
+	ModelIO::LoadAnimations(filePath, *model->second);
 }
 
 const Model* ModelManager::GetModel(ModelId id)

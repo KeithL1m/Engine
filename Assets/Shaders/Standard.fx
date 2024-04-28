@@ -31,8 +31,14 @@ cbuffer SettingsBuffer : register(b3)
     bool useSpecMap;
     bool useBumpMap;
     bool useShadowMap;
+    bool useSkinning;
     float bumpWeight;
     float depthBias;
+}
+
+cbuffer BoneTransformBuffer : register(b4)
+{
+    matrix boneTransforms[256];
 }
 
 Texture2D diffuseMap : register(t0);
@@ -42,20 +48,46 @@ Texture2D bumpMap : register(t3);
 Texture2D shadowMap : register(t4);
 SamplerState textureSampler : register(s0);
 
+static matrix Identity =
+{
+    1, 0, 0, 0,
+    0, 1, 0, 0,
+    0, 0, 1, 0,
+    0, 0, 0, 1
+};
+
+matrix GetBoneTransform(int4 indices, float4 weights)
+{
+    if (length(weights) <= 0.0f)
+    {
+        return Identity;
+    }
+    
+    matrix transform = boneTransforms[indices[0]] * weights[0];
+    for (int i = 1; i < 4; ++i)
+    {
+         transform += boneTransforms[indices[i]] * weights[i];
+    }
+    
+    return transform;
+}
+
 struct VS_INPUT
 {
-	float3 position : POSITION;
-	float3 normal : NORMAL;
-	float3 tangent : TANGENT;
-	float2 texCoord : TEXCOORD;
+    float3 position : POSITION;
+    float3 normal : NORMAL;
+    float3 tangent : TANGENT;
+    float2 texCoord : TEXCOORD;
+    int4 blendIndices : BLENDINDICES;
+    float4 blendWeights : BLENDWEIGHT;
 };
 
 struct VS_OUTPUT
 {
-	float4 position : SV_Position;
+    float4 position : SV_Position;
     float3 worldNormal : NORMAL;
     float3 worldTangent : TANGENT;
-	float2 texCoord : TEXCOORD0;
+    float2 texCoord : TEXCOORD0;
     float3 dirToLight : TEXCOORD1;
     float3 dirToView : TEXCOORD2;
     float4 lightNDCPosition : TEXCOORD3;
@@ -66,6 +98,13 @@ VS_OUTPUT VS(VS_INPUT input)
     matrix toWorld = world;
     matrix toNDC = wvp;
     
+    if(useSkinning)
+    {
+        matrix boneTransform = GetBoneTransform(input.blendIndices, input.blendWeights);
+        toWorld = mul(boneTransform, toWorld);
+        toNDC = mul(boneTransform, toNDC);
+    }
+    
     float3 localPosition = input.position;
     if(useBumpMap)
     {
@@ -74,11 +113,11 @@ VS_OUTPUT VS(VS_INPUT input)
         localPosition += (input.normal * bumpColor * bumpWeight);
     }
     
-	VS_OUTPUT output;
-	output.position = mul(float4(localPosition, 1.0f), toNDC);
+    VS_OUTPUT output;
+    output.position = mul(float4(localPosition, 1.0f), toNDC);
     output.worldNormal = mul(input.normal, (float3x3) toWorld);
     output.worldTangent = mul(input.tangent, (float3x3) toWorld);
-	output.texCoord = input.texCoord;
+    output.texCoord = input.texCoord;
     output.dirToLight = -lightDirection;
     output.dirToView = normalize(viewPosition - (mul(float4(localPosition, 1.0f), world).xyz));
     if (useShadowMap)
@@ -86,7 +125,7 @@ VS_OUTPUT VS(VS_INPUT input)
         output.lightNDCPosition = mul(float4(localPosition, 1.0f), lwvp);
 
     }
-	return output;
+    return output;
 }
 
 float4 PS(VS_OUTPUT input) : SV_Target

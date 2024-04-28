@@ -37,7 +37,6 @@ RenderGroup Graphics::CreateRenderGroup(const Model& model)
 		return TextureManager::Get()->LoadTexture(textureName, false);
 	};
 	RenderGroup renderGroup;
-	renderGroup.resize(model.meshData.size());
 	for (const Model::MeshData& meshData : model.meshData)
 	{
 		RenderObject& renderObject = renderGroup.emplace_back();
@@ -51,6 +50,8 @@ RenderGroup Graphics::CreateRenderGroup(const Model& model)
 			renderObject.bumpMapId = TryLoadTexture(materialData.bumpMapName);
 			renderObject.specMapId = TryLoadTexture(materialData.specularMapName);
 		}
+
+		renderObject.skeleton = model.skeleton.get();
 	}
 	return renderGroup;
 }

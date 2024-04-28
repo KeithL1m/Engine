@@ -23,6 +23,8 @@ namespace KEIEngine::Graphics
 		TextureId normalMapId;
 		TextureId specMapId;
 		TextureId bumpMapId;
+
+		const Skeleton* skeleton = nullptr;
 	};
 
 	using RenderGroup = std::vector<RenderObject>;

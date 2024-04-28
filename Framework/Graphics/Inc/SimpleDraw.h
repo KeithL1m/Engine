@@ -21,7 +21,8 @@ namespace KEIEngine::Graphics
 		void AddFilledAABB(const Vector3& min, const Vector3& max, const Color& color);
 		void AddFilledAABB(float minX, float minY, float minZ, float maxX, float maxY, float maxZ, const Color& color);
 
-		void AddSphere(int slices, int rings, float radius, const Vector3& pos, const Color& color);
+		void AddSphere(int slices, int rings, float radius, const Color& color);
+		void AddSphere(int slices, int rings, float radius,const Vector3& origin, const Color& color);
 		void AddCircle(int slices, float radius, const Color& color);
 
 		void AddGroundPlane(float size, const Color& color);
