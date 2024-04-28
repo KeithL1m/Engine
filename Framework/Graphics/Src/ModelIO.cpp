@@ -396,7 +396,7 @@ void ModelIO::LoadAnimations(std::filesystem::path filePath, Model& model)
 	fscanf_s(file, "AnimClipCount: %d\n", animClipCount);
 	for (uint32_t i = 0; i < animClipCount; ++i)
 	{
-		const AnimationClip& animClipData = model.animationClips.emplace_back();
+		AnimationClip& animClipData = model.animationClips.emplace_back();
 
 		char animClipName[MAX_PATH] = {};
 		fscanf_s(file, "AnimationClipName: %s\n", animClipName, (uint32_t)sizeof(animClipName));
