@@ -9,6 +9,7 @@
 namespace KEIEngine::Graphics
 {
 	struct Model;
+	class Animator;
 	class RenderObject
 	{
 	public:
@@ -25,11 +26,12 @@ namespace KEIEngine::Graphics
 		TextureId bumpMapId;
 
 		const Skeleton* skeleton = nullptr;
+		const Animator* animator = nullptr;
 	};
 
 	using RenderGroup = std::vector<RenderObject>;
-	[[nodiscard]] RenderGroup CreateRenderGroup(ModelId id);
-	[[nodiscard]] RenderGroup CreateRenderGroup(const Model& model);
+	[[nodiscard]] RenderGroup CreateRenderGroup(ModelId id, Animator* animator = nullptr);
+	[[nodiscard]] RenderGroup CreateRenderGroup(const Model& model, Animator* animator = nullptr);
 	void CleanupRenderGroup(RenderGroup& renderGroup);
 	void SetRenderGroupPosition(RenderGroup& renderGroup, const KMath::Vector3& position);
 

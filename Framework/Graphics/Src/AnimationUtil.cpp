@@ -7,13 +7,20 @@ using namespace KEIEngine::Graphics;
 
 namespace
 {
-	void ComputerBoneTransformRecursive(const Bone* bone, AnimationUtil::BoneTransforms& boneTransforms)
+	void ComputerBoneTransformRecursive(const Bone* bone, AnimationUtil::BoneTransforms& boneTransforms, const Animator* animator)
 	{
 		if (bone == nullptr)
 		{
 			return;
 		}
-		boneTransforms[bone->index] = bone->toParentTransform;
+		if (animator != nullptr)
+		{
+			boneTransforms[bone->index] = animator->GetToParentTransform(bone);
+		}
+		else
+		{
+			boneTransforms[bone->index] = bone->toParentTransform;
+		}
 		if (bone->parent != nullptr)
 		{
 			boneTransforms[bone->index] = boneTransforms[bone->index] * boneTransforms[bone->parentIndex];
@@ -21,12 +28,12 @@ namespace
 
 		for (const Bone* child : bone->children)
 		{
-			ComputerBoneTransformRecursive(child, boneTransforms);
+			ComputerBoneTransformRecursive(child, boneTransforms, animator);
 		}
 	}
 }
 
-void AnimationUtil::ComputerBoneTransform(ModelId id, BoneTransforms& boneTransforms)
+void AnimationUtil::ComputerBoneTransform(ModelId id, BoneTransforms& boneTransforms, const Animator* animator)
 {
 	// compute the world transform of the bone
 	const Model* model = ModelManager::Get()->GetModel(id);
@@ -34,7 +41,7 @@ void AnimationUtil::ComputerBoneTransform(ModelId id, BoneTransforms& boneTransf
 	{
 		boneTransforms.resize(model->skeleton->bones.size(), KMath::Matrix4::Identity);
 	}
-	ComputerBoneTransformRecursive(model->skeleton->root, boneTransforms);
+	ComputerBoneTransformRecursive(model->skeleton->root, boneTransforms, animator);
 
 	// move skeleton up 
 	for (auto& m : boneTransforms)

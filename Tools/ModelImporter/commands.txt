@@ -1,1 +1,5 @@
 -scale 0.01 ../../Assets/Models/character/character.fbx ../../Assets/Models/character/character.fbx
+-scale 0.01 ../../Assets/Models/character/rumbadance.fbx ../../Assets/Models/character/rumbadance.fbx
+-scale 0.01 -animOnly 1 ../../Assets/Models/character/rumbadance.fbx ../../Assets/Models/character/rumbadance.fbx
+-scale 0.01 -animOnly 1 ../../Assets/Models/character/mutant_turn.fbx ../../Assets/Models/character/mutant_turn.fbx
+-scale 0.01 -animOnly 1 ../../Assets/Models/character/walkfoward.fbx ../../Assets/Models/character/walkfoward.fbx

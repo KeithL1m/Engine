@@ -22,7 +22,7 @@ void ModelManager::StaticTerminate()
 
 ModelManager* ModelManager::Get()
 {
-	ASSERT(sModelManager == nullptr, "ModelManager: was not initialized");
+	ASSERT(sModelManager != nullptr, "ModelManager: was not initialized");
 	return sModelManager.get();
 }
 

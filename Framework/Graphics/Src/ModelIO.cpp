@@ -19,7 +19,7 @@ void AnimationIO::Write(FILE* file, const Animation& animation)
 	fprintf_s(file, "RotationKeyCount: %d\n", count);
 	for (auto& k : animation.mRotationKeys)
 	{
-		fprintf_s(file, "%f %f %f %f\n", k.time, k.key.x, k.key.y, k.key.z, k.key.w);
+		fprintf_s(file, "%f %f %f %f %f\n", k.time, k.key.x, k.key.y, k.key.z, k.key.w);
 	}
 
 	count = animation.mScaleKeys.size();
@@ -45,7 +45,7 @@ void AnimationIO::Read(FILE* file, Animation& animation)
 	for (uint32_t k = 0; k < count; ++k)
 	{
 		KMath::Quaternion rot;
-		fscanf_s(file, "%f %f %f %f\n", &time, &rot.x, &rot.y, &rot.z, &rot.w);
+		fscanf_s(file, "%f %f %f %f %f\n", &time, &rot.x, &rot.y, &rot.z, &rot.w);
 		builder.AddRotationKey(rot, time);
 	}
 	fscanf_s(file, "ScaleKeyCount: %d\n", &count);
@@ -393,7 +393,7 @@ void ModelIO::LoadAnimations(std::filesystem::path filePath, Model& model)
 	}
 
 	uint32_t animClipCount = 0;
-	fscanf_s(file, "AnimClipCount: %d\n", animClipCount);
+	fscanf_s(file, "AnimClipCount: %d\n", &animClipCount);
 	for (uint32_t i = 0; i < animClipCount; ++i)
 	{
 		AnimationClip& animClipData = model.animationClips.emplace_back();
@@ -402,17 +402,17 @@ void ModelIO::LoadAnimations(std::filesystem::path filePath, Model& model)
 		fscanf_s(file, "AnimationClipName: %s\n", animClipName, (uint32_t)sizeof(animClipName));
 		animClipData.name = std::move(animClipName);
 
-		fscanf_s(file, "TickDuration: %f\n", animClipData.tickDuration);
-		fscanf_s(file, "TicksPerSecond: %f\n", animClipData.ticksPerSecond);
+		fscanf_s(file, "TickDuration: %f\n", &animClipData.tickDuration);
+		fscanf_s(file, "TicksPerSecond: %f\n", &animClipData.ticksPerSecond);
 
 		uint32_t boneAnimCount = 0;
-		fscanf_s(file, "BoneAnimCount: %d\n", boneAnimCount);
+		fscanf_s(file, "BoneAnimCount: %d\n", &boneAnimCount);
 		animClipData.boneAnimations.resize(boneAnimCount);
 		for (uint32_t b = 0; b < boneAnimCount; ++b)
 		{
 			char label[128] = {};
 			fscanf_s(file, "%s\n", label, (uint32_t)sizeof(label));
-			if (strcmp(label, "[ANIMATION]"))
+			if (strcmp(label, "[ANIMATION]") == 0)
 			{
 				animClipData.boneAnimations[b] = std::make_unique<Animation>();
 				AnimationIO::Read(file, *animClipData.boneAnimations[b]);

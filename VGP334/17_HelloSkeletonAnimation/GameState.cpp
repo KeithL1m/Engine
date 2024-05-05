@@ -24,7 +24,12 @@ void GameState::Initialize()
 	mGround.diffuseMapId = TextureManager::Get()->LoadTexture("Images/misc/concrete.jpg");
 
 	mCharacterId = ModelManager::Get()->LoadModel("../../Assets/Models/character/character.model");
-	mCharacter = CreateRenderGroup(mCharacterId);
+	ModelManager::Get()->AddAnimation(mCharacterId, "../../Assets/Models/character/rumbadance.model");
+	ModelManager::Get()->AddAnimation(mCharacterId, "../../Assets/Models/character/mutant_turn.model");
+	ModelManager::Get()->AddAnimation(mCharacterId, "../../Assets/Models/character/walkfoward.model");
+	mCharacter = CreateRenderGroup(mCharacterId, &mCharacterAnimator);
+	mCharacterAnimator.Initialize(mCharacterId);
+	mCharacterAnimator.PlayAnimation(1, true);
 
 };
 void GameState::Terminate()
@@ -43,7 +48,7 @@ void GameState::Render()
 	if (mDrawSkeleton)
 	{
 		AnimationUtil::BoneTransforms boneTransforms;
-		AnimationUtil::ComputerBoneTransform(mCharacterId, boneTransforms);
+		AnimationUtil::ComputerBoneTransform(mCharacterId, boneTransforms, &mCharacterAnimator);
 		AnimationUtil::DrawSkeleton(mCharacterId, boneTransforms);
 	}
 	else
@@ -56,6 +61,31 @@ void GameState::Render()
 void GameState::Update(float deltaTime)
 {
 	UpdateCameraControl(deltaTime);
+	mCharacterAnimator.Update(deltaTime);
+	//auto input = Input::InputSystem::Get();
+	//int targetAnim = mAnimationIndex;
+	//if (input->IsKeyPressed(Input::KeyCode::UP))
+	//{
+	//	targetAnim = 0;
+	//}
+	//else if (input->IsKeyPressed(Input::KeyCode::DOWN))
+	//{
+	//	targetAnim = 1;
+	//}
+	//else if (input->IsKeyPressed(Input::KeyCode::LEFT))
+	//{
+	//	targetAnim = 2;
+	//}
+	//else if (input->IsKeyPressed(Input::KeyCode::RIGHT))
+	//{
+	//	targetAnim = 3;
+	//}
+
+	//if (targetAnim != mAnimationIndex)
+	//{
+	//	mAnimationIndex = targetAnim;
+	//	mCharacterAnimator.PlayAnimation(mAnimationIndex, true);
+	//}
 }
 void GameState::DebugUI()
 {
@@ -70,6 +100,11 @@ void GameState::DebugUI()
 		ImGui::ColorEdit4("Ambient##Light", &mDirectionalLight.ambient.r);
 		ImGui::ColorEdit4("Diffuse##Light", &mDirectionalLight.diffuse.r);
 		ImGui::ColorEdit4("Specular##Light", &mDirectionalLight.specular.r);
+
+		if (ImGui::DragInt("AnimationIndex", &mAnimationIndex, 1, -1, mCharacterAnimator.GetAnimationCount() - 1))
+		{
+			mCharacterAnimator.PlayAnimation(mAnimationIndex, true);
+		}
 	}
 	mStandardEffect.DebugUI();
 	ImGui::Checkbox("DrawSkeleton", &mDrawSkeleton);

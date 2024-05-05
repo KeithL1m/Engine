@@ -75,7 +75,7 @@ KMath::Matrix4 Animator::GetToParentTransform(const Bone* bone) const
 	const Animation* animation = animClip.boneAnimations[bone->index].get();
 	if (animation == nullptr)
 	{
-		return bone->toParentTransform;
+		return KMath::Matrix4::Identity;
 	}
 	Transform transform = animation->GetTransform(mAnimationTick);
 	return transform.GetMatrix4();

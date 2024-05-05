@@ -22,6 +22,8 @@ private:
 	KEIEngine::Graphics::ModelId mCharacterId;
 	KEIEngine::Graphics::RenderGroup mCharacter;
 	KEIEngine::Graphics::RenderObject mGround;
+	KEIEngine::Graphics::Animator mCharacterAnimator;
 
+	int mAnimationIndex = -1;
 	bool mDrawSkeleton = false;
 };

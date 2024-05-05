@@ -6,6 +6,7 @@ using namespace KEIEngine;
 using namespace KEIEngine::Core;
 using namespace KEIEngine::Input;
 using namespace KEIEngine::Graphics;
+using namespace KEIEngine::Physics;
 
 void App::ChangeState(const std::string& stateName)
 {
@@ -29,7 +30,10 @@ void App::Run(const AppConfig& config)
 
 	ASSERT(myWindow.IsActive(), "Failed to create window!");
 
+	
 	// initialize static classes
+	PhysicsWorld::Settings physicsSettings;
+
 	auto handle = myWindow.GetWindowHandle();
 	InputSystem::StaticInitialize(handle);
 	GraphicsSystem::StaticInitialize(handle, false);
@@ -37,6 +41,7 @@ void App::Run(const AppConfig& config)
 	SimpleDraw::StaticInitialize(config.debugDrawLimit);
 	TextureManager::StaticInitialize("../../Assets/Textures/");
 	ModelManager::StaticInitialize();
+	PhysicsWorld::StaticInitialize(physicsSettings);
 
 	ASSERT(mCurrentState != nullptr, "App -- need an app state");
 	mCurrentState->Initialize();
@@ -67,6 +72,7 @@ void App::Run(const AppConfig& config)
 
 		if (deltaTime < 0.5f)
 		{
+			PhysicsWorld::Get()->Update(deltaTime);
 			mCurrentState->Update(deltaTime);
 		}
 
@@ -80,6 +86,7 @@ void App::Run(const AppConfig& config)
 	}
 
 	//terminate static classes
+	PhysicsWorld::StaticTerminate();
 	ModelManager::StaticTerminate();
 	TextureManager::StaticTerminate();
 	SimpleDraw::StaticTerminate();
