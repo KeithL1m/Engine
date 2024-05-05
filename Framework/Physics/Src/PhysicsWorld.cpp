@@ -72,6 +72,7 @@ void PhysicsWorld::Register(PhysicsObject* physicsObject)
 	auto iter = std::find(mPhysicsObjects.begin(), mPhysicsObjects.end(), physicsObject);
 	if (iter == mPhysicsObjects.end())
 	{
+		//missing
 		mPhysicsObjects.push_back(physicsObject);
 		if (physicsObject->GetRigidBody() != nullptr)
 		{
