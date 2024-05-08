@@ -40,7 +40,7 @@ namespace KEIEngine::Physics
 		btDiscreteDynamicsWorld* mDynamicsWorld = nullptr;
 		btSequentialImpulseConstraintSolver* mSolver = nullptr;
 
-		using PhysicsObjects = std::vector<PhysicsObjects*>;
+		using PhysicsObjects = std::vector<PhysicsObject*>;
 		PhysicsObjects mPhysicsObjects;
 	};
 }
