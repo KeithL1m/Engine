@@ -36,10 +36,20 @@ inline KEIEngine::KMath::Vector3 ConvertToVector3(const btVector3& v)
 
 inline btQuaternion ConvertTobtQuaternion(const KEIEngine::KMath::Quaternion& q)
 {
-	return btQuaternion(q.x, q.y, q.z);
+	return btQuaternion(q.x, q.y, q.z, q.w);
+}
+
+inline KEIEngine::KMath::Quaternion ConvertToQuaternion(const btQuaternion& q)
+{
+	return {
+		static_cast<float>(q.getX()),
+		static_cast<float>(q.getY()),
+		static_cast<float>(q.getZ()),
+		static_cast<float>(q.getW())
+	};
 }
 
 inline btTransform ConvertTobtTransform(const KEIEngine::Graphics::Transform& trans)
 {
-	return btTransform(trans.rotation, ConvertTobtVector3(trans.position));
+	return btTransform(ConvertTobtQuaternion(trans.rotation), ConvertTobtVector3(trans.position));
 }

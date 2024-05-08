@@ -2,7 +2,7 @@
 
 #include "PhysicsObject.h"
 
-namespace KEIEngine::Physics
+namespace KEIEngine::Graphics
 {
 	struct Transform;
 }

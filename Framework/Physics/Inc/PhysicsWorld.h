@@ -2,7 +2,8 @@
 
 namespace KEIEngine::Physics
 {
-	class PhysicsObjects;
+	class PhysicsObject;
+
 	class PhysicsWorld final
 	{
 	public:

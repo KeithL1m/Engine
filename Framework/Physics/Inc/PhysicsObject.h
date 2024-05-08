@@ -1,5 +1,7 @@
 #pragma once
 
+class btRigidBody;
+
 namespace KEIEngine::Physics
 {
 	class PhysicsObject

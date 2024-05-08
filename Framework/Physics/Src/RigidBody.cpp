@@ -6,6 +6,7 @@
 
 using namespace KEIEngine;
 using namespace KEIEngine::Physics;
+using namespace KEIEngine::Graphics;
 
 RigidBody::~RigidBody()
 {
@@ -36,11 +37,13 @@ void RigidBody::SetPosition(const KEIEngine::KMath::Vector3& position)
 		mRigidBody->activate();
 	}
 	mGraphicsTransform->position = position;
-	//mRigidBody->setWorldTransform(ConvertTobtTransform(position));
+	mRigidBody->setWorldTransform(ConvertTobtTransform(*mGraphicsTransform));
 }
 
 void RigidBody::SetVelocity(const KEIEngine::KMath::Vector3& velocity)
 {
+	mRigidBody->activate();
+	mRigidBody->setLinearVelocity(ConvertTobtVector3(velocity));
 }
 
 bool RigidBody::IsDynamic() const
@@ -52,12 +55,12 @@ void RigidBody::Update()
 {
 	btTransform& worldTransform = mRigidBody->getWorldTransform();
 	mGraphicsTransform->position = ConvertToVector3(worldTransform.getOrigin());
-	//mGraphicsTransform->rotation = ConvertToQuaternion(worldTransform.getRotation());
+	mGraphicsTransform->rotation = ConvertToQuaternion(worldTransform.getRotation());
 }
 
 btRigidBody* RigidBody::GetRigidBody()
 {
-	return nullptr;
+	return mRigidBody;
 }
 
 
