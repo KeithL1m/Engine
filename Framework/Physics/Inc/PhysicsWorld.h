@@ -1,5 +1,7 @@
 #pragma once
 
+#include "PhysicsDebugDraw.h"
+
 namespace KEIEngine::Physics
 {
 	class PhysicsObject;
@@ -42,5 +44,13 @@ namespace KEIEngine::Physics
 
 		using PhysicsObjects = std::vector<PhysicsObject*>;
 		PhysicsObjects mPhysicsObjects;
+
+		PhysicsDebugDraw mPhysicsDebugDraw;
+		bool mDebugDraw = false;
+
+		// soft body physics
+		btSoftRigidDynamicsWorld* mSoftBodyWorld = nullptr;
+		friend class SoftBody;
+		btSoftBody* CreateSoftBody(int nodeCount);
 	};
 }

@@ -83,21 +83,21 @@ namespace
 
 	void CreatePlaneIndices(std::vector<uint32_t>& indices, int numRows, int numColumns)
 	{
-		for (int r = 0; r <= numRows; ++r)
+		for (int r = 0; r < numRows; ++r)
 		{
 			for (int c = 0; c < numColumns; ++c)
 			{
-				int i = (r * numColumns) + c;
+				uint32_t i = (r * (numColumns + 1)) + c;
 
 				//triangle 1
 				indices.push_back(i);
-				indices.push_back(i + numColumns + 1);
+				indices.push_back(i + numColumns + 2);
 				indices.push_back(i + 1);
 
 				//triangle 2
 				indices.push_back(i);
-				indices.push_back(i + numColumns);
 				indices.push_back(i + numColumns + 1);
+				indices.push_back(i + numColumns + 2);
 			}
 		}
 	}

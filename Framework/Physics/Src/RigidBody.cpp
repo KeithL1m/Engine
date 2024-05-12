@@ -1,6 +1,7 @@
 #include "Precompiled.h"
 #include "RigidBody.h"
 #include "PhysicsWorld.h"
+#include "CollisionShape.h"
 
 #include <Graphics/Inc/Transform.h>
 
@@ -19,7 +20,9 @@ void RigidBody::Initialize(KEIEngine::Graphics::Transform& graphicsTransform, co
 	mMass = mass;
 
 	mMotionState = new btDefaultMotionState(ConvertTobtTransform(graphicsTransform));
-	mRigidBody = new btRigidBody(mMass, mMotionState, nullptr);
+	mRigidBody = new btRigidBody(mMass, mMotionState, shape.GetCollisionShape());
+	// add bounce
+	//mRigidBody->setRestitution(1.5f);
 	PhysicsWorld::Get()->Register(this);
 }
 

@@ -4,10 +4,15 @@
 #include <Math/Inc/KMath.h>
 #include <Core/Inc/Core.h>
 #include <Graphics/Inc/Transform.h>
+#include <Graphics/Inc/Colors.h>
 
 // bullet files
 #include <Bullet/btBulletCollisionCommon.h>
 #include <Bullet/btBulletDynamicsCommon.h>
+#include <Bullet/BulletSoftBody/btSoftRigidDynamicsWorld.h>
+#include <Bullet/BulletSoftBody/btSoftBodyHelpers.h>
+#include <Bullet/BulletSoftBody/btSoftBodyRigidBodyCollisionConfiguration.h>
+#include <Bullet/BulletSoftBody/btSoftBodySolvers.h>
 
 // functions
 template<class T>
@@ -31,6 +36,16 @@ inline KEIEngine::KMath::Vector3 ConvertToVector3(const btVector3& v)
 		static_cast<float>(v.getX()),
 		static_cast<float>(v.getY()),
 		static_cast<float>(v.getZ())
+	};
+}
+
+inline KEIEngine::Color ConvertToColor(const btVector3& v)
+{
+	return {
+		static_cast<float>(v.getX()),
+		static_cast<float>(v.getY()),
+		static_cast<float>(v.getZ()),
+		1.0f
 	};
 }
 
