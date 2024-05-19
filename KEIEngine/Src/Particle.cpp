@@ -1,0 +1,52 @@
+#include "Precompiled.h"
+#include "Particle.h"
+
+using namespace KEIEngine;
+using namespace KEIEngine::KMath;
+using namespace KEIEngine::Graphics;
+
+void Particle::Initialize()
+{
+	mLifeTime = 0.0f;
+	mCollisionShape.InitializeEmpty();
+	mRigidBody.Initialize(mTransform, mCollisionShape, 0.1f);
+}
+
+void Particle::Terminate()
+{
+	mRigidBody.Terminate();
+	mCollisionShape.Terminate();
+}
+
+void Particle::Activate(const ParticleActivateData& data)
+{
+	mData = data;
+	mLifeTime = data.lifeTime;
+	mRigidBody.SetPosition(data.position);
+	mRigidBody.SetVelocity(data.velocity);
+}
+
+void Particle::Update(float deltaTime)
+{
+	mLifeTime -= deltaTime;
+}
+
+bool Particle::IsActive() const
+{
+	return mLifeTime > 0.0f;
+}
+
+void KEIEngine::Particle::GetCurrentInfo(ParticleInfo& info) const
+{
+	if (mData.lifeTime > 0.0f)
+	{
+		float t = 1.0f - Clamp(mLifeTime / mData.lifeTime, 0.0f, 1.0f);
+		info.currentColor = Lerp(mData.startColor, mData.endColor, t);
+		info.currentScale = Lerp(mData.startScale, mData.endScale, t);
+	}
+}
+
+const Graphics::Transform& Particle::GetTransform() const
+{
+	return mTransform;
+}

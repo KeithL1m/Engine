@@ -26,6 +26,7 @@
 #include "ModelIO.h"
 #include "ModelManager.h"
 #include "PostProcessingEffect.h"
+#include "ParticleSystemEffect.h"
 #include "GaussianBlurEffect.h"
 #include "Sampler.h"
 #include "SimpleDraw.h"
