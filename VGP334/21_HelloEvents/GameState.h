@@ -14,11 +14,17 @@ public:
 
 private:
 	void UpdateCameraControl(float deltaTime);
+	void MoveRight();
 
 	KEIEngine::Graphics::Camera mCamera;
 	KEIEngine::Graphics::DirectionalLight mDirectionalLight;
+	KEIEngine::Graphics::StandardEffect mStandardEffect;
 
-	KEIEngine::Graphics::ParticleEffect mParticleEffect;
-	KEIEngine::ParticleSystem mParticleSystem;
-	KEIEngine::FireworkParticleSystem mFireworks;
+	KEIEngine::Graphics::RenderObject mBall;
+	KEIEngine::Graphics::RenderObject mGround;
+
+	//animation
+	KEIEngine::KMath::Vector3 mOffset = KEIEngine::KMath::Vector3::Zero;
+	KEIEngine::Graphics::Animation mAnimation;
+	float mAnimationTime = 0.0f;
 };

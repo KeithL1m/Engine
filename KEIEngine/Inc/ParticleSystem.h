@@ -30,6 +30,7 @@ namespace KEIEngine
 		KMath::Vector3 maxEndScale = KMath::Vector3::One;
 		int maxParticles = 100;
 		Graphics::TextureId particleTextureId = 0;
+		bool startPlaying = true;
 	};
 
 	class ParticleSystem
@@ -38,26 +39,30 @@ namespace KEIEngine
 		ParticleSystem() = default;
 		~ParticleSystem() = default;
 
-		void Initialize(const ParticleSystemInfo& info);
-		void Terminate();
-		void Update(float deltaTime);
+		virtual void Initialize(const ParticleSystemInfo& info);
+		virtual void Terminate();
+		virtual void Update(float deltaTime);
+
+		void Play(float lifeTime);
+		void SetPosition(const KMath::Vector3& position);
+		bool IsActive() const;
 
 		void DebugUI();
 
-		void SetCamera(Graphics::Camera camera);
+		virtual void SetCamera(const Graphics::Camera& camera);
 
 		template<class Effect>
 		void Render(Effect& effect)
 		{
-			if (mLifeTime > 0.0f)
+			if (IsActive())
 			{
 				ParticleInfo particleInfo;
-				for (const Particle& particle : mParticles)
+				for (const auto& particle : mParticles)
 				{
-					if (particle.IsActive())
+					if (particle->IsActive())
 					{
-						particle.GetCurrentInfo(particleInfo);
-						mRenderObject.transform = particle.GetTransform();
+						particle->GetCurrentInfo(particleInfo);
+						mRenderObject.transform = particle->GetTransform();
 						mRenderObject.transform.scale = particleInfo.currentScale;
 						effect.Render(mRenderObject, particleInfo.currentColor);
 					}
@@ -65,12 +70,13 @@ namespace KEIEngine
 			}
 		}
 
-	private:
 		void SpawnParticles();
+	protected:
+		virtual void InitializeParticles(uint32_t count);
 		void SpawnParticle();
 
 		//particles
-		using Particles = std::vector<Particle>;
+		using Particles = std::vector<std::unique_ptr<Particle>>;
 		Particles mParticles;
 		std::vector<int> mParticleIndexes;
 
@@ -80,7 +86,7 @@ namespace KEIEngine
 
 		// particle system info
 		ParticleSystemInfo mInfo;
-		int mNextAvailableParticleIndex;
+		int mNextAvailableParticleIndex = 0;
 		float mNextSpawnTime = 0.0f;
 		float mLifeTime = 0.0f;
 	};

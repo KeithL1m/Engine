@@ -43,12 +43,40 @@ void GameState::Initialize()
 	info.maxEndScale = KMath::Vector3::Zero;
 	info.maxParticles = 100;
 	info.particleTextureId = TextureManager::Get()->LoadTexture("Images/mushroom.png");
-
 	mParticleSystem.Initialize(info);
 	mParticleSystem.SetCamera(mCamera);
+
+	// FIREWORKS
+	info.spawnPosition = {0.0f, 0.0f, 10.0f};
+	info.spawnDirection = KMath::Vector3::YAxis;
+	info.spawnDelay = 0.0f;
+	info.systemLifeTime = 99999.0f;
+	info.minParticlePerEmit = 1;
+	info.maxParticlePerEmit = 3;
+	info.minTimeBetweenEmit = 0.5f;
+	info.maxTimeBetweenEmit = 2.0f;
+	info.minSpawnAngle = -10.0f * 3.141592 / 180.0f;
+	info.maxSpawnAngle = 10.0f * 3.141592 / 180.0f;
+	info.minSpeed = 10.0f;
+	info.maxSpeed = 15.0f;
+	info.minLifeTime = 1.0f;
+	info.maxLifeTime = 2.0f;
+	info.minStartColor = Colors::White;
+	info.maxStartColor = Colors::White;
+	info.minEndColor = Colors::OrangeRed;
+	info.maxEndColor = Colors::Orange;
+	info.minStartScale = KMath::Vector3::One;
+	info.maxStartScale = KMath::Vector3::One;
+	info.minEndScale = KMath::Vector3::Zero;
+	info.maxEndScale = KMath::Vector3::Zero;
+	info.maxParticles = 5;
+	info.particleTextureId = TextureManager::Get()->LoadTexture("Images/bullet1.png");
+	mFireworks.Initialize(info);
+	mFireworks.SetCamera(mCamera);
 };
 void GameState::Terminate()
 {
+	mFireworks.Terminate();
 	mParticleSystem.Terminate();
 	mParticleEffect.Terminate();
 }
@@ -58,12 +86,14 @@ void GameState::Render()
 	SimpleDraw::Render(mCamera);
 
 	mParticleEffect.Begin();
+		mFireworks.Render(mParticleEffect);
 		mParticleSystem.Render(mParticleEffect);
 	mParticleEffect.End();
 
 }
 void GameState::Update(float deltaTime)
 {
+	mFireworks.Update(deltaTime);
 	mParticleSystem.Update(deltaTime);
 	UpdateCameraControl(deltaTime);
 

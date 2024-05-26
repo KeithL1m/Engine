@@ -4,6 +4,7 @@
 #include "App.h"
 #include "AppState.h"
 
+#include "FireworkParticleSystem.h"
 #include "Particle.h"
 #include "ParticleSystem.h"
 

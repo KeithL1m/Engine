@@ -11,6 +11,8 @@ namespace KEIEngine::Graphics
 		Transform GetTransform(float time) const;
 		float GetDuration() const;
 
+		void PlayEvents(float prevTime, float currentTime);
+
 	private:
 		KMath::Vector3 GetPosition(float time) const;
 		KMath::Quaternion GetRotation(float time) const;
@@ -19,6 +21,7 @@ namespace KEIEngine::Graphics
 		friend class AnimationBuilder;
 		friend class AnimationIO;
 
+		EventKeys mEventKeys;
 		PositionKeys mPositionKeys;
 		RotationKeys mRotationKeys;
 		ScaleKeys mScaleKeys;

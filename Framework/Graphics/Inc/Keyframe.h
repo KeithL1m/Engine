@@ -28,10 +28,13 @@ namespace KEIEngine::Graphics
 		EaseType easeType = EaseType::Linear;
 	};
 
+	using AnimationCallback = std::function<void()>;
+
 	template<class T>
 	using Keyframes = std::vector<Keyframe<T>>;
 
 	using PositionKeys = Keyframes<KMath::Vector3>;
 	using RotationKeys = Keyframes<KMath::Quaternion>;
 	using ScaleKeys = Keyframes<KMath::Vector3>;
+	using EventKeys = Keyframes<AnimationCallback>;
 }

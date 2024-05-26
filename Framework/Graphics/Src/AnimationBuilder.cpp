@@ -35,6 +35,13 @@ AnimationBuilder& AnimationBuilder::AddScaleKey(const KMath::Vector3& scale, flo
 	return *this;
 }
 
+AnimationBuilder& AnimationBuilder::AddEventKey(AnimationCallback cb, float time)
+{
+	PushKey(mWorkingCopy.mEventKeys, cb, time, EaseType::Linear);
+	mWorkingCopy.mDuration = KMath::Max(mWorkingCopy.mDuration, time);
+	return *this;
+}
+
 Animation AnimationBuilder::Build()
 {
 	ASSERT(!mWorkingCopy.mPositionKeys.empty() ||
