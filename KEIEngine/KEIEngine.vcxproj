@@ -23,6 +23,8 @@
     <ClInclude Include="Inc\App.h" />
     <ClInclude Include="Inc\AppState.h" />
     <ClInclude Include="Inc\Common.h" />
+    <ClInclude Include="Inc\Event.h" />
+    <ClInclude Include="Inc\EventManager.h" />
     <ClInclude Include="Inc\FireworkParticleSystem.h" />
     <ClInclude Include="Inc\KEIEngine.h" />
     <ClInclude Include="Inc\Particle.h" />
@@ -31,6 +33,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Src\App.cpp" />
+    <ClCompile Include="Src\EventManager.cpp" />
     <ClCompile Include="Src\FireworkParticleSystem.cpp" />
     <ClCompile Include="Src\KEIEngine.cpp" />
     <ClCompile Include="Src\Particle.cpp" />

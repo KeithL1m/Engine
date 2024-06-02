@@ -4,29 +4,25 @@
 
 namespace KEIEngine
 {
+	class Event;
 	class FireworkParticle : public Particle
 	{
 	public:
-		FireworkParticle() = default;
-		~FireworkParticle() = default;
-		virtual void Initialize() override;
-		virtual void Terminate() override;
+		FireworkParticle(uint32_t parentId) : mParentId(parentId) {};
 
-		virtual void Activate(const ParticleActivateData& data) override;
+		void SetparentId(uint32_t id);
 		virtual void Update(float deltaTime) override;
-
-		void SetCamera(const Graphics::Camera camera);
-
-		ParticleSystem& GetParticleSystem() { return mExplosionEffect; }
 	private:
 		void OnDeath();
-
-		ParticleSystem mExplosionEffect;
+		uint32_t mParentId = 0;
 	};
 
 	class FireworkParticleSystem : public ParticleSystem
 	{
 	public:
+		FireworkParticleSystem();
+		virtual void Terminate() override;
+		virtual void Update(float deltaTime) override;
 		virtual void SetCamera(const Graphics::Camera& camera) override;
 
 		template<class Effect>
@@ -34,22 +30,19 @@ namespace KEIEngine
 		{
 			if (IsActive())
 			{
-				ParticleInfo particleInfo;
-				for (const int& index : mParticleIndexes)
+				ParticleSystem::Render(effect);
+				for (auto& e : mExplosionEffects)
 				{
-					FireworkParticle* particle = static_cast<FireworkParticle*>(mParticles[index].get());
-					if (particle->IsActive())
-					{
-						particle->GetCurrentInfo(particleInfo);
-						mRenderObject.transform = particle->GetTransform();
-						mRenderObject.transform.scale = particleInfo.currentScale;
-						effect.Render(mRenderObject, particleInfo.currentColor);
-					}
-					particle->GetParticleSystem().Render(effect);
+					e->Render(effect);
 				}
 			}
 		}
 	protected:
 		virtual void InitializeParticles(uint32_t count) override;
+		void OnExplosionEvent(const Event* event);
+
+		uint32_t mUniqueId = 0;
+		uint32_t mNextAvailableEffect = 0;
+		std::vector<std::unique_ptr<ParticleSystem>> mExplosionEffects;
 	};
 }

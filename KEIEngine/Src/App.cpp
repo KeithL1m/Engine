@@ -1,12 +1,14 @@
 #include "Precompiled.h"
 #include "App.h"
 #include "AppState.h"
+#include "EventManager.h"
 
 using namespace KEIEngine;
 using namespace KEIEngine::Core;
 using namespace KEIEngine::Input;
 using namespace KEIEngine::Graphics;
 using namespace KEIEngine::Physics;
+using namespace KEIEngine::Audio;
 
 void App::ChangeState(const std::string& stateName)
 {
@@ -42,6 +44,8 @@ void App::Run(const AppConfig& config)
 	TextureManager::StaticInitialize("../../Assets/Textures/");
 	ModelManager::StaticInitialize();
 	PhysicsWorld::StaticInitialize(physicsSettings);
+	EventManager::StaticInitialize();
+	AudioSystem::StaticInitialize();
 
 	ASSERT(mCurrentState != nullptr, "App -- need an app state");
 	mCurrentState->Initialize();
@@ -66,7 +70,7 @@ void App::Run(const AppConfig& config)
 			mCurrentState = std::exchange(mNextState, nullptr);
 			mCurrentState->Initialize();
 		}
-		
+		AudioSystem::Get()->Update();
 		//run the game
 		auto deltaTime = TimeUtil::GetDeltaTime();
 
@@ -86,6 +90,8 @@ void App::Run(const AppConfig& config)
 	}
 
 	//terminate static classes
+	AudioSystem::StaticTerminate();
+	EventManager::StaticTerminate();
 	PhysicsWorld::StaticTerminate();
 	ModelManager::StaticTerminate();
 	TextureManager::StaticTerminate();

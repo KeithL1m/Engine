@@ -44,9 +44,12 @@ void GameState::Initialize()
 		.Build();
 
 	mAnimationTime = 0.0f;
+
+	EventManager::Get()->AddListener(EventType::SpacePressed, std::bind(&GameState::OnSpacePressedEvent, this, std::placeholders::_1));
 };
 void GameState::Terminate()
 {
+	//EventManager::Get()->RemoveListener(EventType::SpacePressed, std::bind(&GameState::OnSpacePressedEvent, this, std::placeholders::_1));
 	mGround.Terminate();
 	mBall.Terminate();
 	mStandardEffect.Terminate();
@@ -66,6 +69,12 @@ void GameState::Render()
 void GameState::Update(float deltaTime)
 {
 	UpdateCameraControl(deltaTime);
+
+	if (Input::InputSystem::Get()->IsKeyPressed(Input::KeyCode::SPACE))
+	{
+		SpacePressedEvent event;
+		EventManager::Broadcast(&event);
+	}
 
 	float prevTime = mAnimationTime;
 	mAnimationTime += deltaTime;
@@ -134,4 +143,10 @@ void GameState::UpdateCameraControl(float deltaTime)
 void GameState::MoveRight()
 {
 	mOffset.x += 1.0f;
+}
+
+void GameState::OnSpacePressedEvent(const KEIEngine::Event* event)
+{
+	SpacePressedEvent* spEvent = (SpacePressedEvent*)event;
+	mOffset.z += 1.0f;
 }

@@ -1,13 +1,80 @@
 #include "Precompiled.h"
 #include "FireworkParticleSystem.h"
+#include "EventManager.h"
 
 using namespace KEIEngine;
 using namespace KEIEngine::Graphics;
 using namespace KEIEngine::KMath;
 
-void FireworkParticle::Initialize()
+
+void KEIEngine::FireworkParticle::SetparentId(uint32_t id)
 {
-	Particle::Initialize();
+	mParentId = id;
+}
+
+void FireworkParticle::Update(float deltaTime)
+{
+	if (mLifeTime > 0.0f)
+	{
+		Particle::Update(deltaTime);
+		if (mLifeTime < 0.0f)
+		{
+			OnDeath();
+		}
+	}
+}
+
+void FireworkParticle::OnDeath()
+{
+	FireworkExplodeEvent feEvent;
+	feEvent.fireworkId = mParentId;
+	feEvent.position = mTransform.position;
+	EventManager::Broadcast(&feEvent);
+}
+
+static uint32_t gFireworkId = 0;
+FireworkParticleSystem::FireworkParticleSystem()
+	: mUniqueId(++gFireworkId)
+{
+}
+
+void FireworkParticleSystem::Terminate()
+{
+	ParticleSystem::Terminate();
+	for (auto& ps : mExplosionEffects)
+	{
+		ps->Terminate();
+	}
+}
+
+void FireworkParticleSystem::Update(float deltaTime)
+{
+	ParticleSystem::Update(deltaTime);
+	for (auto& ps : mExplosionEffects)
+	{
+		ps->Update(deltaTime);
+	}
+}
+
+void FireworkParticleSystem::SetCamera(const Graphics::Camera& camera)
+{
+	ParticleSystem::SetCamera(camera);
+	for (auto& ep : mExplosionEffects)
+	{
+		ep->SetCamera(camera);
+	}
+}
+
+void FireworkParticleSystem::InitializeParticles(uint32_t count)
+{
+	mParticleIndexes.resize(count);
+	mParticles.resize(count);
+	for (uint32_t i = 0; i < count; ++i)
+	{
+		mParticleIndexes[i] = i;
+		mParticles[i] = std::make_unique<FireworkParticle>(mUniqueId);
+		mParticles[i]->Initialize();
+	}
 
 	ParticleSystemInfo info;
 	info.spawnDelay = 0.0f;
@@ -30,66 +97,27 @@ void FireworkParticle::Initialize()
 	info.maxEndScale = KMath::Vector3::Zero;
 	info.maxParticles = 50;
 	info.particleTextureId = TextureManager::Get()->LoadTexture("Images/bullet2.png");
-	mExplosionEffect.Initialize(info);
-}
 
-void FireworkParticle::Terminate()
-{
-	Particle::Terminate();
-	mExplosionEffect.Terminate();
-}
-
-void FireworkParticle::Activate(const ParticleActivateData& data)
-{
-	Particle::Activate(data);
-}
-
-void FireworkParticle::Update(float deltaTime)
-{
-	if (mLifeTime > 0.0f)
+	const uint32_t maxExplosionEffects = 10;
+	mExplosionEffects.resize(maxExplosionEffects);
+	for (uint32_t i = 0; i < maxExplosionEffects; ++i)
 	{
-		Particle::Update(deltaTime);
-		if (mLifeTime < 0.0f)
-		{
-			OnDeath();
-		}
+		mExplosionEffects[i] = std::make_unique<ParticleSystem>();
+		mExplosionEffects[i]->Initialize(info);
 	}
 
-	if (mExplosionEffect.IsActive())
+	EventManager::Get()->AddListener(EventType::FireworkExplode, std::bind(&FireworkParticleSystem::OnExplosionEvent, this, std::placeholders::_1));
+}
+
+void FireworkParticleSystem::OnExplosionEvent(const Event* event)
+{
+	FireworkExplodeEvent* feEvent = (FireworkExplodeEvent*)event;
+	if (feEvent->fireworkId == mUniqueId)
 	{
-		mExplosionEffect.Update(deltaTime);
-	}
-}
+		auto& nextPS = mExplosionEffects[mNextAvailableEffect];
+		mNextAvailableEffect = (mNextAvailableEffect + 1) % mExplosionEffects.size();
 
-void FireworkParticle::OnDeath()
-{
-	mExplosionEffect.SetPosition(mTransform.position);
-	mExplosionEffect.SpawnParticles();
-}
-
-void FireworkParticle::SetCamera(const Graphics::Camera camera)
-{
-	mExplosionEffect.SetCamera(camera);
-}
-
-void FireworkParticleSystem::SetCamera(const Graphics::Camera& camera)
-{
-	ParticleSystem::SetCamera(camera);
-	for (auto& p : mParticles)
-	{
-		FireworkParticle* fp = static_cast<FireworkParticle*>(p.get());
-		fp->SetCamera(camera);
-	}
-}
-
-void FireworkParticleSystem::InitializeParticles(uint32_t count)
-{
-	mParticleIndexes.resize(count);
-	mParticles.resize(count);
-	for (uint32_t i = 0; i < count; ++i)
-	{
-		mParticleIndexes[i] = i;
-		mParticles[i] = std::make_unique<FireworkParticle>();
-		mParticles[i]->Initialize();
+		nextPS->SetPosition(feEvent->position);
+		nextPS->SpawnParticles();
 	}
 }

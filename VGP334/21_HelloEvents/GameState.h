@@ -14,7 +14,9 @@ public:
 
 private:
 	void UpdateCameraControl(float deltaTime);
+
 	void MoveRight();
+	void OnSpacePressedEvent(const KEIEngine::Event* event);
 
 	KEIEngine::Graphics::Camera mCamera;
 	KEIEngine::Graphics::DirectionalLight mDirectionalLight;
