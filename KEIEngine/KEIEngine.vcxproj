@@ -43,6 +43,9 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Framework\Audio\Audio.vcxproj">
+      <Project>{48c7e85c-f1d0-48ba-b8d1-e8ad1c2089d1}</Project>
+    </ProjectReference>
     <ProjectReference Include="..\Framework\Core\Core.vcxproj">
       <Project>{d24ddc53-9a5d-41b6-bde0-3657e0762058}</Project>
     </ProjectReference>
