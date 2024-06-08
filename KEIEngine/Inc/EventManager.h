@@ -6,7 +6,7 @@ namespace KEIEngine
 {
 	
 	using EventCallback = std::function<void(const Event*)>;
-	using EventListeners = std::map<EventType, std::vector<EventCallback>>;
+	using EventListeners = std::map<EventType, std::map<uint32_t, EventCallback>>;
 
 	class EventManager final
 	{
@@ -17,15 +17,17 @@ namespace KEIEngine
 		static void Broadcast(const Event* event);
 
 		EventManager() = default;
-		~EventManager() = default;
+		~EventManager();
 
 		void Initialize();
 		void Terminate();
 
-		void AddListener(EventType eventType, EventCallback&& cb);
-		void RemoveListener(EventType eventType, EventCallback&& cb);
+		uint32_t AddListener(EventType eventType, const EventCallback& cb);
+		void RemoveListener(EventType eventType, uint32_t listenerId);
 	private:
 		void BroadcastPrivate(const Event* event);
+
 		EventListeners mListeners;
+		uint32_t mListenerId = 0;
 	};
 }

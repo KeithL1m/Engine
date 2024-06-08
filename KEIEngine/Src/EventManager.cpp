@@ -36,6 +36,10 @@ void EventManager::Broadcast(const Event* event)
 }
 
 
+EventManager::~EventManager()
+{
+}
+
 void EventManager::Initialize()
 {
 	mListeners.clear();
@@ -46,27 +50,26 @@ void EventManager::Terminate()
 	mListeners.clear();
 }
 
-void EventManager::AddListener(EventType eventType, EventCallback&& cb)
+uint32_t EventManager::AddListener(EventType eventType, const EventCallback& cb)
 {
-	mListeners[eventType].push_back(cb);
+	mListeners[eventType][++mListenerId] = cb;
+	return mListenerId;
 }
-
-void EventManager::RemoveListener(EventType eventType, EventCallback&& cb)
+void EventManager::RemoveListener(EventType eventType, uint32_t listenerId)
 {
-	//auto& listeners = mListeners[eventType];
-	//auto iter = std::find(listeners.begin(), listeners.end(), cb);
-	//if (iter != listeners.end())
-	//{
-	//	listeners.erase(iter);
-	//}
+	auto& listeners = mListeners[eventType];
+	auto iter = listeners.find(listenerId);
+	if (iter != listeners.end())
+	{
+		listeners.erase(iter);
+	}
 }
 
 void EventManager::BroadcastPrivate(const Event* event)
 {
 	auto& listeners = mListeners[event->GetType()];
-
 	for (auto& cb : listeners)
 	{
-		cb(event);
+		cb.second(event);
 	}
 }

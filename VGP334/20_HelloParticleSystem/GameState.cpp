@@ -4,6 +4,7 @@ using namespace KEIEngine;
 using namespace KEIEngine::Graphics;
 using namespace KEIEngine::KMath;
 using namespace KEIEngine::Input;
+using namespace KEIEngine::Audio;
 
 void GameState::Initialize()
 {
@@ -73,9 +74,13 @@ void GameState::Initialize()
 	info.particleTextureId = TextureManager::Get()->LoadTexture("Images/bullet1.png");
 	mFireworks.Initialize(info);
 	mFireworks.SetCamera(mCamera);
+
+	mExplosionEventId = EventManager::Get()->AddListener(EventType::FireworkExplode, std::bind(&GameState::OnExplosionEvent, this, std::placeholders::_1));
+	mSoundId = SoundEffectManager::Get()->Load("explosion.wav");
 };
 void GameState::Terminate()
 {
+	EventManager::Get()->RemoveListener(EventType::FireworkExplode, mExplosionEventId);
 	mFireworks.Terminate();
 	mParticleSystem.Terminate();
 	mParticleEffect.Terminate();
@@ -93,10 +98,15 @@ void GameState::Render()
 }
 void GameState::Update(float deltaTime)
 {
+	mTime += deltaTime;
 	mFireworks.Update(deltaTime);
 	mParticleSystem.Update(deltaTime);
 	UpdateCameraControl(deltaTime);
-
+	auto input = Input::InputSystem::Get();
+	if (input->IsKeyPressed(KeyCode::SPACE))
+	{
+		SoundEffectManager::Get()->Play(mSoundId);
+	}
 }
 void GameState::DebugUI()
 {
@@ -116,6 +126,11 @@ void GameState::DebugUI()
 	Physics::PhysicsWorld::Get()->DebugUI();
 
 	ImGui::End();
+}
+
+void GameState::OnExplosionEvent(const KEIEngine::Event* e)
+{
+	SoundEffectManager::Get()->Play(mSoundId);
 }
 
 void GameState::UpdateCameraControl(float deltaTime)

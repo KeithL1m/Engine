@@ -12,6 +12,8 @@ public:
 	void Update(float deltaTime) override;
 	void DebugUI() override;
 
+	void OnExplosionEvent(const KEIEngine::Event* e);
+
 private:
 	void UpdateCameraControl(float deltaTime);
 
@@ -21,4 +23,8 @@ private:
 	KEIEngine::Graphics::ParticleEffect mParticleEffect;
 	KEIEngine::ParticleSystem mParticleSystem;
 	KEIEngine::FireworkParticleSystem mFireworks;
+
+	KEIEngine::Audio::SoundId mSoundId;
+	std::size_t mExplosionEventId;
+	float mTime = 0.0f;
 };

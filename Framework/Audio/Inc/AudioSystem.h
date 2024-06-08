@@ -24,8 +24,7 @@ namespace KEIEngine::Audio
 
 		void Suspend();
 	private:
-
-		friend class SoundEffectsManager;
+		friend class SoundEffectManager;
 		DirectX::AudioEngine* mAudioEngine = nullptr;
 	};
 }

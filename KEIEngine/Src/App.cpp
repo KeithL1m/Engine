@@ -46,6 +46,7 @@ void App::Run(const AppConfig& config)
 	PhysicsWorld::StaticInitialize(physicsSettings);
 	EventManager::StaticInitialize();
 	AudioSystem::StaticInitialize();
+	SoundEffectManager::StaticInitialize("../../Assets/Sounds");
 
 	ASSERT(mCurrentState != nullptr, "App -- need an app state");
 	mCurrentState->Initialize();
@@ -90,6 +91,7 @@ void App::Run(const AppConfig& config)
 	}
 
 	//terminate static classes
+	SoundEffectManager::StaticTerminate();
 	AudioSystem::StaticTerminate();
 	EventManager::StaticTerminate();
 	PhysicsWorld::StaticTerminate();
