@@ -21,7 +21,7 @@ cbuffer MaterialBuffer : register(b2)
     float4 materialDiffuse;
     float4 materialSpecular;
     float4 materialEmissive;
-    float4 materialPower;
+    float materialPower;
 }
 
 cbuffer SettingsBuffer : register(b3)
