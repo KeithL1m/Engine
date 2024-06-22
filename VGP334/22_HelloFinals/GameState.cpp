@@ -8,7 +8,7 @@ using namespace KEIEngine::Audio;
 
 void GameState::Initialize()
 {
-	mCamera.SetPosition({ 0.0f, 2.0f, -4.0f });
+	mCamera.SetPosition({ 0.0f, 2.0f, -15.0f });
 	mCamera.SetLookAt({ 0.0f, 0.0f, 0.0f });
 
 	mDirectionalLight.direction = KMath::Normalize({ 1.0f,-1.0f,1.0f });
@@ -23,7 +23,7 @@ void GameState::Initialize()
 	mStandardEffect.SetCamera(mCamera);
 	mStandardEffect.SetDirectionalLight(mDirectionalLight);
 
-	Mesh ball = MeshBuilder::CreateSphere(60, 60, 0.5f);
+	Mesh ball = MeshBuilder::CreateSphere(60, 60, 2.0f);
 	mDisco.meshBuffer.Initialize(ball);
 	mDisco.diffuseMapId = TextureManager::Get()->LoadTexture("Images/misc/discoball.jpg");
 
@@ -35,7 +35,7 @@ void GameState::Initialize()
 
 	// Firework
 	ParticleSystemInfo info;
-	info.spawnPosition = { 3.0f, 0.0f, 13.0f };
+	info.spawnPosition = { 0.0f, 0.0f, 13.0f };
 	info.spawnDirection = KMath::Vector3::YAxis;
 	info.spawnDelay = 0.0f;
 	info.systemLifeTime = 99999.0f;
@@ -63,7 +63,7 @@ void GameState::Initialize()
 	mFireworks.SetCamera(mCamera);
 
 	// Sparkles
-	info.spawnPosition = { 3.0f, 0.0f, 5.0f };
+	info.spawnPosition = { 0.0f, 0.0f, 5.0f };
 	info.spawnDirection = KMath::Vector3::YAxis;
 	info.spawnDelay = 0.0f;
 	info.systemLifeTime = 99999.0f;
@@ -102,7 +102,7 @@ void GameState::Initialize()
 	mCharacterId2 = ModelManager::Get()->LoadModel("../../Assets/Models/characterfin/moose.model");
 	mCharacter2 = CreateRenderGroup(mCharacterId2, &mCharacterAnimator2);
 
-	mCharacter2Position.x = 0.0f;
+	mCharacter2Position.x = -5.0f;
 	mCharacter2Position.y = 0.0f;
 	SetRenderGroupPosition(mCharacter2, mCharacter2Position);
 
@@ -119,6 +119,10 @@ void GameState::Initialize()
 	ModelManager::Get()->AddAnimation(mCharacterId2, "../../Assets/Models/characterfin/Animations/house_dancing.model");
 	mCharacterAnimator2.Initialize(mCharacterId2);
 	//mCharacterAnimator2.PlayAnimation(1, true);
+
+	// Disco Animation
+	//mAnimation = AnimationBuilder()
+		
 };
 void GameState::Terminate()
 {
@@ -138,6 +142,8 @@ void GameState::Render()
 		mSparkles.Render(mParticleEffect);
 	mParticleEffect.End();
 
+	mDisco.transform.position.y = 5.0f;
+
 	mStandardEffect.Begin();
 	if (mDrawSkeleton)
 	{
@@ -155,6 +161,7 @@ void GameState::Render()
 		DrawRenderGroup(mStandardEffect, mCharacter2);
 	}
 		mStandardEffect.Render(mGround);
+		mStandardEffect.Render(mDisco);
 	mStandardEffect.End();
 }
 void GameState::Update(float deltaTime)
