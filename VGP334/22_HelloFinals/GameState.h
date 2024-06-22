@@ -14,6 +14,9 @@ public:
 
 private:
 	void UpdateCameraControl(float deltaTime);
+	void ChangeAnimation();
+	void ChangeToEndAnimation();
+	void MoveUP();
 
 	KEIEngine::Graphics::Camera mCamera;
 	KEIEngine::Graphics::DirectionalLight mDirectionalLight;
@@ -41,7 +44,12 @@ private:
 	// ANIMATION
 	KEIEngine::KMath::Vector3 mOffset = KEIEngine::KMath::Vector3::Zero;
 	KEIEngine::Graphics::Animation mAnimation;
+	KEIEngine::Graphics::Animation mAnimationCharacter;
 	float mAnimationTime = 0.0f;
+	float mAnimationCharacterTime = 0.0f;
+
+	// SOUND
+	KEIEngine::Audio::SoundId mSoundID;
 
 	int mAnimationIndex = -1;
 	bool mDrawSkeleton = false;

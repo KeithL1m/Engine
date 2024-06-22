@@ -88,7 +88,7 @@ void FireworkParticleSystem::InitializeParticles(uint32_t count)
 	info.minLifeTime = 0.5f;
 	info.maxLifeTime = 1.0f;
 	info.minStartColor = Colors::MediumVioletRed;
-	info.maxStartColor = Colors::Purple;
+	info.maxStartColor = Colors::Yellow;
 	info.minEndColor = Colors::White;
 	info.maxEndColor = Colors::LightYellow;
 	info.minStartScale = KMath::Vector3::One;

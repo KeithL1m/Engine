@@ -27,9 +27,9 @@ void GameState::Initialize()
 	mDisco.meshBuffer.Initialize(ball);
 	mDisco.diffuseMapId = TextureManager::Get()->LoadTexture("Images/misc/discoball.jpg");
 
-	Mesh ground = MeshBuilder::CreateGroundPlane(100, 100, 1.0f);
+	Mesh ground = MeshBuilder::CreateGroundPlane(30, 30, 1.0f);
 	mGround.meshBuffer.Initialize(ground);
-	mGround.diffuseMapId = TextureManager::Get()->LoadTexture("Images/misc/concrete.jpg");
+	mGround.diffuseMapId = TextureManager::Get()->LoadTexture("Images/misc/wood.jpg");
 
 	// Adding Particles
 
@@ -39,8 +39,8 @@ void GameState::Initialize()
 	info.spawnDirection = KMath::Vector3::YAxis;
 	info.spawnDelay = 0.0f;
 	info.systemLifeTime = 99999.0f;
-	info.minParticlePerEmit = 20;
-	info.maxParticlePerEmit = 50;
+	info.minParticlePerEmit = 200;
+	info.maxParticlePerEmit = 800;
 	info.minTimeBetweenEmit = 0.5f;
 	info.maxTimeBetweenEmit = 3.0f;
 	info.minSpawnAngle = -10.0f * 3.141592 / 180.0f;
@@ -67,14 +67,14 @@ void GameState::Initialize()
 	info.spawnDirection = KMath::Vector3::YAxis;
 	info.spawnDelay = 0.0f;
 	info.systemLifeTime = 99999.0f;
-	info.minParticlePerEmit = 3;
-	info.maxParticlePerEmit = 5;
+	info.minParticlePerEmit = 20;
+	info.maxParticlePerEmit = 40;
 	info.minTimeBetweenEmit = 0.1f;
 	info.maxTimeBetweenEmit = 0.3f;
 	info.minSpawnAngle = -30.0f * 3.141592 / 180.0f;
 	info.maxSpawnAngle = 30.0f * 3.141592 / 180.0f;
 	info.minSpeed = 5.0f;
-	info.maxSpeed = 10.0f;
+	info.maxSpeed = 15.0f;
 	info.minLifeTime = 0.3f;
 	info.maxLifeTime = 1.0f;
 	info.minStartColor = Colors::White;
@@ -95,14 +95,14 @@ void GameState::Initialize()
 	mCharacterId = ModelManager::Get()->LoadModel("../../Assets/Models/characterfin/zombie.model");
 	mCharacter = CreateRenderGroup(mCharacterId, &mCharacterAnimator);
 
-	mCharacterPosition.x = 5.0f;
+	mCharacterPosition.x = 3.0f;
 	mCharacterPosition.y = 0.0f;
 	SetRenderGroupPosition(mCharacter, mCharacterPosition);
 
 	mCharacterId2 = ModelManager::Get()->LoadModel("../../Assets/Models/characterfin/moose.model");
 	mCharacter2 = CreateRenderGroup(mCharacterId2, &mCharacterAnimator2);
 
-	mCharacter2Position.x = -5.0f;
+	mCharacter2Position.x = -3.0f;
 	mCharacter2Position.y = 0.0f;
 	SetRenderGroupPosition(mCharacter2, mCharacter2Position);
 
@@ -113,6 +113,7 @@ void GameState::Initialize()
 	ModelManager::Get()->AddAnimation(mCharacterId, "../../Assets/Models/characterfin/Animations/mutant_dying.model");
 	mCharacterAnimator.Initialize(mCharacterId);
 	mCharacterAnimator.PlayAnimation(1, true);
+	
 
 	ModelManager::Get()->AddAnimation(mCharacterId2, "../../Assets/Models/characterfin/Animations/moose_run.model");
 	ModelManager::Get()->AddAnimation(mCharacterId2, "../../Assets/Models/characterfin/Animations/moose_dance.model");
@@ -120,9 +121,40 @@ void GameState::Initialize()
 	mCharacterAnimator2.Initialize(mCharacterId2);
 	mCharacterAnimator2.PlayAnimation(1, true);
 
-	// Disco Animation
-	//mAnimation = AnimationBuilder()
-		
+	// Animation
+	mAnimation = AnimationBuilder()
+		.AddRotationKey(KMath::Quaternion::Normalize({ 0.0f, 0.0f, 0.0f, 1.0f}), 0.0f)
+		.AddScaleKey({ 1.0f, 1.0f, 1.0f }, 0.0f)
+		.AddScaleKey({ 1.0f, 1.0f, 1.0f }, 0.8f)
+		.AddRotationKey(KMath::Quaternion::Normalize({ 0.0f, -6.28f, 0.0f, 1.0f}), 3.0f)
+		.AddRotationKey(KMath::Quaternion::Normalize({ 0.0f, -8.28f, 0.0f, 1.0f }), 2.0f)
+		.AddScaleKey({ 1.0f, 1.1f, 1.0f }, 1.0f)
+		.AddScaleKey({ 1.0f, 1.2f, 1.0f }, 1.25f)
+		.AddScaleKey({ 1.0f, 1.0f, 1.0f }, 1.3f)
+		.AddRotationKey(KMath::Quaternion::Normalize({ 0.0f, 0.0f, 0.0f, 1.0f }), 0.0f)
+		.AddScaleKey({ 1.0f, 1.0f, 1.0f }, 1.0f)
+		.AddScaleKey({ 1.0f, 1.0f, 1.0f }, 1.5f)
+		.AddScaleKey({ 1.0f, 1.1f, 1.0f }, 1.0f)
+		.AddScaleKey({ 1.0f, 1.2f, 1.0f }, 1.25f)
+		.AddScaleKey({ 1.0f, 1.0f, 1.0f }, 1.3f)
+		.Build();
+
+	AnimationCallback cbWalk = [&]() {MoveUP(); };
+	AnimationCallback cbAnimation = [&]() {ChangeAnimation(); };
+	AnimationCallback cbAnimationEnd = [&]() {ChangeToEndAnimation(); };
+	mAnimationCharacter = AnimationBuilder()
+		.AddPositionKey({0.0f, 0.0f, 0.0f}, 0.0f)
+		.AddPositionKey({0.0f, 0.0f, -8.0f}, 1.5f)
+		.AddEventKey(cbWalk, 0.1f)
+		.AddEventKey(cbAnimation, 1.5f)
+		.AddEventKey([&]() {}, 44.0f)
+		.AddEventKey(cbAnimationEnd, 45.0f)
+		.Build();
+
+	// Music
+	mSoundID = SoundEffectManager::Get()->Load("undertale.wav");
+
+	SoundEffectManager::Get()->Play(mSoundID);
 };
 void GameState::Terminate()
 {
@@ -134,8 +166,9 @@ void GameState::Terminate()
 }
 void GameState::Render()
 {
-	SimpleDraw::AddGroundPlane(10.0f, Colors::White);
 	SimpleDraw::Render(mCamera);
+
+	mDisco.transform = mAnimation.GetTransform(mAnimationTime);
 
 	mParticleEffect.Begin();
 		mFireworks.Render(mParticleEffect);
@@ -172,6 +205,24 @@ void GameState::Update(float deltaTime)
 	mCharacterAnimator2.Update(deltaTime);
 	mFireworks.Update(deltaTime);
 	mSparkles.Update(deltaTime);
+
+
+	float prevTime = mAnimationTime;
+	float prevCharacterTime = mAnimationCharacterTime;
+	mAnimationTime += deltaTime;
+	mAnimationCharacterTime += deltaTime;
+	while (mAnimationTime > mAnimation.GetDuration())
+	{
+		mAnimationTime -= mAnimation.GetDuration();
+	}
+	mAnimation.PlayEvents(prevTime, mAnimationTime);
+	mAnimationCharacter.PlayEvents(prevCharacterTime, mAnimationCharacterTime);
+	
+	Transform transformOffset = mAnimationCharacter.GetTransform(mAnimationCharacterTime);
+	mOffset = transformOffset.position;
+
+	SetRenderGroupPosition(mCharacter, mCharacterPosition + mOffset);
+	SetRenderGroupPosition(mCharacter2, mCharacter2Position + mOffset);
 	//auto input = Input::InputSystem::Get();
 	//int targetAnim = mAnimationIndex;
 	//if (input->IsKeyPressed(Input::KeyCode::UP))
@@ -221,6 +272,8 @@ void GameState::DebugUI()
 		}
 	}
 	mStandardEffect.DebugUI();
+	mSparkles.DebugUI();
+	mFireworks.DebugUI();
 	ImGui::Checkbox("DrawSkeleton", &mDrawSkeleton);
 	ImGui::End();
 }
@@ -260,4 +313,21 @@ void GameState::UpdateCameraControl(float deltaTime)
 		mCamera.Yaw(input->GetMouseMoveX() * turnSpeed * deltaTime);
 		mCamera.Pitch(input->GetMouseMoveY() * turnSpeed * deltaTime);
 	}
+}
+
+void GameState::ChangeAnimation()
+{
+	mCharacterAnimator.PlayAnimation(2, true);
+	mCharacterAnimator2.PlayAnimation(2, true);
+}
+
+void GameState::ChangeToEndAnimation()
+{
+	mCharacterAnimator.PlayAnimation(3, true);
+	mCharacterAnimator2.PlayAnimation(3, true);
+}
+
+void GameState::MoveUP()
+{
+	mOffset.z -= 0.5f;
 }
