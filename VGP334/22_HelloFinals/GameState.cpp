@@ -114,11 +114,11 @@ void GameState::Initialize()
 	mCharacterAnimator.Initialize(mCharacterId);
 	mCharacterAnimator.PlayAnimation(1, true);
 
-	ModelManager::Get()->AddAnimation(mCharacterId2, "../../Assets/Models/characterfin/Animations/running_jump.model");
-	ModelManager::Get()->AddAnimation(mCharacterId2, "../../Assets/Models/characterfin/Animations/dance_ending.model");
-	ModelManager::Get()->AddAnimation(mCharacterId2, "../../Assets/Models/characterfin/Animations/house_dancing.model");
+	ModelManager::Get()->AddAnimation(mCharacterId2, "../../Assets/Models/characterfin/Animations/moose_run.model");
+	ModelManager::Get()->AddAnimation(mCharacterId2, "../../Assets/Models/characterfin/Animations/moose_dance.model");
+	ModelManager::Get()->AddAnimation(mCharacterId2, "../../Assets/Models/characterfin/Animations/moose_dying.model");
 	mCharacterAnimator2.Initialize(mCharacterId2);
-	//mCharacterAnimator2.PlayAnimation(1, true);
+	mCharacterAnimator2.PlayAnimation(1, true);
 
 	// Disco Animation
 	//mAnimation = AnimationBuilder()
