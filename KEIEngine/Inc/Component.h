@@ -1,5 +1,7 @@
 #pragma once
 
+#include "TypeIds.h"
+
 namespace KEIEngine
 {
 	class GameObject;
@@ -19,6 +21,8 @@ namespace KEIEngine
 		virtual void Terminate() {}
 		virtual void Update(float deltaTime) {}
 		virtual void DebugUI() {}
+
+		virtual uint32_t GetTypeId() const = 0;
 
 		GameObject& GetOwner() { return *mOwner; }
 		const GameObject& GetOwner() const { return *mOwner; }

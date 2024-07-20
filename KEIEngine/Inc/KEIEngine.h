@@ -12,10 +12,18 @@
 #include "EventManager.h"
 
 #include "GameObject.h"
+#include "GameWorld.h"
 
 // components
 #include "Component.h"
+#include "CameraComponent.h"
+#include "FPSCameraComponent.h"
+#include "TransformComponent.h"
 
+// services
+#include "Service.h"
+#include "CameraService.h"
+#include "UpdateService.h"
 
 namespace KEIEngine
 {
