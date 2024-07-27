@@ -5,22 +5,22 @@
 class GameState : public KEIEngine::AppState
 {
 public:
-	~GameState() = default;
-	void Initialize() override;
-	void Terminate() override;
-	void Render() override;
-	void Update(float deltaTime) override;
-	void DebugUI() override;
+    ~GameState() = default;
+    void Initialize() override;
+    void Terminate() override;
+    void Render() override;
+    void Update(float deltaTime) override;
+    void DebugUI() override;
 
 private:
 
-	void MoveRight();
-	void OnSpacePressedEvent(const KEIEngine::Event* event);
+    void MoveRight();
+    void OnSpacePressedEvent(const KEIEngine::Event* event);
 
-	KEIEngine::Graphics::DirectionalLight mDirectionalLight;
-	KEIEngine::Graphics::StandardEffect mStandardEffect;
+    KEIEngine::Graphics::DirectionalLight mDirectionalLight;
+    KEIEngine::Graphics::StandardEffect mStandardEffect;
 
-	KEIEngine::GameObject mGameObject;
-	KEIEngine::GameWorld mGameWorld;
+    KEIEngine::GameObject mGameObject;
+    KEIEngine::GameWorld mGameWorld;
 
 };

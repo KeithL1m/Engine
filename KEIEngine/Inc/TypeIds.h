@@ -2,26 +2,26 @@
 
 namespace KEIEngine
 {
-	enum class ComponentId
-	{
-		Invalid,
-		Transform,
-		Camera,
-		FPSCamera,
+    enum class ComponentId
+    {
+        Invalid,
+        Transform,
+        Camera,
+        FPSCamera,
 
-		Count
-	};
+        Count
+    };
 
-	enum class ServiceId
-	{
-		Invalid,
-		Camera,
-		Update,
+    enum class ServiceId
+    {
+        Invalid,
+        Camera,
+        Update,
 
-		Count
-	};
+        Count
+    };
 }
 
 #define SET_TYPE_ID(id)\
-	static uint32_t StaticGetTypeId() {return static_cast<uint32_t>(id);}\
-	uint32_t GetTypeId() const override {return StaticGetTypeId(); }
+    static uint32_t StaticGetTypeId() {return static_cast<uint32_t>(id);}\
+    uint32_t GetTypeId() const override {return StaticGetTypeId(); }

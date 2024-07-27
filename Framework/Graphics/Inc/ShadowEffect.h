@@ -9,47 +9,47 @@
 
 namespace KEIEngine::Graphics
 {
-	class RenderObject;
+    class RenderObject;
 
-	class ShadowEffect
-	{
-	public:
-		void Initialize();
-		void Terminate();
+    class ShadowEffect
+    {
+    public:
+        void Initialize();
+        void Terminate();
 
-		void Begin();
-		void End();
+        void Begin();
+        void End();
 
-		void Render(const RenderObject& renderObject);
+        void Render(const RenderObject& renderObject);
 
-		void DebugUI();
+        void DebugUI();
 
-		void SetDirectionalLight(const DirectionalLight& directionalLight);
-		void SetFocus(const KMath::Vector3& focusPosition);
-		void SetSize(float size);
-		const Camera& GetLightCamera() const;
-		const Texture& GetDepthMap() const;
-		void UpdateLightCamera();
+        void SetDirectionalLight(const DirectionalLight& directionalLight);
+        void SetFocus(const KMath::Vector3& focusPosition);
+        void SetSize(float size);
+        const Camera& GetLightCamera() const;
+        const Texture& GetDepthMap() const;
+        void UpdateLightCamera();
 
-	private:
-		struct TransformData
-		{
-			KMath::Matrix4 wvp;
-		};
+    private:
+        struct TransformData
+        {
+            KMath::Matrix4 wvp;
+        };
 
-		using TransformBuffer = TypedConstantBuffer<TransformData>;
-		TransformBuffer mTransformBuffer;
+        using TransformBuffer = TypedConstantBuffer<TransformData>;
+        TransformBuffer mTransformBuffer;
 
-		VertexShader mVertexShader;
-		PixelShader mPixelShader;
+        VertexShader mVertexShader;
+        PixelShader mPixelShader;
 
-		Camera mLightCamera;
-		RenderTarget mDepthMapRenderTarget;
+        Camera mLightCamera;
+        RenderTarget mDepthMapRenderTarget;
 
-		const DirectionalLight* mDirectionalLight = nullptr;
+        const DirectionalLight* mDirectionalLight = nullptr;
 
 
-		KMath::Vector3 mFocusPosition = KMath::Vector3::Zero;
-		float mSize = 100.0f;
-	};
+        KMath::Vector3 mFocusPosition = KMath::Vector3::Zero;
+        float mSize = 100.0f;
+    };
 }

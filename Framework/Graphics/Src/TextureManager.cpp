@@ -6,87 +6,87 @@ using namespace KEIEngine::Graphics;
 
 namespace
 {
-	std::unique_ptr<TextureManager> sInstance;
-	Core::WindowMessageHandler sWindowMessageHandler;
+    std::unique_ptr<TextureManager> sInstance;
+    Core::WindowMessageHandler sWindowMessageHandler;
 }
 
 void TextureManager::StaticInitialize(const std::filesystem::path& root)
 {
-	ASSERT(sInstance == nullptr, "TextureManager: is already initialized");
-	sInstance = std::make_unique<TextureManager>();
-	sInstance->SetRootDirectory(root);
+    ASSERT(sInstance == nullptr, "TextureManager: is already initialized");
+    sInstance = std::make_unique<TextureManager>();
+    sInstance->SetRootDirectory(root);
 }
 void TextureManager::StaticTerminate()
 {
-	sInstance.reset();
+    sInstance.reset();
  }
 TextureManager* TextureManager::Get()
 {
-	ASSERT(sInstance != nullptr, "TextureManager: is not initialized");
-	return sInstance.get();
+    ASSERT(sInstance != nullptr, "TextureManager: is not initialized");
+    return sInstance.get();
 }
 
 
 TextureManager::~TextureManager()
 {
-	for (auto& [id, texture] : mInventory)
-	{
-		texture->Terminate();
-	}
-	mInventory.clear();
+    for (auto& [id, texture] : mInventory)
+    {
+        texture->Terminate();
+    }
+    mInventory.clear();
 }
 
 void TextureManager::SetRootDirectory(const std::filesystem::path& root)
 {
-	mRootDirectory = std::move(root);
+    mRootDirectory = std::move(root);
 }
 
 TextureId TextureManager::LoadTexture(const std::filesystem::path& fileName, bool useRootDir)
 {
-	const size_t textureId = std::filesystem::hash_value(fileName);
-	auto [iter, success] = mInventory.insert({ textureId, nullptr });
-	if (success)
-	{
-		auto& texturePtr = iter->second;
-		texturePtr = std::make_unique<Texture>();
-		texturePtr->Initialize((useRootDir) ? mRootDirectory / fileName : fileName);
-	}
+    const size_t textureId = std::filesystem::hash_value(fileName);
+    auto [iter, success] = mInventory.insert({ textureId, nullptr });
+    if (success)
+    {
+        auto& texturePtr = iter->second;
+        texturePtr = std::make_unique<Texture>();
+        texturePtr->Initialize((useRootDir) ? mRootDirectory / fileName : fileName);
+    }
 
-	return textureId;
+    return textureId;
 }
 const Texture* TextureManager::GetTexture(TextureId id)
 {
-	auto iter = mInventory.find(id);
-	if (iter != mInventory.end())
-	{
-		return iter->second.get();
-	}
-	return nullptr;
+    auto iter = mInventory.find(id);
+    if (iter != mInventory.end())
+    {
+        return iter->second.get();
+    }
+    return nullptr;
 }
 
 void TextureManager::BindVS(TextureId id, uint32_t slot) const
 {
-	if (id == 0)
-	{
-		return;
-	}
+    if (id == 0)
+    {
+        return;
+    }
 
-	auto iter = mInventory.find(id);
-	if (iter != mInventory.end())
-	{
-		iter->second->BindVS(slot);
-	}
+    auto iter = mInventory.find(id);
+    if (iter != mInventory.end())
+    {
+        iter->second->BindVS(slot);
+    }
 }
 void TextureManager::BindPS(TextureId id, uint32_t slot) const
 {
-	if (id == 0)
-	{
-		return;
-	}
+    if (id == 0)
+    {
+        return;
+    }
 
-	auto iter = mInventory.find(id);
-	if (iter != mInventory.end())
-	{
-		iter->second->BindPS(slot);
-	}
+    auto iter = mInventory.find(id);
+    if (iter != mInventory.end())
+    {
+        iter->second->BindPS(slot);
+    }
 }

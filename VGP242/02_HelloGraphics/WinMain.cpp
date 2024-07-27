@@ -4,12 +4,12 @@
 using namespace KEIEngine;
 int WINAPI WinMain(HINSTANCE instance, HINSTANCE, LPSTR, int)
 {
-	AppConfig config;
-	config.appName = L"Hello Graphics";
+    AppConfig config;
+    config.appName = L"Hello Graphics";
 
-	App myApp;
-	myApp.AddState<GameState>("GameState");
-	myApp.Run(config);
-	
-	return (0);
+    App myApp;
+    myApp.AddState<GameState>("GameState");
+    myApp.Run(config);
+    
+    return (0);
 }

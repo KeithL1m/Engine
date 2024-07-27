@@ -10,18 +10,18 @@ using namespace KEIEngine::Graphics;
 class GameState : public AppState
 {
 public:
-	void Initialize();
-	void Terminate();
-	void Render();
-	void Update(float deltaTime);
+    void Initialize();
+    void Terminate();
+    void Render();
+    void Update(float deltaTime);
 protected:
-	Camera mCamera;
-	ConstantBuffer mConstantBuffer;
-	MeshBuffer mMeshBuffer ;
-	VertexShader mVertexShader;
-	PixelShader mPixelShader;
+    Camera mCamera;
+    ConstantBuffer mConstantBuffer;
+    MeshBuffer mMeshBuffer ;
+    VertexShader mVertexShader;
+    PixelShader mPixelShader;
 
-	Texture mDiffuseTexture;
-	Sampler mSampler;
+    Texture mDiffuseTexture;
+    Sampler mSampler;
 };
 

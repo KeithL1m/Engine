@@ -17,7 +17,7 @@ void FPSCameraComponent::Initialize()
     ASSERT(updateService != nullptr, "FPSCameraComponent: game world requires an update service");
     updateService->Register(this);
 
-	mCameraComponent = GetOwner().GetComponent<CameraComponent>();
+    mCameraComponent = GetOwner().GetComponent<CameraComponent>();
 }
 
 void FPSCameraComponent::Terminate()
@@ -31,8 +31,8 @@ void FPSCameraComponent::Terminate()
 
 void FPSCameraComponent::Update(float deltaTime)
 {
-	Camera& camera = mCameraComponent->GetCamera();
-	InputSystem* input = InputSystem::Get();
+    Camera& camera = mCameraComponent->GetCamera();
+    InputSystem* input = InputSystem::Get();
     const float moveSpeed = input->IsKeyDown(KeyCode::LSHIFT) ? mShiftSpeed : mMoveSpeed;
     const float turnSpeed = mTurnSpeed;
 
@@ -64,5 +64,21 @@ void FPSCameraComponent::Update(float deltaTime)
     {
         camera.Yaw(input->GetMouseMoveX() * turnSpeed * deltaTime);
         camera.Pitch(input->GetMouseMoveY() * turnSpeed * deltaTime);
+    }
+}
+
+void FPSCameraComponent::Deserialize(const rapidjson::Value& value)
+{
+    if (value.HasMember("MoveSpeed"))
+    {
+        mMoveSpeed = value["MoveSpeed"].GetFloat();
+    }
+    if (value.HasMember("TurnSpeed"))
+    {
+        mTurnSpeed = value["TurnSpeed"].GetFloat();
+    }
+    if (value.HasMember("ShiftSpeed"))
+    {
+        mShiftSpeed = value["ShiftSpeed"].GetFloat();
     }
 }

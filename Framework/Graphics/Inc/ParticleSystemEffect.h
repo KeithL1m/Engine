@@ -10,39 +10,39 @@
 
 namespace KEIEngine::Graphics
 {
-	class Camera;
-	class RenderObject;
+    class Camera;
+    class RenderObject;
 
-	class ParticleEffect
-	{
-	public:
-		void Initialize();
-		void Terminate();
+    class ParticleEffect
+    {
+    public:
+        void Initialize();
+        void Terminate();
 
-		void Begin();
-		void End();
+        void Begin();
+        void End();
 
-		void Render(const RenderObject& renderObject);
-		void Render(const RenderObject& renderObject, const Color& color);
+        void Render(const RenderObject& renderObject);
+        void Render(const RenderObject& renderObject, const Color& color);
 
-		void DebugUI();
-		void SetCamera(const Camera& camera);
+        void DebugUI();
+        void SetCamera(const Camera& camera);
 
-	private:
-		struct ParticleData
-		{
-			KMath::Matrix4 wvp;
-			Color color;
-		};
+    private:
+        struct ParticleData
+        {
+            KMath::Matrix4 wvp;
+            Color color;
+        };
 
-		using ParticleBuffer = TypedConstantBuffer<ParticleData>;
-		ParticleBuffer mParticleBuffer;
+        using ParticleBuffer = TypedConstantBuffer<ParticleData>;
+        ParticleBuffer mParticleBuffer;
 
-		VertexShader mVertexShader;
-		PixelShader mPixelShader;
-		Sampler mSampler;
-		BlendState mBlendState;
+        VertexShader mVertexShader;
+        PixelShader mPixelShader;
+        Sampler mSampler;
+        BlendState mBlendState;
 
-		const Camera* mCamera = nullptr;
-	};
+        const Camera* mCamera = nullptr;
+    };
 }

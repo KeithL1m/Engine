@@ -22,7 +22,7 @@ namespace KEIEngine::KMath
         bool operator == (const Quaternion& q) const { return x == q.x && y == q.y && z == q.z && w == q.w; }
         bool operator != (const Quaternion& q) const { return x != q.x || y != q.y || z != q.z || w != q.w; }
 
-        // Unary operators		
+        // Unary operators        
         Quaternion operator+(const Quaternion& rhs) const { return Quaternion(x + rhs.x, y + rhs.y, z + rhs.z, w + rhs.w); }
         Quaternion operator*(float s) const { return Quaternion(x * s, y * s, z * s, w * s); }
         Quaternion operator/(float s) const { return Quaternion(x / s, y / s, z / s, w / s); }

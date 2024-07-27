@@ -31,6 +31,7 @@
     <ClInclude Include="Inc\FireworkParticleSystem.h" />
     <ClInclude Include="Inc\FPSCameraComponent.h" />
     <ClInclude Include="Inc\GameObject.h" />
+    <ClInclude Include="Inc\GameObjectFactory.h" />
     <ClInclude Include="Inc\GameWorld.h" />
     <ClInclude Include="Inc\KEIEngine.h" />
     <ClInclude Include="Inc\Particle.h" />
@@ -49,6 +50,7 @@
     <ClCompile Include="Src\FireworkParticleSystem.cpp" />
     <ClCompile Include="Src\FPSCameraComponent.cpp" />
     <ClCompile Include="Src\GameObject.cpp" />
+    <ClCompile Include="Src\GameObjectFactory.cpp" />
     <ClCompile Include="Src\GameWorld.cpp" />
     <ClCompile Include="Src\KEIEngine.cpp" />
     <ClCompile Include="Src\Particle.cpp" />

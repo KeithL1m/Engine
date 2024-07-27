@@ -4,18 +4,18 @@
 
 namespace KEIEngine::Graphics
 {
-	struct Bone
-	{
-		std::string name;
-		int index = -1;
+    struct Bone
+    {
+        std::string name;
+        int index = -1;
 
-		Bone* parent = nullptr;
-		int parentIndex = -1;
+        Bone* parent = nullptr;
+        int parentIndex = -1;
 
-		std::vector<Bone*> children;
-		std::vector<int> childrenIndices;
+        std::vector<Bone*> children;
+        std::vector<int> childrenIndices;
 
-		KMath::Matrix4 toParentTransform;
-		KMath::Matrix4 offsetTransform;
-	};
+        KMath::Matrix4 toParentTransform;
+        KMath::Matrix4 offsetTransform;
+    };
 }

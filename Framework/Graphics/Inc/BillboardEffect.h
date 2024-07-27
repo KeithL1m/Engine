@@ -8,27 +8,27 @@
 
 namespace KEIEngine::Graphics
 {
-	class Camera;
-	class RenderObject;
+    class Camera;
+    class RenderObject;
 
-	class BillboardEffect
-	{
-	public:
-		void Initialize();
-		void Terminate();
+    class BillboardEffect
+    {
+    public:
+        void Initialize();
+        void Terminate();
 
-		void Begin();
-		void End();
-		void Render(const RenderObject& renderObject);
-		void SetCamera(const Camera& camera);
+        void Begin();
+        void End();
+        void Render(const RenderObject& renderObject);
+        void SetCamera(const Camera& camera);
 
-	private:
-		const Camera* mCamera = nullptr;
+    private:
+        const Camera* mCamera = nullptr;
 
-		ConstantBuffer mConstantBuffer;
-		VertexShader mVertexShader;
-		PixelShader mPixelShader;
-		Sampler mSampler;
-		BlendState mBlendState;
-	};
+        ConstantBuffer mConstantBuffer;
+        VertexShader mVertexShader;
+        PixelShader mPixelShader;
+        Sampler mSampler;
+        BlendState mBlendState;
+    };
 }

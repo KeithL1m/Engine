@@ -3,6 +3,6 @@
 
 KEIEngine::App& KEIEngine::MainApp()
 {
-	static App sApp;
-	return sApp;
+    static App sApp;
+    return sApp;
 }

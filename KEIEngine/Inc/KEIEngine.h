@@ -13,6 +13,7 @@
 
 #include "GameObject.h"
 #include "GameWorld.h"
+#include "GameObjectFactory.h"
 
 // components
 #include "Component.h"
@@ -27,5 +28,5 @@
 
 namespace KEIEngine
 {
-	App& MainApp();
+    App& MainApp();
 }

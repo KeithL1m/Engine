@@ -4,11 +4,11 @@ class PixelShader final
 {
 public:
 
-	void Initialize(const std::filesystem::path& filePath, const char* entryPoint = "PS");
-	void Terminate();
+    void Initialize(const std::filesystem::path& filePath, const char* entryPoint = "PS");
+    void Terminate();
 
-	void Bind();
+    void Bind();
 
 private:
-	ID3D11PixelShader* mPixelShader = nullptr;
+    ID3D11PixelShader* mPixelShader = nullptr;
 };

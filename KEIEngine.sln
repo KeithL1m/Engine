@@ -50,18 +50,6 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "04_HelloCube", "VGP242\04_H
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "05_HelloMeshBuilder", "VGP242\05_HelloMeshBuilder\05_HelloMeshBuilder.vcxproj", "{3EE42365-CDE0-40AF-BF3B-22C939B337B1}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Textures", "Textures", "{B3C4E657-43D0-4C6E-B298-3588A728C463}"
-	ProjectSection(SolutionItems) = preProject
-		Assets\Textures\earth.jpg = Assets\Textures\earth.jpg
-		Assets\Textures\earth_bump.jpg = Assets\Textures\earth_bump.jpg
-		Assets\Textures\earth_clouds.jpg = Assets\Textures\earth_clouds.jpg
-		Assets\Textures\earth_lights.jpg = Assets\Textures\earth_lights.jpg
-		Assets\Textures\earth_normal.jpg = Assets\Textures\earth_normal.jpg
-		Assets\Textures\earth_spec.jpg = Assets\Textures\earth_spec.jpg
-		Assets\Textures\space.jpg = Assets\Textures\space.jpg
-		Assets\Textures\sun.jpg = Assets\Textures\sun.jpg
-	EndProjectSection
-EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DirectXTK_Desktop_2019", "External\DirectXTK\DirectXTK_Desktop_2019.vcxproj", "{E0B52AE7-E160-4D32-BF3F-910B785E5A8E}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "06_HelloTexture", "VGP242\06_HelloTexture\06_HelloTexture.vcxproj", "{5ABF2ADD-805D-4515-A652-4C4CCAC8D0CC}"
@@ -125,6 +113,14 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "22_HelloMemory", "VGPGameWorld\22_HelloMemory\22_HelloMemory.vcxproj", "{C6BACB65-25ED-4DC8-90F1-FE0AD96FD9D5}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "23_HelloGameObject", "VGPGameWorld\23_HelloGameObject\23_HelloGameObject.vcxproj", "{24AAD9D5-7D2F-4FC9-9E29-3AB807944609}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Templates", "Templates", "{692937C8-6B6D-4FA6-9E40-37264949B7A3}"
+	ProjectSection(SolutionItems) = preProject
+		Assets\Templates\fps_camera.json = Assets\Templates\fps_camera.json
+		Assets\Templates\test_object.json = Assets\Templates\test_object.json
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "24_HelloGameObjectFactory", "VGPGameWorld\24_HelloGameObjectFactory\24_HelloGameObjectFactory.vcxproj", "{E4549551-01F3-4820-8567-E0557960F50B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -430,6 +426,14 @@ Global
 		{24AAD9D5-7D2F-4FC9-9E29-3AB807944609}.Release|x64.Build.0 = Release|x64
 		{24AAD9D5-7D2F-4FC9-9E29-3AB807944609}.Release|x86.ActiveCfg = Release|Win32
 		{24AAD9D5-7D2F-4FC9-9E29-3AB807944609}.Release|x86.Build.0 = Release|Win32
+		{E4549551-01F3-4820-8567-E0557960F50B}.Debug|x64.ActiveCfg = Debug|x64
+		{E4549551-01F3-4820-8567-E0557960F50B}.Debug|x64.Build.0 = Debug|x64
+		{E4549551-01F3-4820-8567-E0557960F50B}.Debug|x86.ActiveCfg = Debug|Win32
+		{E4549551-01F3-4820-8567-E0557960F50B}.Debug|x86.Build.0 = Debug|Win32
+		{E4549551-01F3-4820-8567-E0557960F50B}.Release|x64.ActiveCfg = Release|x64
+		{E4549551-01F3-4820-8567-E0557960F50B}.Release|x64.Build.0 = Release|x64
+		{E4549551-01F3-4820-8567-E0557960F50B}.Release|x86.ActiveCfg = Release|Win32
+		{E4549551-01F3-4820-8567-E0557960F50B}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -445,7 +449,6 @@ Global
 		{3A8BEEC5-CA93-40B8-BAD2-A2E4898DAB1D} = {A00DCE90-84B7-4F9C-8431-850600A737FD}
 		{25E6493D-2D4B-451A-BE13-5321CF9EBAAF} = {6FBEC151-C0C2-4F20-A207-E03EF28FF495}
 		{3EE42365-CDE0-40AF-BF3B-22C939B337B1} = {6FBEC151-C0C2-4F20-A207-E03EF28FF495}
-		{B3C4E657-43D0-4C6E-B298-3588A728C463} = {A00DCE90-84B7-4F9C-8431-850600A737FD}
 		{E0B52AE7-E160-4D32-BF3F-910B785E5A8E} = {F277303F-62A6-4EC3-A9EA-273E589B6DBF}
 		{5ABF2ADD-805D-4515-A652-4C4CCAC8D0CC} = {6FBEC151-C0C2-4F20-A207-E03EF28FF495}
 		{1C77085C-F0BA-416D-9413-26E8B8C37DB6} = {6FBEC151-C0C2-4F20-A207-E03EF28FF495}
@@ -474,6 +477,8 @@ Global
 		{00C7C1E7-BE17-44BD-A984-5F7A65006130} = {77402D0C-887E-4BD1-BFC1-82041E65CA9D}
 		{C6BACB65-25ED-4DC8-90F1-FE0AD96FD9D5} = {60AEAB8E-06E6-4ECC-9CA4-05FE79C5BF42}
 		{24AAD9D5-7D2F-4FC9-9E29-3AB807944609} = {60AEAB8E-06E6-4ECC-9CA4-05FE79C5BF42}
+		{692937C8-6B6D-4FA6-9E40-37264949B7A3} = {A00DCE90-84B7-4F9C-8431-850600A737FD}
+		{E4549551-01F3-4820-8567-E0557960F50B} = {60AEAB8E-06E6-4ECC-9CA4-05FE79C5BF42}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {010E0B6F-B2FD-4AD9-A2B3-9FF364F73B7A}
