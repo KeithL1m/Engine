@@ -7,6 +7,7 @@
 #include "TransformComponent.h"
 #include "CameraComponent.h"
 #include "FPSCameraComponent.h"
+#include "MeshComponent.h"
 
 using namespace KEIEngine;
 namespace rj = rapidjson;
@@ -28,6 +29,10 @@ namespace
         else if (componentName == "FPSCameraComponent")
         {
             component = gameObject.AddComponent<FPSCameraComponent>();
+        }
+        else if (componentName == "MeshComponent")
+        {
+            component = gameObject.AddComponent<MeshComponent>();
         }
         else
         {

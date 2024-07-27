@@ -70,6 +70,7 @@ void ShadowEffect::DebugUI()
             {144,144},
             {0, 0},
             {1, 1},
+            {1, 1, 1, 1},
             {1, 1, 1, 1});
         ImGui::DragFloat("Size##Shadow", &mSize, 1.0f, 1.0f, 1000.0f);
     }

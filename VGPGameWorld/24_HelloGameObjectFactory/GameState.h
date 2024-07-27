@@ -14,12 +14,6 @@ public:
 
 private:
 
-    void MoveRight();
-    void OnSpacePressedEvent(const KEIEngine::Event* event);
-
-    KEIEngine::Graphics::DirectionalLight mDirectionalLight;
-    KEIEngine::Graphics::StandardEffect mStandardEffect;
-
     KEIEngine::GameObject mCameraObject;
     KEIEngine::GameObject mTestGameObject;
     KEIEngine::GameWorld mGameWorld;

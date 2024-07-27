@@ -7,13 +7,9 @@ using namespace KEIEngine::Input;
 
 void GameState::Initialize()
 {
-    mDirectionalLight.direction = KMath::Normalize({ 1.0f,-1.0f,1.0f });
-    mDirectionalLight.ambient = { 0.5f, 0.5f,0.5f,1.0f };
-    mDirectionalLight.diffuse = { 0.8f, 0.8f,0.8f,1.0f };
-    mDirectionalLight.specular = { 1.0f, 1.0f,1.0f,1.0f };
-
     CameraService* cs = mGameWorld.AddService<CameraService>();
     mGameWorld.AddService<UpdateService>();
+    mGameWorld.AddService<RenderService>();
     mGameWorld.Initialize();
 
     mGameWorld.AddGameObject(&mCameraObject);
@@ -29,16 +25,11 @@ void GameState::Initialize()
     name = "test_object";
     mTestGameObject.SetName(name);
     mTestGameObject.Initialize();
-
-    mStandardEffect.Initialize(L"../../Assets/Shaders/Standard.fx");
-    mStandardEffect.SetCamera(cs->GetMain());
-    mStandardEffect.SetDirectionalLight(mDirectionalLight);
 };
 void GameState::Terminate()
 {
     mCameraObject.Terminate();
     mTestGameObject.Terminate();
-    mStandardEffect.Terminate();
 
     mGameWorld.Terminate();
 }

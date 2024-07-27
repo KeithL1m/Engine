@@ -4,19 +4,21 @@ namespace KEIEngine
 {
     enum class ComponentId
     {
-        Invalid,
-        Transform,
-        Camera,
-        FPSCamera,
+        Invalid,            // Invalid component id
+        Transform,          // Transform for component, contains positional data
+        Camera,             // Stationary camera information
+        FPSCamera,          // Functionality for a camera to move
+        Mesh,               // Render a mesh built shape
 
         Count
     };
 
     enum class ServiceId
     {
-        Invalid,
-        Camera,
-        Update,
+        Invalid,            // Invalid service id
+        Camera,             // Registers and manages focus camera
+        Update,             // Registers and updates any component that requires an update
+        Render,             // Registers and renders any graphical components
 
         Count
     };

@@ -19,11 +19,13 @@
 #include "Component.h"
 #include "CameraComponent.h"
 #include "FPSCameraComponent.h"
+#include "MeshComponent.h"
 #include "TransformComponent.h"
 
 // services
 #include "Service.h"
 #include "CameraService.h"
+#include "RenderService.h"
 #include "UpdateService.h"
 
 namespace KEIEngine
