@@ -6,7 +6,7 @@ namespace KEIEngine
 {
     class CameraService;
     class Component;
-    class MeshComponent;
+    class RenderObjectComponent;
     class TransformComponent;
 
     class RenderService : public Service
@@ -21,8 +21,8 @@ namespace KEIEngine
         void DebugUI() override;
 
         // register
-        void Register(const MeshComponent* meshComponent);
-        void Unregister(const MeshComponent* meshComponent);
+        void Register(const RenderObjectComponent* renderObjectComponent);
+        void Unregister(const RenderObjectComponent* renderObjectComponent);
 
     private:
         const CameraService* mCameraService = nullptr;

@@ -29,6 +29,7 @@ namespace KEIEngine
 
             ASSERT(!mInitialized, "GameObject: cannot add components once initialized");
             ASSERT(!HasA<ComponentType>(), "GameObject: already has component type");
+            ASSERT(ComponentType::StaticGetTypeId() != static_cast<uint32_t>(ComponentId::Invalid), "GameObject: invalid component");
 
             auto& newComponent = mComponents.emplace_back(std::make_unique<ComponentType>());
             newComponent->mOwner = this;

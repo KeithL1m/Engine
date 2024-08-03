@@ -8,6 +8,8 @@
 #include "CameraComponent.h"
 #include "FPSCameraComponent.h"
 #include "MeshComponent.h"
+#include "ModelComponent.h"
+#include "AnimatorComponent.h"
 
 using namespace KEIEngine;
 namespace rj = rapidjson;
@@ -33,6 +35,14 @@ namespace
         else if (componentName == "MeshComponent")
         {
             component = gameObject.AddComponent<MeshComponent>();
+        }
+        else if (componentName == "ModelComponent")
+        {
+            component = gameObject.AddComponent<ModelComponent>();
+        }
+        else if (componentName == "AnimatorComponent")
+        {
+            component = gameObject.AddComponent<AnimatorComponent>();
         }
         else
         {

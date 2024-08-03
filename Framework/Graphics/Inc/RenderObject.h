@@ -30,8 +30,8 @@ namespace KEIEngine::Graphics
     };
 
     using RenderGroup = std::vector<RenderObject>;
-    [[nodiscard]] RenderGroup CreateRenderGroup(ModelId id, Animator* animator = nullptr);
-    [[nodiscard]] RenderGroup CreateRenderGroup(const Model& model, Animator* animator = nullptr);
+    [[nodiscard]] RenderGroup CreateRenderGroup(ModelId id, const Animator* animator = nullptr);
+    [[nodiscard]] RenderGroup CreateRenderGroup(const Model& model, const Animator* animator = nullptr);
     void CleanupRenderGroup(RenderGroup& renderGroup);
     void SetRenderGroupPosition(RenderGroup& renderGroup, const KMath::Vector3& position);
 

@@ -15,7 +15,7 @@ void RenderObject::Terminate()
     bumpMapId = 0;
 }
 
-RenderGroup Graphics::CreateRenderGroup(ModelId id, Animator* animator)
+RenderGroup Graphics::CreateRenderGroup(ModelId id, const Animator* animator)
 {
     const Model* model = ModelManager::Get()->GetModel(id);
     ASSERT(model != nullptr, "RenderGroup: ModelID %d is not loaded", id);
@@ -27,7 +27,7 @@ RenderGroup Graphics::CreateRenderGroup(ModelId id, Animator* animator)
     return renderGroup;
 }
 
-RenderGroup Graphics::CreateRenderGroup(const Model& model, Animator* animator)
+RenderGroup Graphics::CreateRenderGroup(const Model& model, const Animator* animator)
 {
     auto TryLoadTexture = [](const auto& textureName) -> TextureId
     {

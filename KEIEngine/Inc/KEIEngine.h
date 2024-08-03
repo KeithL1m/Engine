@@ -17,9 +17,12 @@
 
 // components
 #include "Component.h"
+#include "AnimatorComponent.h"
 #include "CameraComponent.h"
 #include "FPSCameraComponent.h"
 #include "MeshComponent.h"
+#include "ModelComponent.h"
+#include "RenderObjectComponent.h"
 #include "TransformComponent.h"
 
 // services

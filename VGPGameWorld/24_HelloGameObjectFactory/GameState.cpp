@@ -21,7 +21,7 @@ void GameState::Initialize()
     mCameraObject.SetName(name);
 
     // Game Object Factory
-    GameObjectFactory::Make("../../Assets/Templates/test_object.json", mTestGameObject);
+    GameObjectFactory::Make("../../Assets/Templates/test_model.json", mTestGameObject);
     name = "test_object";
     mTestGameObject.SetName(name);
     mTestGameObject.Initialize();

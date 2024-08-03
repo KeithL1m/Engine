@@ -1,23 +1,18 @@
 #pragma once
 
-#include "Component.h"
+#include "RenderObjectComponent.h"
 
 namespace KEIEngine
 {
-    class MeshComponent : public Component
+    class MeshComponent final : public RenderObjectComponent
     {
     public:
         SET_TYPE_ID(ComponentId::Mesh);
 
-        void Initialize() override;
-        void Terminate() override;
         void Deserialize(const rapidjson::Value& value) override;
+        const Graphics::Model& GetModel() const override;
 
-        bool CanCastShadow() const;
-        const Graphics::Model& GetModel() const;
     private:
         Graphics::Model mModel;
-        bool mCastShadow = true;
-
     };
 }

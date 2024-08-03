@@ -4,7 +4,8 @@
 #include "GameWorld.h"
 
 #include "CameraService.h"
-#include "MeshComponent.h"
+#include "AnimatorComponent.h"
+#include "RenderObjectComponent.h"
 #include "TransformComponent.h"
 
 using namespace KEIEngine;
@@ -86,25 +87,39 @@ void RenderService::DebugUI()
     mShadowEffect.DebugUI();
 }
 
-void RenderService::Register(const MeshComponent* meshComponent)
+void RenderService::Register(const RenderObjectComponent* renderObjectComponent)
 {
     Entry& entry = mRenderEntries.emplace_back();
 
-    const GameObject& gameObject = meshComponent->GetOwner();
-    entry.renderComponent = meshComponent;
+    const GameObject& gameObject = renderObjectComponent->GetOwner();
+    entry.renderComponent = renderObjectComponent;
     entry.transformComponent = gameObject.GetComponent<TransformComponent>();
-    entry.castShadow = meshComponent->CanCastShadow();
-    entry.renderGroup = CreateRenderGroup(meshComponent->GetModel());
+    entry.castShadow = renderObjectComponent->CastShadow();
+
+    const Animator* animator = nullptr;
+    const AnimatorComponent* animatorComponent = gameObject.GetComponent<AnimatorComponent>();
+    if (animatorComponent != nullptr)
+    {
+        animator = &animatorComponent->GetAnimator();
+    }
+    if (renderObjectComponent->GetModelId() != 0)
+    {
+        entry.renderGroup = CreateRenderGroup(renderObjectComponent->GetModelId(), animator);
+    }
+    else
+    {
+        entry.renderGroup = CreateRenderGroup(renderObjectComponent->GetModel(), animator);
+    }
 }
 
-void RenderService::Unregister(const MeshComponent* meshComponent)
+void RenderService::Unregister(const RenderObjectComponent* renderObjectComponent)
 {
     auto iter = std::find_if(
         mRenderEntries.begin(),
         mRenderEntries.end(),
         [&](const Entry& entry)
         {
-            return entry.renderComponent == meshComponent;
+            return entry.renderComponent == renderObjectComponent;
         }
     );
     if (iter != mRenderEntries.end())

@@ -9,6 +9,8 @@ namespace KEIEngine
         Camera,             // Stationary camera information
         FPSCamera,          // Functionality for a camera to move
         Mesh,               // Render a mesh built shape
+        Model,              // Renders a Model
+        Animator,           // Controls a Model's animation
 
         Count
     };
