@@ -10,27 +10,13 @@ void GameState::Initialize()
     CameraService* cs = mGameWorld.AddService<CameraService>();
     mGameWorld.AddService<UpdateService>();
     mGameWorld.AddService<RenderService>();
-    mGameWorld.Initialize();
+    mGameWorld.Initialize(50);
 
-    mGameWorld.AddGameObject(&mCameraObject);
-    mGameWorld.AddGameObject(&mTestGameObject);
-
-    GameObjectFactory::Make("../../Assets/Templates/fps_camera.json", mCameraObject);
-    mCameraObject.Initialize();
-    std::string name = "CameraObject";
-    mCameraObject.SetName(name);
-
-    // Game Object Factory
-    GameObjectFactory::Make("../../Assets/Templates/test_model.json", mTestGameObject);
-    name = "test_object";
-    mTestGameObject.SetName(name);
-    mTestGameObject.Initialize();
+    mGameWorld.CreateGameObject("../../Assets/Templates/fps_camera.json", "Camera");
+    mGameWorld.CreateGameObject("../../Assets/Templates/test_model.json", "Obj");
 };
 void GameState::Terminate()
 {
-    mCameraObject.Terminate();
-    mTestGameObject.Terminate();
-
     mGameWorld.Terminate();
 }
 void GameState::Render()
