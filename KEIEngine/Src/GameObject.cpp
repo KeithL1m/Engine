@@ -61,3 +61,8 @@ const GameWorld& KEIEngine::GameObject::GetWorld() const
 {
     return *mWorld;
 }
+
+const GameObjectHandle& KEIEngine::GameObject::GetHandle() const
+{
+    return mHandle;
+}

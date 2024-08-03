@@ -14,6 +14,7 @@
 #include "GameObject.h"
 #include "GameWorld.h"
 #include "GameObjectFactory.h"
+#include "GameObjectHandle.h"
 
 // components
 #include "Component.h"

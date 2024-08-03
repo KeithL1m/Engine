@@ -123,6 +123,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Templates", "Templates", "{
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "24_HelloGameObjectFactory", "VGPGameWorld\24_HelloGameObjectFactory\24_HelloGameObjectFactory.vcxproj", "{E4549551-01F3-4820-8567-E0557960F50B}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "25_HelloGameWorld", "VGPGameWorld\25_HelloGameWorld\25_HelloGameWorld.vcxproj", "{C4D2E0CB-BC8A-45B3-803F-3053614C72B0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -435,6 +437,14 @@ Global
 		{E4549551-01F3-4820-8567-E0557960F50B}.Release|x64.Build.0 = Release|x64
 		{E4549551-01F3-4820-8567-E0557960F50B}.Release|x86.ActiveCfg = Release|Win32
 		{E4549551-01F3-4820-8567-E0557960F50B}.Release|x86.Build.0 = Release|Win32
+		{C4D2E0CB-BC8A-45B3-803F-3053614C72B0}.Debug|x64.ActiveCfg = Debug|x64
+		{C4D2E0CB-BC8A-45B3-803F-3053614C72B0}.Debug|x64.Build.0 = Debug|x64
+		{C4D2E0CB-BC8A-45B3-803F-3053614C72B0}.Debug|x86.ActiveCfg = Debug|Win32
+		{C4D2E0CB-BC8A-45B3-803F-3053614C72B0}.Debug|x86.Build.0 = Debug|Win32
+		{C4D2E0CB-BC8A-45B3-803F-3053614C72B0}.Release|x64.ActiveCfg = Release|x64
+		{C4D2E0CB-BC8A-45B3-803F-3053614C72B0}.Release|x64.Build.0 = Release|x64
+		{C4D2E0CB-BC8A-45B3-803F-3053614C72B0}.Release|x86.ActiveCfg = Release|Win32
+		{C4D2E0CB-BC8A-45B3-803F-3053614C72B0}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -480,6 +490,7 @@ Global
 		{24AAD9D5-7D2F-4FC9-9E29-3AB807944609} = {60AEAB8E-06E6-4ECC-9CA4-05FE79C5BF42}
 		{692937C8-6B6D-4FA6-9E40-37264949B7A3} = {A00DCE90-84B7-4F9C-8431-850600A737FD}
 		{E4549551-01F3-4820-8567-E0557960F50B} = {60AEAB8E-06E6-4ECC-9CA4-05FE79C5BF42}
+		{C4D2E0CB-BC8A-45B3-803F-3053614C72B0} = {60AEAB8E-06E6-4ECC-9CA4-05FE79C5BF42}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {010E0B6F-B2FD-4AD9-A2B3-9FF364F73B7A}

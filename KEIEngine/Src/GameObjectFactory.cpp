@@ -74,6 +74,4 @@ void GameObjectFactory::Make(const std::filesystem::path& templatePath, GameObje
             newComponent->Deserialize(component.value);
         }
     }
-
-    gameObject.Initialize();
 }

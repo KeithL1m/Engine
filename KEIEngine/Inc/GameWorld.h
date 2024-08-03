@@ -8,15 +8,18 @@ namespace KEIEngine
     class GameWorld final
     {
     public:
-        void Initialize();
+        [[deprecated]]void Initialize();
+        void Initialize(uint32_t capacity);
         void Terminate();
 
         void Update(float deltaTime);
         void Render();
         void DebugUI();
 
-        void AddGameObject(GameObject* gameObject);
-        void RemoveGameObject(GameObject* gameObject);
+        GameObject* CreateGameObject(const std::filesystem::path& templateFile, const std::string& name);
+        GameObject* GetGameObject(const std::string& name);
+        GameObject* GetGameObject(const GameObjectHandle& handle);
+        void DestroyGameObject(const GameObjectHandle& handle);
 
         template<class ServiceType>
         ServiceType* AddService()
@@ -49,13 +52,21 @@ namespace KEIEngine
          }
 
     private:
+        bool IsValid(const GameObjectHandle& handle);
+        void ProcessDestroyList();
+
+        struct Slot
+        {
+            std::unique_ptr<GameObject> gameObject;
+            uint32_t generation = 0;
+        };
         using Services = std::vector<std::unique_ptr<Service>>;
-        using GameObjects = std::vector<GameObject*>;
+        using GameObjectSlots = std::vector<Slot>;
 
         Services mServices;
-        GameObjects mGameObjects;
-        GameObjects mPendingAddObjects;
-        GameObjects mPendingRemoveObjects;
+        GameObjectSlots mGameObjectSlots;
+        std::vector<uint32_t> mFreeSlots;
+        std::vector<uint32_t> mToBeDestroyed;
 
         bool mInitialized = false;
     };

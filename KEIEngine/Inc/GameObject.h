@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Component.h"
+#include "GameObjectHandle.h"
 
 namespace KEIEngine
 {
@@ -20,6 +21,7 @@ namespace KEIEngine
 
         GameWorld& GetWorld();
         const GameWorld& GetWorld() const;
+        const GameObjectHandle& GetHandle() const;
 
         template<class ComponentType>
         ComponentType* AddComponent()
@@ -87,5 +89,6 @@ namespace KEIEngine
 
         friend class GameWorld;
         GameWorld* mWorld = nullptr;
+        GameObjectHandle mHandle;
     };
 }

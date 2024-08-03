@@ -33,6 +33,7 @@
     <ClInclude Include="Inc\FPSCameraComponent.h" />
     <ClInclude Include="Inc\GameObject.h" />
     <ClInclude Include="Inc\GameObjectFactory.h" />
+    <ClInclude Include="Inc\GameObjectHandle.h" />
     <ClInclude Include="Inc\GameWorld.h" />
     <ClInclude Include="Inc\KEIEngine.h" />
     <ClInclude Include="Inc\MeshComponent.h" />
