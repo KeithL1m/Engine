@@ -8,8 +8,6 @@ int WINAPI WinMain(HINSTANCE instance, HINSTANCE, LPSTR, int)
     KEIEngine::App& mainApp = KEIEngine::MainApp();
     mainApp.AddState<GameState>("GameState");
 
-    mainApp.ChangeState("GameState");
-
     KEIEngine::AppConfig config;
     config.appName = L"Hello Game World";
     config.winWidth = 1280;

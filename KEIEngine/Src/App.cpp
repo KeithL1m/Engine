@@ -90,6 +90,8 @@ void App::Run(const AppConfig& config)
         graphicsSystem->EndRender();
     }
 
+    mCurrentState->Terminate();
+
     //terminate static classes
     SoundEffectManager::StaticTerminate();
     AudioSystem::StaticTerminate();
