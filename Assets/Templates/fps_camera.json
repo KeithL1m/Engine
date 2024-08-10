@@ -1,7 +1,7 @@
 {
   "Components": {
     "CameraComponent": {
-      "Position": [ 0.0, 1.0, -4.0 ],
+      "Position": [ 0.0, 2.0, -6.0 ],
       "LookAt": [ 0.0, 0.0, 0.0 ]
     },
     "FPSCameraComponent": {

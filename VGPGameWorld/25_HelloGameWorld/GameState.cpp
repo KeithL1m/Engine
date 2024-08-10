@@ -13,9 +13,10 @@ void GameState::Initialize()
     mGameWorld.Initialize(50);
 
     mGameWorld.CreateGameObject("../../Assets/Templates/fps_camera.json", "Camera");
-    mGameWorld.CreateGameObject("../../Assets/Templates/test_model.json", "Obj");
+    mGameWorld.CreateGameObject("../../Assets/Templates/test_object.json", "Earth");
+    mGameWorld.CreateGameObject("../../Assets/Templates/test_model.json", "Model");
 }
-void GameState::Terminate()
+void GameState::Terminate()                                                                                              
 {
     mGameWorld.Terminate();
 }
