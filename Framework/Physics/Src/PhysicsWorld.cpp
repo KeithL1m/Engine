@@ -28,7 +28,7 @@ void PhysicsWorld::StaticTerminate()
 
 PhysicsWorld* PhysicsWorld::Get()
 {
-    ASSERT(sPhysicsWorld == nullptr, "PhysicsWorld: is not initialized!");
+    ASSERT(sPhysicsWorld != nullptr, "PhysicsWorld: is not initialized!");
     return sPhysicsWorld.get();
 }
 
@@ -48,9 +48,9 @@ void PhysicsWorld::Initialize(const Settings& settings)
     mDynamicsWorld->setGravity(ConvertTobtVector3(settings.gravity));
     mDynamicsWorld->setDebugDrawer(&mPhysicsDebugDraw);
 
-    //mSoftBodyWorld = new btSoftRigidDynamicsWorld(mDispatcher, mInterface, mSolver, mCollisionConfiguration);
-    //mSoftBodyWorld->setGravity(ConvertTobtVector3(settings.gravity));
-    //mSoftBodyWorld->setDebugDrawer(&mPhysicsDebugDraw);
+    mSoftBodyWorld = new btSoftRigidDynamicsWorld(mDispatcher, mInterface, mSolver, mCollisionConfiguration);
+    mSoftBodyWorld->setGravity(ConvertTobtVector3(settings.gravity));
+    mSoftBodyWorld->setDebugDrawer(&mPhysicsDebugDraw);
 }
 
 void PhysicsWorld::Terminate()
@@ -66,7 +66,7 @@ void PhysicsWorld::Terminate()
 void PhysicsWorld::Update(float deltaTime)
 {
     mDynamicsWorld->stepSimulation(deltaTime, mSettings.simulationSteps, mSettings.fixedTimeStep);
-    //mSoftBodyWorld->stepSimulation(deltaTime, mSettings.simulationSteps, mSettings.fixedTimeStep);
+    mSoftBodyWorld->stepSimulation(deltaTime, mSettings.simulationSteps, mSettings.fixedTimeStep);
     for (PhysicsObject* obj : mPhysicsObjects)
     {
         obj->Update();
@@ -106,10 +106,10 @@ void PhysicsWorld::Register(PhysicsObject* physicsObject)
     if (iter == mPhysicsObjects.end())
     {
         mPhysicsObjects.push_back(physicsObject);
-        //if (physicsObject->GetSoftBody() != nullptr)
-        //{
-        //    mSoftBodyWorld->addSoftBody(physicsObject->GetSoftBody());
-        //}
+        if (physicsObject->GetSoftBody() != nullptr)
+        {
+            mSoftBodyWorld->addSoftBody(physicsObject->GetSoftBody());
+        }
         if (physicsObject->GetRigidBody() != nullptr)
         {
             mDynamicsWorld->addRigidBody(physicsObject->GetRigidBody());
@@ -122,10 +122,10 @@ void PhysicsWorld::Unregister(PhysicsObject* physicsObject)
     auto iter = std::find(mPhysicsObjects.begin(), mPhysicsObjects.end(), physicsObject);
     if (iter == mPhysicsObjects.end())
     {
-        //if (physicsObject->GetSoftBody() != nullptr)
-        //{
-        //    mSoftBodyWorld->removeSoftBody(physicsObject->GetSoftBody());
-        //}
+        if (physicsObject->GetSoftBody() != nullptr)
+        {
+            mSoftBodyWorld->removeSoftBody(physicsObject->GetSoftBody());
+        }
         if (physicsObject->GetRigidBody() != nullptr)
         {
             mDynamicsWorld->removeRigidBody(physicsObject->GetRigidBody());

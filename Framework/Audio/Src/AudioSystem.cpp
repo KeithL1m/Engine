@@ -44,7 +44,6 @@ AudioSystem::~AudioSystem()
 
 void AudioSystem::Initialize()
 {
-    ASSERT(sAudioSystem == nullptr, "AudioSystem: is already initialized");
     AUDIO_ENGINE_FLAGS flags = AudioEngine_Default;
 #if defined(_DEBUG)
     flags |= AudioEngine_Debug;

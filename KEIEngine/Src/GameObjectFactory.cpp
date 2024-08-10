@@ -17,10 +17,17 @@ namespace rj = rapidjson;
 namespace
 {
     using namespace KEIEngine;
+
+    CustomMake TryMake;
+
     Component* AddComponent(const std::string& componentName, GameObject& gameObject)
     {
-        Component* component = nullptr;
-        if (componentName == "TransformComponent")
+        Component* component = TryMake(componentName, gameObject);
+        if (component != nullptr)
+        {
+            LOG("Custom component %s was added successfuly", componentName.c_str());
+        }
+        else if (componentName == "TransformComponent")
         {
             component = gameObject.AddComponent<TransformComponent>();
         }
@@ -53,11 +60,16 @@ namespace
     }
 }
 
+void GameObjectFactory::SetCustomMake(CustomMake customMake)
+{
+    TryMake = customMake;
+}
+
 void GameObjectFactory::Make(const std::filesystem::path& templatePath, GameObject& gameObject)
 {
     FILE* file = nullptr;
     auto err = fopen_s(&file, templatePath.u8string().c_str(), "r");
-    ASSERT(err = 0, "GameObjectFactory: failed to open file %s", templatePath.u8string().c_str());
+    ASSERT(err == 0, "GameObjectFactory: failed to open file %s", templatePath.u8string().c_str());
 
     char readBuffer[65536];
     rj::FileReadStream readStream(file, readBuffer, sizeof(readBuffer));

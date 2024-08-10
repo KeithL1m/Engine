@@ -1,19 +1,22 @@
 {
   "Capacity": 50,
-  "Services": {
-    "CameraService": {
+    "Services": {
+        "CameraService": {
 
-    },
-    "RenderService": {
-      "LightDirection": [ 1.0, -1.0, 1.0 ],
-      "ColorAmbient": [ 0.6, 0.6, 0.6, 1.0 ],
-      "ColorDiffuse": [ 0.8, 0.8, 0.8, 1.0 ],
-      "ColorSpecular": [ 0.9, 0.9, 0.9, 1.0 ]
-    },
-    "UpdateService": {
+        },
+        "RenderService": {
+            "LightDirection": [ 1.0, -1.0, 1.0 ],
+            "ColorAmbient": [ 0.6, 0.6, 0.6, 1.0 ],
+            "ColorDiffuse": [ 0.8, 0.8, 0.8, 1.0 ],
+            "ColorSpecular": [ 0.9, 0.9, 0.9, 1.0 ]
+        },
+        "UpdateService": {
 
-    }
-  },
+        },
+        "CustomDebugDrawDisplayService": {
+
+        }
+    },
   "GameObjects": {
     "MainCamera": {
       "Template": "../../Assets/Templates/fps_camera.json",
