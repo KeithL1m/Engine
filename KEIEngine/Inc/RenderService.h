@@ -19,6 +19,7 @@ namespace KEIEngine
         void Update(float deltaTime) override;
         void Render() override;
         void DebugUI() override;
+        virtual void Deserialize(rapidjson::Value& value);
 
         // register
         void Register(const RenderObjectComponent* renderObjectComponent);

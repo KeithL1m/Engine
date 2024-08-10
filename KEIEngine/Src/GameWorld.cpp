@@ -2,6 +2,14 @@
 #include "GameWorld.h"
 #include "GameObjectFactory.h"
 
+
+#include "CameraService.h"
+#include "RenderService.h"
+#include "UpdateService.h"
+
+#include "TransformComponent.h"
+#include "CameraComponent.h"
+
 using namespace KEIEngine;
 
 void GameWorld::Initialize()
@@ -80,6 +88,78 @@ void GameWorld::DebugUI()
     }
 }
 
+void GameWorld::LoadLevel(const std::filesystem::path& levelFile)
+{
+    FILE* file = nullptr;
+    auto err = fopen_s(&file, levelFile.u8string().c_str(), "r");
+    ASSERT(err == 0 && file != nullptr, "GameWorld: failed to load level %s", levelFile.u8string().c_str());
+
+    char readBuffer[65536];
+    rapidjson::FileReadStream readStream(file, readBuffer, sizeof(readBuffer));
+    fclose(file);
+
+    rapidjson::Document doc;
+    doc.ParseStream(readStream);
+
+    auto services = doc["Services"].GetObj();
+    for (auto& service : services)
+    {
+        std::string serviceName = service.name.GetString();
+        Service* newService = nullptr;
+        if (serviceName == "CameraService")
+        {
+            newService = AddService<CameraService>();
+        }
+        else if (serviceName == "RenderService")
+        {
+            newService = AddService<RenderService>();
+        }
+        else if (serviceName == "UpdateService")
+        {
+            newService = AddService<UpdateService>();
+        }
+        else
+        {
+            ASSERT(false, "GameObject: service %s is not defined", serviceName.c_str());
+        }
+        ASSERT(newService != nullptr, "GameObject: service %s was not created properly", serviceName.c_str());
+        newService->Deserialize(service.value);
+    }
+
+    uint32_t capacity = static_cast<uint32_t>(doc["Capacity"].GetInt());
+    Initialize(capacity);
+
+    auto gameObjects = doc["GameObjects"].GetObj();
+    for (auto& gameObject : gameObjects)
+    {
+        std::string name = gameObject.name.GetString();
+        const char* templateFile = gameObject.value["Template"].GetString();
+        GameObject* obj = CreateGameObject(templateFile, name);
+        if (obj != nullptr)
+        {
+            if (gameObject.value.HasMember("TransformComponent"))
+            {
+                TransformComponent* transformComponent = obj->GetComponent<TransformComponent>();
+                if (transformComponent != nullptr)
+                {
+                    transformComponent->Deserialize(gameObject.value["TransformComponent"].GetObj());
+                }
+            }
+
+            if(gameObject.value.HasMember("CameraComponent"))
+            {
+                CameraComponent* cameraComponent = obj->GetComponent<CameraComponent>();
+                if (cameraComponent != nullptr)
+                {
+                    cameraComponent->Deserialize(gameObject.value["CameraComponent"].GetObj());
+                }
+            }
+            obj->Initialize();
+        }
+    }
+
+}
+
 GameObject* GameWorld::CreateGameObject(const std::filesystem::path& templateFile, const std::string& name)
 {
     ASSERT(mInitialized, "GameWorld: is not initialized");
@@ -103,7 +183,6 @@ GameObject* GameWorld::CreateGameObject(const std::filesystem::path& templateFil
     newObject->mHandle.mIndex = freeSlot;
     newObject->mHandle.mGeneration = slot.generation;
 
-    newObject->Initialize();
     return newObject.get();
 }
 

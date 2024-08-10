@@ -7,14 +7,7 @@ using namespace KEIEngine::Input;
 
 void GameState::Initialize()
 {
-    CameraService* cs = mGameWorld.AddService<CameraService>();
-    mGameWorld.AddService<UpdateService>();
-    mGameWorld.AddService<RenderService>();
-    mGameWorld.Initialize(50);
-
-    mGameWorld.CreateGameObject("../../Assets/Templates/fps_camera.json", "Camera");
-    mGameWorld.CreateGameObject("../../Assets/Templates/test_object.json", "Earth");
-    mGameWorld.CreateGameObject("../../Assets/Templates/test_model.json", "Model");
+    mGameWorld.LoadLevel("../../Assets/Templates/Levels/test_level.json");
 }
 void GameState::Terminate()                                                                                              
 {

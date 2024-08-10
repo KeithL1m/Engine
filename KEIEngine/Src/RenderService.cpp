@@ -87,6 +87,45 @@ void RenderService::DebugUI()
     mShadowEffect.DebugUI();
 }
 
+void RenderService::Deserialize(rapidjson::Value& value)
+{
+    if (value.HasMember("LightDirection"))
+    {
+        auto dir = value["LightDirection"].GetArray();
+        const float x = dir[0].GetFloat();
+        const float y = dir[1].GetFloat();
+        const float z = dir[2].GetFloat();
+        mDirectionalLight.direction = KMath::Normalize({ x, y, z });
+    }
+    if (value.HasMember("ColorAmbient"))
+    {
+        auto dir = value["ColorAmbient"].GetArray();
+        const float r = dir[0].GetFloat();
+        const float g = dir[1].GetFloat();
+        const float b = dir[2].GetFloat();
+        const float a = dir[3].GetFloat();
+        mDirectionalLight.ambient = { r, g, b, a };
+    }
+    if (value.HasMember("ColorDiffuse"))
+    {
+        auto dir = value["ColorDiffuse"].GetArray();
+        const float r = dir[0].GetFloat();
+        const float g = dir[1].GetFloat();
+        const float b = dir[2].GetFloat();
+        const float a = dir[3].GetFloat();
+        mDirectionalLight.diffuse = { r, g, b, a };
+    }
+    if (value.HasMember("ColorSpecular"))
+    {
+        auto dir = value["ColorSpecular"].GetArray();
+        const float r = dir[0].GetFloat();
+        const float g = dir[1].GetFloat();
+        const float b = dir[2].GetFloat();
+        const float a = dir[3].GetFloat();
+        mDirectionalLight.specular = { r, g, b, a };
+    }
+}
+
 void RenderService::Register(const RenderObjectComponent* renderObjectComponent)
 {
     Entry& entry = mRenderEntries.emplace_back();
