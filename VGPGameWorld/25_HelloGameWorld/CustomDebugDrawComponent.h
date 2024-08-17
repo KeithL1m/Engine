@@ -11,6 +11,8 @@ public:
     void Initialize() override;
     void Terminate() override;
 
+    void Update(float deltaTime) override;
+
     void AddDebugDraw();
     void Deserialize(const rapidjson::Value& value) override;
 

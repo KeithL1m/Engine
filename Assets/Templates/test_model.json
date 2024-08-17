@@ -27,7 +27,17 @@
       "ColliderData": {
         "Shape": "Hull",
         "HalfExtents": [ 0.4, 1.0, 0.2 ],
-        "Origin":  [0.0, 1.6, 0.0]
+        "Origin": [ 0.0, 1.6, 0.0 ]
+      }
+    },
+    "SoundBankComponent": {
+      "SoundEffects": {
+        "Explosion": {
+          "FileName": "explosion.wav"
+        },
+        "Gun": {
+          "FileName": "photongun1.wav"
+        }
       }
     }
   }

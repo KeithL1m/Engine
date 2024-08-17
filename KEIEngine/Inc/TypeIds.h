@@ -12,6 +12,8 @@ namespace KEIEngine
         Model,              // Renders a Model
         Animator,           // Controls a Model's animation
         RigidBody,          // Adds a rigidbody to a world
+        SoundEffect,        // Add a single sound effect to an object
+        SoundBank,          // Add an array of sound effects to an object that can be triggered
 
         Count
     };

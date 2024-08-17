@@ -11,6 +11,8 @@
 #include "ModelComponent.h"
 #include "AnimatorComponent.h"
 #include "RigidBodyComponent.h"
+#include "SoundBankComponent.h"
+#include "SoundEffectComponent.h"
 
 using namespace KEIEngine;
 namespace rj = rapidjson;
@@ -55,6 +57,14 @@ namespace
         else if (componentName == "RigidBodyComponent")
         {
             component = gameObject.AddComponent<RigidBodyComponent>();
+        }
+        else if (componentName == "SoundBankComponent")
+        {
+            component = gameObject.AddComponent<SoundBankComponent>();
+        }
+        else if (componentName == "SoundEffectComponent")
+        {
+            component = gameObject.AddComponent<SoundEffectComponent>();
         }
         else
         {
