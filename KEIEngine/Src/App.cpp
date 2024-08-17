@@ -77,7 +77,8 @@ void App::Run(const AppConfig& config)
 
         if (deltaTime < 0.5f)
         {
-            PhysicsWorld::Get()->Update(deltaTime);
+            // physics is a service
+            //PhysicsWorld::Get()->Update(deltaTime);
             mCurrentState->Update(deltaTime);
         }
 

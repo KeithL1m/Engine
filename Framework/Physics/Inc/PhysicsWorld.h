@@ -32,6 +32,10 @@ namespace KEIEngine::Physics
         void Register(PhysicsObject* physicsObject);
         void Unregister(PhysicsObject* physicsObject);
 
+        void SetGravity(const KMath::Vector3& gravity);
+        void SetSimSteps(uint32_t steps);
+        void SetFixedTimeStep(float timeStep);
+
     private:
         Settings mSettings;
 

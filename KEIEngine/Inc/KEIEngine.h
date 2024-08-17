@@ -31,6 +31,7 @@
 #include "CameraService.h"
 #include "RenderService.h"
 #include "UpdateService.h"
+#include "PhysicsService.h"
 
 namespace KEIEngine
 {

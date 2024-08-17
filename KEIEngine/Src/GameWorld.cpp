@@ -6,6 +6,7 @@
 #include "CameraService.h"
 #include "RenderService.h"
 #include "UpdateService.h"
+#include "PhysicsService.h"
 
 #include "TransformComponent.h"
 #include "CameraComponent.h"
@@ -55,6 +56,14 @@ void GameWorld::Terminate()
     if (!mInitialized)
     {
         return;
+    }
+    for (Slot& slot : mGameObjectSlots)
+    {
+        if (slot.gameObject != nullptr)
+        {
+            slot.gameObject->Terminate();
+            slot.gameObject.reset();
+        }
     }
     for (auto& service : mServices)
     {
@@ -131,6 +140,10 @@ void GameWorld::LoadLevel(const std::filesystem::path& levelFile)
         else if (serviceName == "UpdateService")
         {
             newService = AddService<UpdateService>();
+        }
+        else if (serviceName == "PhysicsService")
+        {
+            newService = AddService<PhysicsService>();
         }
         else
         {

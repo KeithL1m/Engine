@@ -120,7 +120,7 @@ void PhysicsWorld::Register(PhysicsObject* physicsObject)
 void PhysicsWorld::Unregister(PhysicsObject* physicsObject)
 {
     auto iter = std::find(mPhysicsObjects.begin(), mPhysicsObjects.end(), physicsObject);
-    if (iter == mPhysicsObjects.end())
+    if (iter != mPhysicsObjects.end())
     {
         if (physicsObject->GetSoftBody() != nullptr)
         {
@@ -132,6 +132,23 @@ void PhysicsWorld::Unregister(PhysicsObject* physicsObject)
         }
         mPhysicsObjects.erase(iter);
     }
+}
+
+void PhysicsWorld::SetGravity(const KMath::Vector3& gravity)
+{
+    ASSERT(mDynamicsWorld != nullptr, "PhysicsWorld: static initialized was not called");
+    mSettings.gravity = gravity;
+    mDynamicsWorld->setGravity(ConvertTobtVector3(gravity));
+}
+
+void PhysicsWorld::SetSimSteps(uint32_t steps)
+{
+    mSettings.simulationSteps = steps;
+}
+
+void PhysicsWorld::SetFixedTimeStep(float timeStep)
+{
+    mSettings.fixedTimeStep = timeStep;
 }
 
 btSoftBody* PhysicsWorld::CreateSoftBody(int nodeCount)

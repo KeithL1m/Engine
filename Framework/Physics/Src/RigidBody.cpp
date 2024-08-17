@@ -23,12 +23,12 @@ void RigidBody::Initialize(KEIEngine::Graphics::Transform& graphicsTransform, co
     mRigidBody = new btRigidBody(mMass, mMotionState, shape.GetCollisionShape());
     // add bounce
     //mRigidBody->setRestitution(1.5f);
-    PhysicsWorld::Get()->Register(this);
+    //PhysicsWorld::Get()->Register(this);
 }
 
 void RigidBody::Terminate()
 {
-    PhysicsWorld::Get()->Unregister(this);
+    //PhysicsWorld::Get()->Unregister(this);
     SafeDelete(mRigidBody);
     SafeDelete(mMotionState);
 }
