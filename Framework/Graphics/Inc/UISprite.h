@@ -39,7 +39,10 @@ namespace KEIEngine::Graphics
 		void SetPivot(Pivot pivot);
 		void SetFlip(Flip flip);
 		void SetColor(const Color& color);
+		void SetRotation(float rotation);
 
+		const DirectX::XMFLOAT2& GetPosition() const { return mPosition; }
+		const RECT& GetRect() const { return mRect; }
 	private:
 		void UpdateOrigin();
 

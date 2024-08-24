@@ -129,6 +129,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Levels", "Levels", "{B7B48EE2-25C6-472E-AE8F-B2A7D24866A0}"
 	ProjectSection(SolutionItems) = preProject
 		Assets\Templates\Levels\test_level.json = Assets\Templates\Levels\test_level.json
+		Assets\Templates\test_ui_sprite.json = Assets\Templates\test_ui_sprite.json
 	EndProjectSection
 EndProject
 Global

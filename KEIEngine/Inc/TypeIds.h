@@ -14,6 +14,8 @@ namespace KEIEngine
         RigidBody,          // Adds a rigidbody to a world
         SoundEffect,        // Add a single sound effect to an object
         SoundBank,          // Add an array of sound effects to an object that can be triggered
+        UISprite,           // Adds a sprite to the UI
+        UIButton,           // Adds a button to the UI
 
         Count
     };
@@ -25,6 +27,7 @@ namespace KEIEngine
         Update,             // Registers and updates any component that requires an update
         Render,             // Registers and renders any graphical components
         Physics,            // Registers and updates physics based objects
+        UIRender,             // Registers and render UI components
 
         Count
     };

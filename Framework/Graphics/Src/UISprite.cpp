@@ -68,6 +68,11 @@ void UISprite::SetColor(const Color& color)
 	mColor.m128_f32[3] = color.a;
 }
 
+void UISprite::SetRotation(float rotation)
+{
+	mRotation = rotation;
+}
+
 void UISprite::UpdateOrigin()
 {
 	const float width = mRect.right - mRect.left;

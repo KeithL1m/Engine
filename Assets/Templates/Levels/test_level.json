@@ -17,7 +17,10 @@
 
         },
         "PhysicsService": {
-            "Gravity":  [0.0, -9.81, 0.0]
+            "Gravity": [ 0.0, -9.81, 0.0 ]
+        },
+        "UIRenderService": {
+
         }
     },
   "GameObjects": {
@@ -44,10 +47,16 @@
       }
     },
     "TestObject2": {
-      "Template": "../../Assets/Templates/test_model.json",
-      "TransformComponent": {
-        "Position": [ -2.0, 6.0, 0.0 ]
-      }
+        "Template": "../../Assets/Templates/test_model.json",
+        "TransformComponent": {
+            "Position": [ -2.0, 6.0, 0.0 ]
+        }
+    },
+    "TestUISprite": {
+        "Template": "../../Assets/Templates/test_ui_sprite.json",
+        "UISpriteComponent": {
+            "Position":  [100, 100]
+        }
     }
   }
 }

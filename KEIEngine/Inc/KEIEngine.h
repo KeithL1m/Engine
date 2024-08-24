@@ -28,6 +28,9 @@
 #include "SoundEffectComponent.h"
 #include "TransformComponent.h"
 #include "RigidBodyComponent.h"
+#include "UIComponent.h"
+#include "UIButtonComponent.h"
+#include "UISpriteComponent.h"
 
 // services
 #include "Service.h"
@@ -35,6 +38,7 @@
 #include "RenderService.h"
 #include "UpdateService.h"
 #include "PhysicsService.h"
+#include "UIRenderService.h"
 
 namespace KEIEngine
 {
