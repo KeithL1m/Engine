@@ -36,6 +36,8 @@
 #include "TextureManager.h"
 #include "Terrain.h"
 #include "TerrainEffect.h"
+#include "UISpriteRenderer.h"
+#include "UISprite.h"
 #include "RenderTarget.h"
 #include "RenderObject.h"
 #include "StandardEffect.h"

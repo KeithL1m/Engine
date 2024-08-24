@@ -47,6 +47,7 @@ void App::Run(const AppConfig& config)
     EventManager::StaticInitialize();
     AudioSystem::StaticInitialize();
     SoundEffectManager::StaticInitialize("../../Assets/Sounds");
+    UISpriteRenderer::StaticInitialize();
 
     ASSERT(mCurrentState != nullptr, "App -- need an app state");
     mCurrentState->Initialize();
@@ -82,18 +83,22 @@ void App::Run(const AppConfig& config)
             mCurrentState->Update(deltaTime);
         }
 
-        auto graphicsSystem = GraphicsSystem::Get();
-        graphicsSystem->BeginRender();
-            mCurrentState->Render();
+        auto gs = GraphicsSystem::Get();
+        auto sr = UISpriteRenderer::Get();
+        gs->BeginRender();
+            sr->BeginRender();
+                mCurrentState->Render();
+            sr->EndRender();
             DebugUI::BeginRender();
                 mCurrentState->DebugUI();
             DebugUI::EndRender();
-        graphicsSystem->EndRender();
+        gs->EndRender();
     }
 
     mCurrentState->Terminate();
 
     //terminate static classes
+    UISpriteRenderer::StaticTerminate();
     SoundEffectManager::StaticTerminate();
     AudioSystem::StaticTerminate();
     EventManager::StaticTerminate();
