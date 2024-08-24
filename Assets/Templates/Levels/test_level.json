@@ -23,40 +23,46 @@
 
         }
     },
-  "GameObjects": {
-    "MainCamera": {
-      "Template": "../../Assets/Templates/fps_camera.json",
-      "CameraComponent": {
-        "Position": [ 0.0, 1.0, -4.0 ],
-        "LookAt": [ 0.0, 0.0, 1.0 ]
-      }
-    },
-    "Ground": {
-      "Template": "../../Assets/Templates/ground.json"
-    },
-    "TestObject0": {
-      "Template": "../../Assets/Templates/test_model.json",
-      "TransformComponent": {
-        "Position": [ 0.0, 6.0, 0.0 ]
-      }
-    },
-    "TestObject1": {
-      "Template": "../../Assets/Templates/test_model.json",
-      "TransformComponent": {
-        "Position": [ 2.0, 6.0, 0.0 ]
-      }
-    },
-    "TestObject2": {
-        "Template": "../../Assets/Templates/test_model.json",
-        "TransformComponent": {
-            "Position": [ -2.0, 6.0, 0.0 ]
-        }
-    },
-    "TestUISprite": {
-        "Template": "../../Assets/Templates/test_ui_sprite.json",
-        "UISpriteComponent": {
-            "Position":  [100, 100]
+    "GameObjects": {
+        "MainCamera": {
+            "Template": "../../Assets/Templates/fps_camera.json",
+            "CameraComponent": {
+                "Position": [ 0.0, 1.0, -4.0 ],
+                "LookAt": [ 0.0, 0.0, 1.0 ]
+            }
+        },
+        "Ground": {
+            "Template": "../../Assets/Templates/ground.json"
+        },
+        "TestObject0": {
+            "Template": "../../Assets/Templates/test_model.json",
+            "TransformComponent": {
+                "Position": [ 0.0, 6.0, 0.0 ]
+            }
+        },
+        "TestObject1": {
+            "Template": "../../Assets/Templates/test_model.json",
+            "TransformComponent": {
+                "Position": [ 2.0, 6.0, 0.0 ]
+            }
+        },
+        "TestObject2": {
+            "Template": "../../Assets/Templates/test_model.json",
+            "TransformComponent": {
+                "Position": [ -2.0, 6.0, 0.0 ]
+            }
+        },
+        "TestUISprite": {
+            "Template": "../../Assets/Templates/test_ui_sprite.json",
+            "UISpriteComponent": {
+                "Position": [ 100, 100 ]
+            }
+        },
+        "TestUISprite1": {
+            "Template": "../../Assets/Templates/test_ui_sprite.json",
+            "UISpriteComponent": {
+                "Position": [ 200, 100 ]
+            }
         }
     }
-  }
 }
