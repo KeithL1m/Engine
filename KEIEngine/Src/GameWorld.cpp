@@ -198,14 +198,14 @@ void GameWorld::LoadLevel(const std::filesystem::path& levelFile)
                 }
             }
 
-            //if (gameObject.value.HasMember("UIButtonComponent"))
-            //{
-            //    UIButtonComponent* uiButtonComponent = obj->GetComponent<UIButtonComponent>();
-            //    if (uiButtonComponent != nullptr)
-            //    {
-            //        uiButtonComponent->Deserialize(gameObject.value["UIButtonComponent"].GetObj());
-            //    }
-            //}
+            if (gameObject.value.HasMember("UIButtonComponent"))
+            {
+                UIButtonComponent* uiButtonComponent = obj->GetComponent<UIButtonComponent>();
+                if (uiButtonComponent != nullptr)
+                {
+                    uiButtonComponent->Deserialize(gameObject.value["UIButtonComponent"].GetObj());
+                }
+            }
             obj->Initialize();
         }
     }
