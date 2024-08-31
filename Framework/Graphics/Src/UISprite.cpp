@@ -73,6 +73,14 @@ void UISprite::SetRotation(float rotation)
 	mRotation = rotation;
 }
 
+bool UISprite::IsInSprite(float x, float y)
+{
+	const float width = mRect.right - mRect.left;
+	const float height = mRect.bottom - mRect.top;
+	return x >= mPosition.x - mOrigin.x && x <= mPosition.x + width - mOrigin.x &&
+		y >= mPosition.y - mOrigin.y && y <= mPosition.y + height - mOrigin.y;
+}
+
 void UISprite::UpdateOrigin()
 {
 	const float width = mRect.right - mRect.left;

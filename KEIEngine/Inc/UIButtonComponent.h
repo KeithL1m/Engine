@@ -13,6 +13,8 @@ namespace KEIEngine {
         Count
     };
 
+    using ButtonCallback = std::function<void()>;
+
     class UIButtonComponent : public UIComponent
     {
     public:
@@ -24,11 +26,15 @@ namespace KEIEngine {
         void Render() override;
         void Deserialize(const rapidjson::Value& value) override;
 
+        void SetCallback(ButtonCallback cb);
+
     private:
         void OnClick();
 
+        ButtonCallback mCallback = nullptr;
         RECT mRect = { 0, 0, 0, 0 };
         DirectX::XMFLOAT2 mPosition = { 0.0f, 0.0f };
+        
         Graphics::UISprite mButtonStates[static_cast<uint32_t>(ButtonState::Count)];
         std::string mButtonStateTextures[static_cast<uint32_t>(ButtonState::Count)];
         ButtonState mCurrentState = ButtonState::Default;

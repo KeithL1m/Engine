@@ -16,11 +16,7 @@ void UIButtonComponent::Initialize()
             mButtonStates[i].Initialize(mButtonStateTextures[i]);
         }
     }
-
-    if (mRect.right == 0 || mRect.bottom == 0)
-    {
-        mRect = mButtonStates[0].GetRect();
-    }
+    mPosition = mButtonStates[0].GetPosition();
 
     auto uiRenderService = GetOwner().GetWorld().GetService<UIRenderService>();
     uiRenderService->Register(this);
@@ -37,13 +33,9 @@ void UIButtonComponent::Update(float deltaTime)
     mCurrentState = ButtonState::Default;
 
     auto input = InputSystem::Get();
-    const int mouseX = input->GetMouseMoveX();
+    const int mouseX = input->GetMouseScreenX();
     const int mouseY = input->GetMouseScreenY();
-
-    // mouseX can't be called
-
-    /*if (mouseX >= mRect.left + mPosition.x && mouseX <= mRect.right + mPosition.x
-        && mouseY >= mRect.top + mPosition.y && mouseY <= mRect.bottom = mPosition.y)
+    if (mButtonStates[static_cast<uint32_t>(mCurrentState)].IsInSprite(mouseX, mouseY))
     {
         mCurrentState = ButtonState::Hover;
         if (input->IsMouseDown(MouseButton::LBUTTON))
@@ -54,13 +46,13 @@ void UIButtonComponent::Update(float deltaTime)
         {
             OnClick();
         }
-    }*/
+    }
 }
 
 void UIButtonComponent::Render()
 {
     uint32_t buttonState = static_cast<uint32_t>(mCurrentState);
-    if (mButtonStateTextures[buttonState].empty())
+    if (!mButtonStateTextures[buttonState].empty())
     {
         UISpriteRenderer::Get()->Render(&mButtonStates[buttonState]);
     }
@@ -90,12 +82,12 @@ void UIButtonComponent::Deserialize(const rapidjson::Value& value)
         auto buttonStateObj = value[buttonStateString.c_str()].GetObj();
         if (buttonStateObj.HasMember("Texture"))
         {
-            mButtonStateTextures[i] = value["Texture"].GetString();
+            mButtonStateTextures[i] = buttonStateObj["Texture"].GetString();
         }
 
         if (buttonStateObj.HasMember("Scale"))
         {
-            auto scale = value["Scale"].GetArray();
+            auto scale = buttonStateObj["Scale"].GetArray();
             const float x = scale[0].GetFloat();
             const float y = scale[1].GetFloat();
             mButtonStates[i].SetScale({x, y});
@@ -133,77 +125,87 @@ void UIButtonComponent::Deserialize(const rapidjson::Value& value)
                 ASSERT(false, "UISpriteComponent: invalid flip %s", flip.c_str());
             }
         }
-        if (value.HasMember("Position"))
+    }
+    if (value.HasMember("Position"))
+    {
+        auto pos = value["Position"].GetArray();
+        const float x = pos[0].GetFloat();
+        const float y = pos[1].GetFloat();
+        for (uint32_t i = 0; i < static_cast<uint32_t>(ButtonState::Count); ++i)
         {
-            auto pos = value["Position"].GetArray();
-            const float x = pos[0].GetFloat();
-            const float y = pos[1].GetFloat();
-            for (uint32_t i = 0; i < static_cast<uint32_t>(ButtonState::Count); ++i)
-            {
-                mButtonStates[i].SetPosition({ x,y });
-            }
-        }
-        if (value.HasMember("Rotation"))
-        {
-            const float rotation = value["Rotation"].GetFloat();
-            for (uint32_t i = 0; i < static_cast<uint32_t>(ButtonState::Count); ++i)
-            {
-                mButtonStates[i].SetRotation(rotation);
-            }
-        }
-        if (value.HasMember("Pivot"))
-        {
-            std::string pivot = value["Pivot"].GetString();
-            Pivot buttonPivot = Pivot::TopLeft;
-            if (pivot == "TopLeft")
-            {
-                buttonPivot = Pivot::TopLeft;
-            }
-            else if (pivot == "Top")
-            {
-                buttonPivot = Pivot::Top;
-            }
-            else if (pivot == "TopRight")
-            {
-                buttonPivot = Pivot::TopRight;
-            }
-            else if (pivot == "Left")
-            {
-                buttonPivot = Pivot::Left;
-            }
-            else if (pivot == "Center")
-            {
-                buttonPivot = Pivot::Center;
-            }
-            else if (pivot == "Right")
-            {
-                buttonPivot = Pivot::Right;
-            }
-            else if (pivot == "BottomLeft")
-            {
-                buttonPivot = Pivot::BottomLeft;
-            }
-            else if (pivot == "Bottom")
-            {
-                buttonPivot = Pivot::Bottom;
-            }
-            else if (pivot == "BottomRight")
-            {
-                buttonPivot = Pivot::BottomRight;
-            }
-            else
-            {
-                ASSERT(false, "UISpriteComponent: invalid pivot %s", pivot.c_str());
-            }
-            for (uint32_t i = 0; i < static_cast<uint32_t>(ButtonState::Count); ++i)
-            {
-                mButtonStates[i].SetPivot(buttonPivot);
-            }
+            mButtonStates[i].SetPosition({ x,y });
         }
     }
+    if (value.HasMember("Rotation"))
+    {
+        const float rotation = value["Rotation"].GetFloat();
+        for (uint32_t i = 0; i < static_cast<uint32_t>(ButtonState::Count); ++i)
+        {
+            mButtonStates[i].SetRotation(rotation);
+        }
+    }
+    if (value.HasMember("Pivot"))
+    {
+        std::string pivot = value["Pivot"].GetString();
+        Pivot buttonPivot = Pivot::TopLeft;
+        if (pivot == "TopLeft")
+        {
+            buttonPivot = Pivot::TopLeft;
+        }
+        else if (pivot == "Top")
+        {
+            buttonPivot = Pivot::Top;
+        }
+        else if (pivot == "TopRight")
+        {
+            buttonPivot = Pivot::TopRight;
+        }
+        else if (pivot == "Left")
+        {
+            buttonPivot = Pivot::Left;
+        }
+        else if (pivot == "Center")
+        {
+            buttonPivot = Pivot::Center;
+        }
+        else if (pivot == "Right")
+        {
+            buttonPivot = Pivot::Right;
+        }
+        else if (pivot == "BottomLeft")
+        {
+            buttonPivot = Pivot::BottomLeft;
+        }
+        else if (pivot == "Bottom")
+        {
+            buttonPivot = Pivot::Bottom;
+        }
+        else if (pivot == "BottomRight")
+        {
+            buttonPivot = Pivot::BottomRight;
+        }
+        else
+        {
+            ASSERT(false, "UISpriteComponent: invalid pivot %s", pivot.c_str());
+        }
+        for (uint32_t i = 0; i < static_cast<uint32_t>(ButtonState::Count); ++i)
+        {
+            mButtonStates[i].SetPivot(buttonPivot);
+        }
+    }
+}
+
+void UIButtonComponent::SetCallback(ButtonCallback cb)
+{
+    mCallback = cb;
 }
 
 void UIButtonComponent::OnClick()
 {
     LOG("BUTTON WAS CLICKED!!!!");
+    if (mCallback != nullptr)
+    {
+        mCallback();
+    }
 }
+

@@ -204,6 +204,9 @@ void GameWorld::LoadLevel(const std::filesystem::path& levelFile)
                 if (uiButtonComponent != nullptr)
                 {
                     uiButtonComponent->Deserialize(gameObject.value["UIButtonComponent"].GetObj());
+
+                    //Make a button call a function
+                    //uiButtonComponent->SetCallback(std::bind(&GameWorld::OnButtonClick, this));
                 }
             }
             obj->Initialize();

@@ -120,6 +120,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Templates", "Templates", "{
 		Assets\Templates\ground.json = Assets\Templates\ground.json
 		Assets\Templates\test_model.json = Assets\Templates\test_model.json
 		Assets\Templates\test_object.json = Assets\Templates\test_object.json
+		Assets\Templates\test_ui_button.json = Assets\Templates\test_ui_button.json
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "24_HelloGameObjectFactory", "VGPGameWorld\24_HelloGameObjectFactory\24_HelloGameObjectFactory.vcxproj", "{E4549551-01F3-4820-8567-E0557960F50B}"

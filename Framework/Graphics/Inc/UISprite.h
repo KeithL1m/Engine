@@ -41,6 +41,8 @@ namespace KEIEngine::Graphics
 		void SetColor(const Color& color);
 		void SetRotation(float rotation);
 
+		bool IsInSprite(float x, float y);
+
 		const DirectX::XMFLOAT2& GetPosition() const { return mPosition; }
 		const RECT& GetRect() const { return mRect; }
 	private:
