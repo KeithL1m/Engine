@@ -31,6 +31,7 @@
 #include "UIComponent.h"
 #include "UIButtonComponent.h"
 #include "UISpriteComponent.h"
+#include "UITextComponent.h"
 
 // services
 #include "Service.h"

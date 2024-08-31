@@ -1,12 +1,32 @@
 #include "Precompiled.h"
 #include "TransformComponent.h"
 
+#include "GameObject.h"
+#include "SaveUtil.h"
+
 using namespace KEIEngine;
 using namespace KEIEngine::Graphics;
 
 void TransformComponent::DebugUI()
 {
     SimpleDraw::AddTransform(GetMatrix4());
+
+    std::string idTag = GetOwner().GetName();
+    std::string imguiName = "Position##" + idTag;
+    ImGui::DragFloat3(imguiName.c_str(), &position.x);
+    imguiName = "Rotation##" + idTag;
+    ImGui::DragFloat3(imguiName.c_str(), &rotation.x, 0.01f);
+    imguiName = "Scale##" + idTag;
+    ImGui::DragFloat3(imguiName.c_str(), &scale.x, 0.01f);
+}
+
+void TransformComponent::Serialize(rapidjson::Document& doc, rapidjson::Value& value)
+{
+    rapidjson::Value componentValue(rapidjson::kObjectType);
+    SaveUtil::SaveVector3("Position", position, doc, componentValue);
+    SaveUtil::SaveQuaternion("Rotation", rotation, doc, componentValue);
+    SaveUtil::SaveVector3("Scale", scale, doc, componentValue);
+    value.AddMember("TransformComponent", componentValue, doc.GetAllocator());
 }
 
 void TransformComponent::Deserialize(const rapidjson::Value& value)

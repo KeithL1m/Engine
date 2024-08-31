@@ -16,6 +16,7 @@ namespace KEIEngine
         SoundBank,          // Add an array of sound effects to an object that can be triggered
         UISprite,           // Adds a sprite to the UI
         UIButton,           // Adds a button to the UI
+        UIText,             // Adds a text to the UI
 
         Count
     };

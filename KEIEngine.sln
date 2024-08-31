@@ -121,6 +121,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Templates", "Templates", "{
 		Assets\Templates\test_model.json = Assets\Templates\test_model.json
 		Assets\Templates\test_object.json = Assets\Templates\test_object.json
 		Assets\Templates\test_ui_button.json = Assets\Templates\test_ui_button.json
+		Assets\Templates\test_ui_text.json = Assets\Templates\test_ui_text.json
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "24_HelloGameObjectFactory", "VGPGameWorld\24_HelloGameObjectFactory\24_HelloGameObjectFactory.vcxproj", "{E4549551-01F3-4820-8567-E0557960F50B}"
@@ -129,9 +130,12 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "25_HelloGameWorld", "VGPGam
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Levels", "Levels", "{B7B48EE2-25C6-472E-AE8F-B2A7D24866A0}"
 	ProjectSection(SolutionItems) = preProject
+		Assets\Templates\Levels\test_edit_level.json = Assets\Templates\Levels\test_edit_level.json
 		Assets\Templates\Levels\test_level.json = Assets\Templates\Levels\test_level.json
 		Assets\Templates\test_ui_sprite.json = Assets\Templates\test_ui_sprite.json
 	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "FW1FontWrapper", "External\FW1FontWrapper\FW1FontWrapper.vcxproj", "{0D034612-14E2-44E7-993A-72344A2CA7BD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -453,6 +457,14 @@ Global
 		{C4D2E0CB-BC8A-45B3-803F-3053614C72B0}.Release|x64.Build.0 = Release|x64
 		{C4D2E0CB-BC8A-45B3-803F-3053614C72B0}.Release|x86.ActiveCfg = Release|Win32
 		{C4D2E0CB-BC8A-45B3-803F-3053614C72B0}.Release|x86.Build.0 = Release|Win32
+		{0D034612-14E2-44E7-993A-72344A2CA7BD}.Debug|x64.ActiveCfg = Debug|x64
+		{0D034612-14E2-44E7-993A-72344A2CA7BD}.Debug|x64.Build.0 = Debug|x64
+		{0D034612-14E2-44E7-993A-72344A2CA7BD}.Debug|x86.ActiveCfg = Debug|Win32
+		{0D034612-14E2-44E7-993A-72344A2CA7BD}.Debug|x86.Build.0 = Debug|Win32
+		{0D034612-14E2-44E7-993A-72344A2CA7BD}.Release|x64.ActiveCfg = Release|x64
+		{0D034612-14E2-44E7-993A-72344A2CA7BD}.Release|x64.Build.0 = Release|x64
+		{0D034612-14E2-44E7-993A-72344A2CA7BD}.Release|x86.ActiveCfg = Release|Win32
+		{0D034612-14E2-44E7-993A-72344A2CA7BD}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -500,6 +512,7 @@ Global
 		{E4549551-01F3-4820-8567-E0557960F50B} = {60AEAB8E-06E6-4ECC-9CA4-05FE79C5BF42}
 		{C4D2E0CB-BC8A-45B3-803F-3053614C72B0} = {60AEAB8E-06E6-4ECC-9CA4-05FE79C5BF42}
 		{B7B48EE2-25C6-472E-AE8F-B2A7D24866A0} = {692937C8-6B6D-4FA6-9E40-37264949B7A3}
+		{0D034612-14E2-44E7-993A-72344A2CA7BD} = {F277303F-62A6-4EC3-A9EA-273E589B6DBF}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {010E0B6F-B2FD-4AD9-A2B3-9FF364F73B7A}

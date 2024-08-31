@@ -21,6 +21,7 @@ namespace KEIEngine
         void DebugUI();
 
         void LoadLevel(const std::filesystem::path& levelFile);
+        void SaveLevel(std::filesystem::path saveFile = "");
 
         GameObject* CreateGameObject(const std::filesystem::path& templateFile, const std::string& name);
         GameObject* GetGameObject(const std::string& name);
@@ -69,6 +70,7 @@ namespace KEIEngine
         using Services = std::vector<std::unique_ptr<Service>>;
         using GameObjectSlots = std::vector<Slot>;
 
+        std::filesystem::path mLevelFileName;
         Services mServices;
         GameObjectSlots mGameObjectSlots;
         std::vector<uint32_t> mFreeSlots;

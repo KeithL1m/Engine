@@ -58,10 +58,16 @@
                 "Position": [ 100, 100 ]
             }
         },
-        "TestUISprite1": {
+        "TestUIButton": {
             "Template": "../../Assets/Templates/test_ui_button.json",
             "UIButtonComponent": {
                 "Position": [ 200, 100 ]
+            }
+        },
+        "TestUIText": {
+            "Template": "../../Assets/Templates/test_ui_text.json",
+            "UITextComponent": {
+                "Position": [ 0, 0 ]
             }
         }
     }

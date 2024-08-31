@@ -15,6 +15,7 @@
 #include "SoundEffectComponent.h"
 #include "UISpriteComponent.h"
 #include "UIButtonComponent.h"
+#include "UITextComponent.h"
 
 using namespace KEIEngine;
 namespace rj = rapidjson;
@@ -75,6 +76,10 @@ namespace
         else if (componentName == "UIButtonComponent")
         {
             component = gameObject.AddComponent<UIButtonComponent>();
+        }
+        else if (componentName == "UITextComponent")
+        {
+            component = gameObject.AddComponent<UITextComponent>();
         }
         else
         {

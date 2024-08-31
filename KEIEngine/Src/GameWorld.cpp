@@ -2,6 +2,7 @@
 #include "GameWorld.h"
 #include "GameObjectFactory.h"
 
+#include "SaveUtil.h"
 
 #include "CameraService.h"
 #include "RenderService.h"
@@ -13,6 +14,7 @@
 #include "CameraComponent.h"
 #include "UISpriteComponent.h"
 #include "UIButtonComponent.h"
+#include "UITextComponent.h"
 
 using namespace KEIEngine;
 
@@ -108,10 +110,17 @@ void GameWorld::DebugUI()
     {
         service->DebugUI();
     }
+
+    if (ImGui::Button("Save"))
+    {
+        SaveLevel("../../Assets/Templates/Levels/test_save_level.json");
+        //SaveLevel();
+    }
 }
 
 void GameWorld::LoadLevel(const std::filesystem::path& levelFile)
 {
+    mLevelFileName = levelFile;
     FILE* file = nullptr;
     auto err = fopen_s(&file, levelFile.u8string().c_str(), "r");
     ASSERT(err == 0 && file != nullptr, "GameWorld: failed to load level %s", levelFile.u8string().c_str());
@@ -209,10 +218,90 @@ void GameWorld::LoadLevel(const std::filesystem::path& levelFile)
                     //uiButtonComponent->SetCallback(std::bind(&GameWorld::OnButtonClick, this));
                 }
             }
+
+            if (gameObject.value.HasMember("UITextComponent"))
+            {
+                UITextComponent* uiTextComponent = obj->GetComponent<UITextComponent>();
+                if (uiTextComponent != nullptr)
+                {
+                    uiTextComponent->Deserialize(gameObject.value["UITextComponent"].GetObj());
+
+                }
+            }
             obj->Initialize();
         }
     }
 
+}
+
+void GameWorld::SaveLevel(std::filesystem::path saveFile)
+{
+    if (saveFile.empty())
+    {
+        saveFile = mLevelFileName;
+    }
+
+    rapidjson::Document doc;
+    // capacity (gloal setup)
+    // services
+    // game objects
+    doc.SetObject();
+    doc.AddMember("Capacity", static_cast<int>(mGameObjectSlots.size()), doc.GetAllocator());
+
+    rapidjson::Value services(rapidjson::kObjectType);
+    for (auto& service : mServices)
+    {
+        service->Serialize(doc, services);
+    }
+    doc.AddMember("Services", services, doc.GetAllocator());
+
+    rapidjson::Value gameObjects(rapidjson::kObjectType);
+    for (auto& slot : mGameObjectSlots)
+    {
+        if (slot.gameObject != nullptr)
+        {
+            rapidjson::Value gameObjectData(rapidjson::kObjectType);
+            SaveUtil::SaveString("Template", slot.gameObject->mTemplateFile.c_str(), doc, gameObjectData);
+            TransformComponent* transformComponent = slot.gameObject->GetComponent<TransformComponent>();
+            if (transformComponent != nullptr)
+            {
+                transformComponent->Serialize(doc, gameObjectData);
+            }
+            CameraComponent* cameraComponent = slot.gameObject->GetComponent<CameraComponent>();
+            if (cameraComponent != nullptr)
+            {
+                cameraComponent->Serialize(doc, gameObjectData);
+            }
+            UISpriteComponent* uiSpriteComponent = slot.gameObject->GetComponent<UISpriteComponent>();
+            if (uiSpriteComponent != nullptr)
+            {
+                uiSpriteComponent->Serialize(doc, gameObjectData);
+            }
+            UIButtonComponent* uiButtonComponent = slot.gameObject->GetComponent<UIButtonComponent>();
+            if (uiButtonComponent != nullptr)
+            {
+                uiButtonComponent->Serialize(doc, gameObjectData);
+            }
+            UITextComponent* uiTextComponent = slot.gameObject->GetComponent<UITextComponent>();
+            if (uiTextComponent != nullptr)
+            {
+                uiTextComponent->Serialize(doc, gameObjectData);
+            }
+            rapidjson::GenericStringRef<char> goName(slot.gameObject->GetName().c_str());
+            gameObjects.AddMember(goName, gameObjectData, doc.GetAllocator());
+        }
+    }
+    doc.AddMember("GameObjects", gameObjects, doc.GetAllocator());
+
+    FILE* file = nullptr;
+    auto err = fopen_s(&file, saveFile.u8string().c_str(), "w");
+    ASSERT(err == 0 && file != nullptr, "GameWorld: filed to open save level %s", saveFile.u8string().c_str());
+
+    char writeBuffer[65536];
+    rapidjson::FileWriteStream writeStream(file, writeBuffer, sizeof(writeBuffer));
+    rapidjson::PrettyWriter<rapidjson::FileWriteStream> writer(writeStream);
+    doc.Accept(writer);
+    fclose(file);
 }
 
 GameObject* GameWorld::CreateGameObject(const std::filesystem::path& templateFile, const std::string& name)
@@ -235,6 +324,7 @@ GameObject* GameWorld::CreateGameObject(const std::filesystem::path& templateFil
     std::string objName = name;
     newObject->SetName(objName);
     newObject->mWorld = this;
+    newObject->mTemplateFile = templateFile.u8string().c_str();
     newObject->mHandle.mIndex = freeSlot;
     newObject->mHandle.mGeneration = slot.generation;
 

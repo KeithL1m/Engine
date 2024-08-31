@@ -24,6 +24,7 @@ namespace KEIEngine
         virtual void Update(float deltaTime) {}
         virtual void Render() {}
         virtual void DebugUI() {}
+        virtual void Serialize(rapidjson::Document& doc, rapidjson::Value& value) {}
         virtual void Deserialize(const rapidjson::Value& value) {}
 
         GameWorld& GetWorld() { return *mWorld; }

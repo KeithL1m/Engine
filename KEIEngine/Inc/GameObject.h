@@ -90,5 +90,6 @@ namespace KEIEngine
         friend class GameWorld;
         GameWorld* mWorld = nullptr;
         GameObjectHandle mHandle;
+        std::string mTemplateFile;
     };
 }

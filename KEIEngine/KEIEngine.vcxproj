@@ -44,6 +44,7 @@
     <ClInclude Include="Inc\RenderObjectComponent.h" />
     <ClInclude Include="Inc\RenderService.h" />
     <ClInclude Include="Inc\RigidBodyComponent.h" />
+    <ClInclude Include="Inc\SaveUtil.h" />
     <ClInclude Include="Inc\Service.h" />
     <ClInclude Include="Inc\SoundBankComponent.h" />
     <ClInclude Include="Inc\SoundEffectComponent.h" />
@@ -53,6 +54,7 @@
     <ClInclude Include="Inc\UIComponent.h" />
     <ClInclude Include="Inc\UIRenderService.h" />
     <ClInclude Include="Inc\UISpriteComponent.h" />
+    <ClInclude Include="Inc\UITextComponent.h" />
     <ClInclude Include="Inc\UpdateService.h" />
     <ClInclude Include="Src\Precompiled.h" />
   </ItemGroup>
@@ -79,12 +81,14 @@
     <ClCompile Include="Src\RenderObjectComponent.cpp" />
     <ClCompile Include="Src\RenderService.cpp" />
     <ClCompile Include="Src\RigidBodyComponent.cpp" />
+    <ClCompile Include="Src\SaveUtil.cpp" />
     <ClCompile Include="Src\SoundBankComponent.cpp" />
     <ClCompile Include="Src\SoundEffectComponent.cpp" />
     <ClCompile Include="Src\TransformComponent.cpp" />
     <ClCompile Include="Src\UIButtonComponent.cpp" />
     <ClCompile Include="Src\UIRenderService.cpp" />
     <ClCompile Include="Src\UISpriteComponent.cpp" />
+    <ClCompile Include="Src\UITextComponent.cpp" />
     <ClCompile Include="Src\UpdateService.cpp" />
   </ItemGroup>
   <ItemGroup>

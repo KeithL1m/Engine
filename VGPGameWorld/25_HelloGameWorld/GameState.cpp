@@ -32,7 +32,7 @@ void GameState::Initialize()
 {
     GameObjectFactory::SetCustomMake(CustomComponentMake);
     GameWorld::SetCustomService(CustomServiceMake);
-    mGameWorld.LoadLevel("../../Assets/Templates/Levels/test_level.json");
+    mGameWorld.LoadLevel("../../Assets/Templates/Levels/test_edit_level.json");
 }
 void GameState::Terminate()                                                                                              
 {
