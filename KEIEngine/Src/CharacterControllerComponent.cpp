@@ -1,7 +1,9 @@
 #include "Precompiled.h"
 #include "CharacterControllerComponent.h"
 
+
 #include "GameWorld.h"
+#include "TPSCameraComponent.h"
 
 using namespace KEIEngine;
 using namespace KEIEngine::Graphics;
