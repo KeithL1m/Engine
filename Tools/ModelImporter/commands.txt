@@ -10,3 +10,5 @@
 -scale 0.01 -animOnly 1 ../../Assets/Models/characterfin/Animations/house_dancing.fbx ../../Assets/Models/characterfin/Animations/house_dancing.fbx
 
 -scale 0.01 -animOnly 1 ../../Assets/Models/characterfin/Animations/moose_dying.fbx ../../Assets/Models/characterfin/Animations/moose_dying.fbx
+
+-scale 0.01 -animOnly 1 ../../Assets/Models/character_movement/walk_backward.fbx ../../Assets/Models/character_movement/walk_backward.fbx
