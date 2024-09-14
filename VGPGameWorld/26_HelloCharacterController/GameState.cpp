@@ -1,5 +1,7 @@
 #include "GameState.h"
 
+#include "CharacterControllerComponent.h"
+#include "TPSCameraComponent.h"
 
 using namespace KEIEngine;
 using namespace KEIEngine::Graphics;
@@ -7,9 +9,31 @@ using namespace KEIEngine::KMath;
 using namespace KEIEngine::Input;
 
 
+namespace
+{
+    Component* CustomComponentMake(const std::string& componentName, GameObject& gameObject)
+    {
+        if (componentName == "CharacterControllerComponent")
+        {
+            return gameObject.AddComponent<CharacterControllerComponent>();
+        }
+        else if (componentName == "TPSCameraComponent")
+        {
+            return gameObject.AddComponent<TPSCameraComponent>();
+        }
+        return nullptr;
+    }
+    Service* CustomServiceMake(const std::string& serviceName, GameWorld& gameWorld)
+    {
+        return nullptr;
+    }
+}
+
 void GameState::Initialize()
 {
-    mGameWorld.LoadLevel("../../Assets/Templates/Levels/test_edit_level.json");
+    GameObjectFactory::SetCustomMake(CustomComponentMake);
+    GameWorld::SetCustomService(CustomServiceMake);
+    mGameWorld.LoadLevel("../../Assets/Templates/Levels/test_gameworld.json");
 }
 void GameState::Terminate()                                                                                              
 {

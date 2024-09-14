@@ -15,6 +15,8 @@ namespace KEIEngine
 
 		void SetPosition(const KMath::Vector3& position);
 		void SetVelocity(const KMath::Vector3& velocity);
+		void SetRotationVelocity(const KMath::Vector3& velocity);
+		Vector3 GetVelocity();
 	private:
 		friend class PhysicsService;
 		Physics::CollisionShape mCollisionShape;

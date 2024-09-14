@@ -96,3 +96,11 @@ void RigidBodyComponent::SetVelocity(const KMath::Vector3& velocity)
 {
     mRigidBody.SetVelocity(velocity);
 }
+void RigidBodyComponent::SetRotationVelocity(const KEIEngine::KMath::Vector3& velocity)
+{
+    mRigidBody.SetRotationVelocity(velocity);
+}
+Vector3 RigidBodyComponent::GetVelocity()
+{
+    return mRigidBody.GetVelocity();
+}

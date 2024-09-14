@@ -3,9 +3,13 @@
   <ItemGroup>
     <ClCompile Include="GameState.cpp" />
     <ClCompile Include="WinMain.cpp" />
+    <ClCompile Include="CharacterControllerComponent.cpp" />
+    <ClCompile Include="TPSCameraComponent.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameState.h" />
     <ClInclude Include="TypeIds.h" />
+    <ClInclude Include="CharacterControllerComponent.h" />
+    <ClInclude Include="TPSCameraComponent.h" />
   </ItemGroup>
 </Project>

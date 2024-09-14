@@ -25,7 +25,6 @@
     <ClInclude Include="Inc\AppState.h" />
     <ClInclude Include="Inc\CameraComponent.h" />
     <ClInclude Include="Inc\CameraService.h" />
-    <ClInclude Include="Inc\CharacterControllerComponent.h" />
     <ClInclude Include="Inc\Common.h" />
     <ClInclude Include="Inc\Component.h" />
     <ClInclude Include="Inc\Event.h" />
@@ -49,7 +48,6 @@
     <ClInclude Include="Inc\Service.h" />
     <ClInclude Include="Inc\SoundBankComponent.h" />
     <ClInclude Include="Inc\SoundEffectComponent.h" />
-    <ClInclude Include="Inc\TPSCameraComponent.h" />
     <ClInclude Include="Inc\TransformComponent.h" />
     <ClInclude Include="Inc\TypeIds.h" />
     <ClInclude Include="Inc\UIButtonComponent.h" />
@@ -65,7 +63,6 @@
     <ClCompile Include="Src\App.cpp" />
     <ClCompile Include="Src\CameraComponent.cpp" />
     <ClCompile Include="Src\CameraService.cpp" />
-    <ClCompile Include="Src\CharacterControllerComponent.cpp" />
     <ClCompile Include="Src\EventManager.cpp" />
     <ClCompile Include="Src\FireworkParticleSystem.cpp" />
     <ClCompile Include="Src\FPSCameraComponent.cpp" />
@@ -87,7 +84,6 @@
     <ClCompile Include="Src\SaveUtil.cpp" />
     <ClCompile Include="Src\SoundBankComponent.cpp" />
     <ClCompile Include="Src\SoundEffectComponent.cpp" />
-    <ClCompile Include="Src\TPSCameraComponent.cpp" />
     <ClCompile Include="Src\TransformComponent.cpp" />
     <ClCompile Include="Src\UIButtonComponent.cpp" />
     <ClCompile Include="Src\UIRenderService.cpp" />

@@ -48,6 +48,16 @@ void RigidBody::SetVelocity(const KEIEngine::KMath::Vector3& velocity)
     mRigidBody->activate();
     mRigidBody->setLinearVelocity(ConvertTobtVector3(velocity));
 }
+void RigidBody::SetRotationVelocity(const KEIEngine::KMath::Vector3& velocity)
+{
+    mRigidBody->activate();
+    mRigidBody->setAngularVelocity(ConvertTobtVector3(velocity));
+}
+
+KMath::Vector3 RigidBody::GetVelocity()
+{
+    return ConvertToVector3(mRigidBody->getLinearVelocity());
+}
 
 bool RigidBody::IsDynamic() const
 {

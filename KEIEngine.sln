@@ -118,6 +118,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Templates", "Templates", "{
 	ProjectSection(SolutionItems) = preProject
 		Assets\Templates\fps_camera.json = Assets\Templates\fps_camera.json
 		Assets\Templates\ground.json = Assets\Templates\ground.json
+		Assets\Templates\test_character.json = Assets\Templates\test_character.json
 		Assets\Templates\test_model.json = Assets\Templates\test_model.json
 		Assets\Templates\test_object.json = Assets\Templates\test_object.json
 		Assets\Templates\test_ui_button.json = Assets\Templates\test_ui_button.json
@@ -131,6 +132,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Levels", "Levels", "{B7B48EE2-25C6-472E-AE8F-B2A7D24866A0}"
 	ProjectSection(SolutionItems) = preProject
 		Assets\Templates\Levels\test_edit_level.json = Assets\Templates\Levels\test_edit_level.json
+		Assets\Templates\Levels\test_gameworld.json = Assets\Templates\Levels\test_gameworld.json
 		Assets\Templates\Levels\test_level.json = Assets\Templates\Levels\test_level.json
 		Assets\Templates\test_ui_sprite.json = Assets\Templates\test_ui_sprite.json
 	EndProjectSection

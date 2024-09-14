@@ -136,11 +136,15 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="CharacterControllerComponent.cpp" />
     <ClCompile Include="GameState.cpp" />
+    <ClCompile Include="TPSCameraComponent.cpp" />
     <ClCompile Include="WinMain.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="CharacterControllerComponent.h" />
     <ClInclude Include="GameState.h" />
+    <ClInclude Include="TPSCameraComponent.h" />
     <ClInclude Include="TypeIds.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

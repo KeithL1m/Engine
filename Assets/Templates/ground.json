@@ -6,8 +6,8 @@
     "MeshComponent": {
       "Shape": {
         "Type": "GroundPlane",
-        "Rows": 10,
-        "Columns": 10,
+        "Rows": 100,
+        "Columns": 100,
         "Spacing": 1.0
       },
       "Material": {
@@ -18,7 +18,7 @@
         "SpecularPower": 12.0
       },
       "Textures": {
-        "DiffuseMap": "../../Assets/Textures/Images/misc/concrete.jpg"
+        "DiffuseMap": "../../Assets/Textures/Images/seamless_grass.jpg"
       },
       "CastShadow": false
     },
@@ -26,7 +26,7 @@
       "Mass": 0.0,
       "ColliderData": {
         "Shape": "Hull",
-        "HalfExtents": [ 5.0, 0.5, 5.0 ],
+        "HalfExtents": [ 50.0, 0.5, 50.0 ],
         "Origin": [ 0.0, -0.5, 0.0 ]
       }
     }
