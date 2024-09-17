@@ -91,5 +91,5 @@ void CharacterControllerComponent::CharacterRoll()
 	// play, is looping = false
 	mCurrentAnimationIndex = 3;
 	mIsRolling = true;
-	mCharacterAnimation->Play(mCurrentAnimationIndex);
+	mCharacterAnimation->Play(mCurrentAnimationIndex, false);
 }

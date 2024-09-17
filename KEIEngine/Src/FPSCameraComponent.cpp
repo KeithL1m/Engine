@@ -33,7 +33,7 @@ void FPSCameraComponent::Update(float deltaTime)
 {
     Camera& camera = mCameraComponent->GetCamera();
     InputSystem* input = InputSystem::Get();
-    const float moveSpeed = input->IsKeyDown(KeyCode::LSHIFT) ? mShiftSpeed : mMoveSpeed;
+    const float moveSpeed = input->IsKeyDown(KeyCode::RSHIFT) ? mShiftSpeed : mMoveSpeed;
     const float turnSpeed = mTurnSpeed;
 
     if (input->IsKeyDown(KeyCode::W))
