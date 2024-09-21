@@ -57,6 +57,20 @@ bool Animator::IsFinished() const
     return mAnimationTick >= animClip.tickDuration;
 }
 
+KMath::Vector3 Animator::GetRootPosition() const
+{
+    KMath::Vector3 location = KMath::Vector3::Zero;
+    if (mClipIndex >= 0)
+    {
+        //const Model* model = ModelManager::Get()->GetModel(mModelId);
+        //const AnimationClip& animClip = model->animationClips[mClipIndex];
+        //Transform transform = animClip.boneAnimations[0]->GetTransform(mAnimationTick);
+        //location = transform.position;
+    }
+
+    return location;
+}
+
 size_t Animator::GetAnimationCount() const
 {
     const Model* model = ModelManager::Get()->GetModel(mModelId);

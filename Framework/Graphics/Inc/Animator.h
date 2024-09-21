@@ -13,6 +13,7 @@ namespace KEIEngine::Graphics
         void Update(float deltaTime);
 
         bool IsFinished() const;
+        KMath::Vector3 GetRootPosition() const;
         size_t GetAnimationCount() const;
         KMath::Matrix4 GetToParentTransform(const Bone* bone) const;
 

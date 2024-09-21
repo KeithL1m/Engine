@@ -16,6 +16,7 @@ namespace KEIEngine
         void Deserialize(const rapidjson::Value& value) override;
         bool IsFinished();
 
+        Vector3 GetRootPosition() const;
         bool Play(int index, bool looping = false);
         Graphics::Animator& GetAnimator();
         const Graphics::Animator& GetAnimator() const;

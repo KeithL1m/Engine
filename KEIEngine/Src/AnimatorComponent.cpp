@@ -52,6 +52,11 @@ void AnimatorComponent::Deserialize(const rapidjson::Value& value)
     }
 }
 
+Vector3 AnimatorComponent::GetRootPosition() const
+{
+    return mAnimator.GetRootPosition();
+}
+
 bool KEIEngine::AnimatorComponent::IsFinished()
 {
     return mAnimator.IsFinished();

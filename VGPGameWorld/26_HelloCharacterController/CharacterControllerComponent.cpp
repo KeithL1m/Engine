@@ -25,6 +25,7 @@ void CharacterControllerComponent::Update(float deltaTime)
 {
 	InputSystem* input = InputSystem::Get();
 	Matrix4 transform = mCharacterTransform->GetMatrix4();
+	Vector3 pos = KMath::GetTranslation(transform);
 	Vector3 foward = KMath::GetLook(transform);
 	Vector3 right = KMath::GetRight(transform);
 	Vector3 velocity = Vector3::Zero;
@@ -37,6 +38,9 @@ void CharacterControllerComponent::Update(float deltaTime)
 		{
 			mIsRolling = false;
 			desiredAnimation = 0;
+			// teleport character to end of animation
+			KMath::Vector3 rootPosition = pos + (-foward * 3.2f);
+			mCharacterRigidBody->SetPosition(rootPosition);
 		}
 	}
 
