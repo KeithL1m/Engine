@@ -52,6 +52,11 @@ void AnimatorComponent::Deserialize(const rapidjson::Value& value)
     }
 }
 
+bool KEIEngine::AnimatorComponent::IsFinished()
+{
+    return mAnimator.IsFinished();
+}
+
 bool AnimatorComponent::Play(int index, bool looping)
 {
     mAnimator.PlayAnimation(index, looping);

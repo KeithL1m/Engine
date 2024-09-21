@@ -12,8 +12,8 @@ void TPSCameraComponent::Initialize()
     updateService->Register(this);
 
     mCameraComponent = GetOwner().GetComponent<CameraComponent>();
-
-    mCharacterPosition = GetOwner().GetComponent<TransformComponent>();
+    mCharacterRigidBody = GetOwner().GetComponent<RigidBodyComponent>();
+    mTransformComponent = GetOwner().GetComponent<TransformComponent>();
 }
 void TPSCameraComponent::Terminate()
 {
@@ -28,7 +28,16 @@ void TPSCameraComponent::Update(float deltaTime)
 {
     Camera& camera = mCameraComponent->GetCamera();
 
-    
+    Matrix4 mat = mTransformComponent->GetMatrix4();
+    Vector3 pos = KMath::GetTranslation(mat);
+    Vector3 fwd = KMath::GetLook(mat);
+    Vector3 right = KMath::GetRight(mat);
+    Vector3 up = KMath::GetUp(mat);
+
+    Vector3 targetCameraPos = pos + (up * 2.0f) + (fwd * 1.3f) + (-right * 0.5f);
+    Vector3 cameraPos = Lerp(camera.GetPosition(), targetCameraPos, deltaTime / 0.2f);
+    camera.SetPosition(cameraPos);
+    camera.SetLookAt(cameraPos + -fwd);
 }
 
 void TPSCameraComponent::Deserialize(const rapidjson::Value& value)

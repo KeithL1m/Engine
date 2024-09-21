@@ -30,42 +30,48 @@ void CharacterControllerComponent::Update(float deltaTime)
 	Vector3 velocity = Vector3::Zero;
 	Vector3 currentVelocity = mCharacterRigidBody->GetVelocity();
 	int desiredAnimation = 0;
+
 	if (mIsRolling)
 	{
-		// check animation is finished
-		// mCharacterAnimation->IsFinished();
-		// look at animation controller, check if animation is finished
-		// if finished, mIsRolling = false;
+		if (mCharacterAnimation->IsFinished())
+		{
+			mIsRolling = false;
+			desiredAnimation = 0;
+		}
 	}
-	if (input->IsKeyDown(KeyCode::UP))
+
+	if (input->IsKeyDown(KeyCode::UP) || input->IsKeyDown(KeyCode::W))
+	{
+		velocity = foward * -2.5f;
+		desiredAnimation = 1;
+	}
+	else if (input->IsKeyDown(KeyCode::DOWN) || input->IsKeyDown(KeyCode::S))
 	{
 		velocity = foward * 1.0f;
 		desiredAnimation = 2;
 	}
-	else if (input->IsKeyDown(KeyCode::DOWN))
+	if (input->IsKeyDown(KeyCode::LEFT) || input->IsKeyDown(KeyCode::A))
 	{
-		velocity = foward * -5.0f;
-		desiredAnimation = 1;
+		velocity += right * 1.5f;
+		desiredAnimation = 2;
 	}
-	if (input->IsKeyDown(KeyCode::LEFT))
+	else if (input->IsKeyDown(KeyCode::RIGHT) || input->IsKeyDown(KeyCode::D))
 	{
-		velocity += right * -5.0f;
-	}
-	else if (input->IsKeyDown(KeyCode::RIGHT))
-	{
-		velocity += right * 5.0f;
+		velocity += right * -1.5f;
+		desiredAnimation = 2;
 	}
 
-	if (input->IsKeyPressed(KeyCode::ENTER))
+	if (input->IsKeyPressed(KeyCode::LSHIFT))
 	{
 		CharacterRoll();
+		velocity = foward * 1.0f;
 	}
 
-	if (input->IsKeyDown(KeyCode::N))
+	if (input->IsKeyDown(KeyCode::M))
 	{
 		mCharacterRigidBody->SetRotationVelocity({ 0.0f, 1.0f, 0.0f });
 	}
-	else if (input->IsKeyDown(KeyCode::M))
+	else if (input->IsKeyDown(KeyCode::N))
 	{
 		mCharacterRigidBody->SetRotationVelocity({ 0.0f, -1.0f, 0.0f });
 	}

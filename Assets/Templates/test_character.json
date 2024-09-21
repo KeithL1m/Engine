@@ -28,6 +28,15 @@
         "HalfExtents": [ 0.4, 1.0, 0.2 ],
         "Origin": [ 0.0, 1.6, 0.0 ]
       }
+    },
+    "CameraComponent": {
+      "Position": [ 0.0, 0.0, 0.0 ],
+      "LookAt": [ 0.0, 0.0, 1.0 ]
+    },
+    "TPSCameraComponent": {
+      "MoveSpeed": 1.0,
+      "TurnSpeed": 0.1,
+      "ShiftSpeed": 10.0
     }
   }
 }

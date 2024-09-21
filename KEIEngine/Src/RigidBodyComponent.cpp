@@ -104,3 +104,8 @@ Vector3 RigidBodyComponent::GetVelocity()
 {
     return mRigidBody.GetVelocity();
 }
+
+Vector3 RigidBodyComponent::GetPosition()
+{
+    return mRigidBody.GetPosition();
+}

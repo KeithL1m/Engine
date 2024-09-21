@@ -19,7 +19,8 @@ namespace KEIEngine
 
     private:
         KEIEngine::CameraComponent* mCameraComponent = nullptr;
-        const KEIEngine::TransformComponent* mCharacterPosition = nullptr;
+        KEIEngine::RigidBodyComponent* mCharacterRigidBody = nullptr;
+        const KEIEngine::TransformComponent* mTransformComponent = nullptr;
 
         float mShiftSpeed = 10.0f;
         float mMoveSpeed = 1.0f;

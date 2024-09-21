@@ -49,7 +49,7 @@ void GameState::Update(float deltaTime)
 }
 void GameState::DebugUI()
 {
-    SimpleDraw::AddGroundPlane(10.0f, Colors::White);
+    //SimpleDraw::AddGroundPlane(10.0f, Colors::White);
     ImGui::Begin("Debug Control", nullptr, ImGuiWindowFlags_AlwaysAutoResize);
         mGameWorld.DebugUI();
     ImGui::End();

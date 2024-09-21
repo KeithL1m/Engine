@@ -23,6 +23,8 @@ namespace KEIEngine::Physics
         void SetPosition(const KEIEngine::KMath::Vector3& position);
         void SetVelocity(const KEIEngine::KMath::Vector3& velocity);
         void SetRotationVelocity(const KEIEngine::KMath::Vector3& velocity);
+        
+        KMath::Vector3 GetPosition();
         KMath::Vector3 GetVelocity();
 
         bool IsDynamic() const;

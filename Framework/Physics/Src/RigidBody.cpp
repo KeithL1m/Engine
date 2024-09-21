@@ -59,6 +59,11 @@ KMath::Vector3 RigidBody::GetVelocity()
     return ConvertToVector3(mRigidBody->getLinearVelocity());
 }
 
+KMath::Vector3 RigidBody::GetPosition()
+{
+    return ConvertToVector3(mRigidBody->getWorldTransform().getOrigin());
+}
+
 bool RigidBody::IsDynamic() const
 {
     return mMass > 0.0f;

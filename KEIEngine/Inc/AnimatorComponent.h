@@ -14,6 +14,7 @@ namespace KEIEngine
         void Update(float deltaTime) override;
         void DebugUI() override;
         void Deserialize(const rapidjson::Value& value) override;
+        bool IsFinished();
 
         bool Play(int index, bool looping = false);
         Graphics::Animator& GetAnimator();
