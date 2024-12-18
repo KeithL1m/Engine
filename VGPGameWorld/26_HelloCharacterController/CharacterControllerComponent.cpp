@@ -71,11 +71,11 @@ void CharacterControllerComponent::Update(float deltaTime)
 		velocity = foward * 1.0f;
 	}
 
-	if (input->IsKeyDown(KeyCode::M))
+	if (input->IsKeyDown(KeyCode::E))
 	{
 		mCharacterRigidBody->SetRotationVelocity({ 0.0f, 1.0f, 0.0f });
 	}
-	else if (input->IsKeyDown(KeyCode::N))
+	else if (input->IsKeyDown(KeyCode::Q))
 	{
 		mCharacterRigidBody->SetRotationVelocity({ 0.0f, -1.0f, 0.0f });
 	}
